@@ -1,0 +1,16 @@
+main {
+    margin : 10px;
+}
+
+.Menu-Card {
+    width  : 300px;
+    height : 150px;
+    margin-top : 20px;
+}
+
+
+.Layout-SystemDetail > button {
+    background-color:#f8d7da;
+    height:20px;
+}
+

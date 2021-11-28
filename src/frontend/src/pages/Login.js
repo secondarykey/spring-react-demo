@@ -1,0 +1,200 @@
+import React from "react";
+
+import {FormattedMessage} from "react-intl";
+
+import Form      from 'react-bootstrap/Form';
+import Button    from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row       from 'react-bootstrap/Row';
+import Col       from 'react-bootstrap/Col';
+import Alert     from 'react-bootstrap/Alert';
+
+import {SelectLanguage} from '../Locale';
+import {SystemMessage}  from "../Layout";
+
+import API from "../API";
+
+class Login extends React.Component {
+
+  constructor(props) {
+
+      super(props);
+
+      this.userId = React.createRef(); 
+      this.password = React.createRef(); 
+      this.oldPassword = React.createRef(); 
+      this.newPassword1 = React.createRef(); 
+      this.newPassword2 = React.createRef(); 
+
+      this.state = { expiry : false, messageId : "" }
+  }
+
+
+  handleLoginClick = (e) => {
+
+    let data = {
+        id : this.userId.current.value,
+        password : this.password.current.value
+    }
+
+    API.post("/api/v1/login",
+      resp => {
+        console.log(resp.data);
+        window.location = '/menu';
+    },data).catch( (err) => {
+        let resp = err.response;
+        let result = resp.data;
+        switch ( resp.status ) {
+          case 401:
+            let expiry = false;
+            let msgId = result.messageID;
+            if ( msgId === "PRFN00M102" ) {
+               expiry = true
+            }
+
+            this.setState({ expiry : expiry, messageId : msgId });
+
+            break;
+          default:
+            console.log(result);
+            if ( result.messageId === undefined ) {
+              SystemMessage("PRFN00M000",result);
+            } else {
+              SystemMessage(result.messageId,result);
+            }
+            break;
+        }
+    });
+
+    return false;
+  }
+
+  handleUpdateClick = (e) => {
+
+    let new1 = this.newPassword1.current.value;
+    let new2 = this.newPassword2.current.value;
+
+    if ( new1 !== new2 ) {
+        this.setState({ messageId : "PRFN00M201" });
+        return;
+    }
+
+    this.setState({ messageId : "" });
+    let data = {
+        userId      : this.userId.current.value,
+        oldPassword : this.oldPassword.current.value,
+        newPassword : new1
+    }
+
+    API.put("/api/v1/password",
+      resp => {
+        console.log(resp.data);
+        window.location = '/menu';
+    },data).catch( (err) => {
+
+      let resp = err.response;
+      let result = resp.data;
+
+      SystemMessage(result.messageId);
+      console.log(result);
+    });
+
+    return false;
+  }
+
+  render() {
+
+    const expiry = this.state.expiry;
+    const msgId = this.state.messageId;
+
+    return ( <>
+
+<Form>
+  <Container>
+    <SpaceRow>
+      <Form.Group>
+        <Form.Label> <FormattedMessage id="PRFN00L101"/> </Form.Label>
+        <Form.Control type="email" placeholder="" ref={this.userId} />
+      </Form.Group>
+    </SpaceRow>
+
+    <SpaceRow>
+      <Form.Group>
+        <Form.Label> <FormattedMessage id="PRFN00L102"/> </Form.Label>
+        <Form.Control type="password" placeholder="" ref={this.password} />
+      </Form.Group>
+    </SpaceRow>
+
+    <SpaceRow>
+      <SelectLanguage />
+    </SpaceRow>
+
+    {/*メッセージ表示 */}
+    {msgId !== "" &&
+    <SpaceRow>
+      <Alert key="1" variant="danger"> <FormattedMessage id={msgId}/> </Alert>
+    </SpaceRow>
+    }
+
+    {/* ログインボタン */}
+    {!expiry &&
+    <SpaceRow>
+      <Button variant="primary" onClick={this.handleLoginClick}> 
+        <FormattedMessage id="PRFN00L104"/>
+      </Button>
+    </SpaceRow>
+    }
+
+    {/* 有効期限フォーム */}
+    {expiry &&
+<>
+    <SpaceRow>
+      <Form.Group>
+        <Form.Label> <FormattedMessage id="PRFN00L201"/> </Form.Label>
+        <Form.Control type="password" placeholder="Password" ref={this.oldPassword} />
+      </Form.Group>
+    </SpaceRow>
+
+    <SpaceRow>
+      <Form.Group>
+        <Form.Label> <FormattedMessage id="PRFN00L202"/> </Form.Label>
+        <Form.Control type="password" placeholder="Password" ref={this.newPassword1} />
+      </Form.Group>
+    </SpaceRow>
+
+    <SpaceRow>
+      <Form.Group>
+        <Form.Label> <FormattedMessage id="PRFN00L203"/> </Form.Label>
+        <Form.Control type="password" placeholder="Password" ref={this.newPassword2} />
+      </Form.Group>
+    </SpaceRow>
+
+    <SpaceRow>
+      <Button variant="primary" onClick={this.handleUpdateClick}> 
+        <FormattedMessage id="PRFN00L204"/>
+      </Button>
+    </SpaceRow>
+</>
+    }
+
+  </Container>
+
+</Form>
+
+</>);
+  }
+}
+
+function SpaceRow(props) {
+  return (
+<Row className="mb-3">
+  <Col></Col>
+  <Col xs="6">
+    {props.children}
+  </Col>
+  <Col></Col>
+</Row>
+  );
+}
+
+export default Login
