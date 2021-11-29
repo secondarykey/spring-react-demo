@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import API from "../../API"
+import {ShowDialog} from "../../Dialog"
 
 class ToDo extends React.Component {
 
@@ -24,7 +25,6 @@ class ToDo extends React.Component {
   }
   
   componentDidMount() {
-    console.log("mount");
     var args = {
     };
     API.post("/api/demo/todo/view",resp => {
@@ -64,15 +64,18 @@ class ToDo extends React.Component {
       id : id
     };
 
-    API.post("/api/demo/todo/delete",resp => {
-      console.log(resp.data.result);
-      let todos = this.state.todos.filter((x) => { return x.id !== id });
-      this.setState({
-        todos:todos
-      });
-    },args).catch( (err) => {
-      console.log(err.data);
-    }) 
+    let todos = this.state.todos.filter((x) => { return x.id !== id });
+    var self = this;
+
+    ShowDialog("タイトル","メッセージ",function() {
+      API.post("/api/demo/todo/delete",resp => {
+        self.setState({
+          todos:todos
+        });
+      },args).catch( (err) => {
+        console.log(err.data);
+      }) 
+    });
   }    
 
   render() {

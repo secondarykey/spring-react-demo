@@ -7,6 +7,7 @@ import Alert     from 'react-bootstrap/Alert';
 import Accordion from 'react-bootstrap/Accordion';
 
 import Locale from "./Locale";
+import Dialog from "./Dialog";
 
 var setMessage;
 var setErrorDetail;
@@ -47,6 +48,8 @@ const Layout =({children}) => {
     }
     {children}
   </main>
+
+  <Dialog/>
 
 </Locale>
 
