@@ -38,12 +38,11 @@ class ToDo extends React.Component {
   }
 
   add() {
-
     let val = this.addText.current.value;
     var args = {
       value : val
     };
-    
+
     API.post("/api/demo/todo/register",resp => {
       let todos = [...this.state.todos]
       todos.push({ 
