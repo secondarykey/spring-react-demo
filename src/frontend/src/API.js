@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {Bearer} from "./Authentication";
+import {Show,Hide} from "./Progress";
 
 //import {SystemMessage}  from "./Layout";
 class API {
@@ -53,6 +54,7 @@ class API {
     //TODO axios がdelete,put,getでbody送信を許してない為、requestに変更する
     let inst = this.createInstance();
 
+    Show();
     return await inst.request({
       method : method, url : url, data : data}).then(response => {
         return callback(response)
@@ -81,7 +83,9 @@ class API {
         }
         console.log(w);
         return Promise.reject(w)
-      })
+      }).finally( () => {
+        Hide();
+      });
   }
 }
 export default API

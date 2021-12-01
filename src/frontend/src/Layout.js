@@ -8,7 +8,10 @@ import Accordion from 'react-bootstrap/Accordion';
 
 import Locale from "./Locale";
 import Dialog from "./Dialog";
+import Progress from "./Progress";
 import {Name} from "./Authentication";
+
+import "./css/Main.css"
 
 var setMessage;
 var setErrorDetail;
@@ -52,6 +55,7 @@ const Layout =({children}) => {
   </main>
 
   <Dialog/>
+  <Progress/>
 
 </Locale>
 

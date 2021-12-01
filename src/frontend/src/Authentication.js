@@ -46,7 +46,7 @@ class Authentication extends React.Component {
   }
 
   decode(buf) {
-    if ( buf === null || buf === "" ) {
+    if ( buf === undefined || buf === null || buf === "" ) {
         return undefined;
     }
     var bytes = AES.decrypt(buf,this.SECRETKEY);
@@ -84,21 +84,26 @@ export function Bearer() {
 }
 
 export function Role(props) {
-    var role = inst.session.role;
-    if ( Array.isArray(props.permission) ) {
-        if ( props.permission.includes(role) ) {
-            return (<>{props.children}</>);
+    if ( inst.session !== undefined ) {
+        var role = inst.session.role;
+        if ( Array.isArray(props.permission) ) {
+            if ( props.permission.includes(role) ) {
+                return (<>{props.children}</>);
+            }
+        } else if ( Array.isArray(props.ignore) ) {
+            if ( !props.permission.includes(role) ) {
+                return (<>{props.children}</>);
+            }
         }
-    } else if ( Array.isArray(props.ignore) ) {
-        if ( !props.permission.includes(role) ) {
-            return (<>{props.children}</>);
-        }
-    }
+    } 
     return (<></>)
 }
 
 export function Name() {
-    return inst.session.name;
+    if ( inst.session !== undefined ) {
+        return inst.session.name;
+    }
+    return "";
 }
 
 export default withCookies(Authentication)

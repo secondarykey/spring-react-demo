@@ -8,6 +8,12 @@ main {
     margin-top : 20px;
 }
 
+.Progress {
+    z-index  : 1024;
+    position : fixed;
+    right    : 20px;
+    bottom   : 20px;
+}
 
 .Layout-SystemDetail > button {
     background-color:#f8d7da;
