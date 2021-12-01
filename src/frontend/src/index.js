@@ -11,10 +11,12 @@ import Login  from './pages/Login';
 import Menu   from './pages/Menu';
 import ToDo   from './pages/Todo/View';
 import Layout from './Layout';
+import Authentication from './Authentication';
 
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider> 
+      <Authentication />
       <Layout> 
         <Router>
           <Routes>

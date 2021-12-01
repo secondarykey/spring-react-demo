@@ -8,6 +8,7 @@ import Accordion from 'react-bootstrap/Accordion';
 
 import Locale from "./Locale";
 import Dialog from "./Dialog";
+import {Name} from "./Authentication";
 
 var setMessage;
 var setErrorDetail;
@@ -25,6 +26,7 @@ const Layout =({children}) => {
   <Navbar bg="light">
     <Container>
       <Navbar.Brand href="/">Demo</Navbar.Brand>
+      <Name/>
     </Container>
   </Navbar>
 

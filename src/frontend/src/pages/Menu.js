@@ -8,6 +8,7 @@ import Row from "react-bootstrap/row";
 import Col from "react-bootstrap/col";
 import Button from "react-bootstrap/button";
 
+import {Role} from "../Authentication";
 
 import "../css/Main.css";
 //import {FormattedMessage} from "react-intl";
@@ -47,16 +48,18 @@ class Menu extends React.Component {
       </Card>
     </Col>
 
-    <Col>
+    <Role permission={["admin"]}>
+      <Col>
       <Card className="Menu-Card">
         <Card.Body>
-          <Card.Title>Function C</Card.Title>
+          <Card.Title>Function Admin</Card.Title>
           <Card.Text> 
           </Card.Text>
           <Button variant="primary">Go C</Button>
         </Card.Body>
       </Card>
     </Col>
+    </Role>
 
   </Row>
 </Container>

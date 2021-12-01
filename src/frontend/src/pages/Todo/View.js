@@ -68,7 +68,7 @@ class ToDo extends React.Component {
     var self = this;
 
     ShowDialog("タイトル","メッセージ",function() {
-      API.post("/api/demo/todo/delete",resp => {
+      API.delete("/api/demo/todo/delete",resp => {
         self.setState({
           todos:todos
         });

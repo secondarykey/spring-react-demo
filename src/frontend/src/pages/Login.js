@@ -11,6 +11,7 @@ import Alert     from 'react-bootstrap/Alert';
 
 import {SelectLanguage} from '../Locale';
 import {SystemMessage}  from "../Layout";
+import {Save} from "../Authentication";
 
 import API from "../API";
 
@@ -39,7 +40,7 @@ class Login extends React.Component {
 
     API.post("/api/v1/login",
       resp => {
-        console.log(resp.data);
+        Save(resp.data.result.user);
         window.location = '/menu';
     },data).catch( (err) => {
         let resp = err.response;
@@ -51,17 +52,12 @@ class Login extends React.Component {
             if ( msgId === "PRFN00M102" ) {
                expiry = true
             }
-
             this.setState({ expiry : expiry, messageId : msgId });
-
             break;
           default:
+            console.log(resp);
             console.log(result);
-            if ( result.messageId === undefined ) {
-              SystemMessage("PRFN00M000",result);
-            } else {
-              SystemMessage(result.messageId,result);
-            }
+            SystemMessage(result.messageId,result);
             break;
         }
     });
