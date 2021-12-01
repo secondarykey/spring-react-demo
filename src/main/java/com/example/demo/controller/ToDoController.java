@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.ToDo;
@@ -22,8 +24,9 @@ public class ToDoController extends JSONController {
     @Autowired
     private ToDoService toDoService;
 
-	@RequestMapping("/view")
-	public Result<ToDoViewResponse> view(@RequestBody ToDoRequest json) {
+	@RequestMapping(value = "/view",method = RequestMethod.POST)
+	public Result<ToDoViewResponse> view(@RequestBody ToDoRequest json,@RequestHeader(name="Authorization",required = true) String bearer) {
+		
 		Result<ToDoViewResponse> result = new Result<>();
 		List<ToDo> list = toDoService.find();
 		ToDoViewResponse res = new ToDoViewResponse();
@@ -31,7 +34,7 @@ public class ToDoController extends JSONController {
 		result.setResult(res);
 		return result;
 	}
-	@RequestMapping("/register")
+	@RequestMapping(value = "/register",method = RequestMethod.POST)
 	public Result<Integer> register(@RequestBody ToDoRequest json) {
 		ToDo todo = new ToDo();
 		todo.setValue(json.getValue());
@@ -42,7 +45,7 @@ public class ToDoController extends JSONController {
 		
 		return result;
 	}
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete",method = RequestMethod.DELETE)
 	public Result<Integer> delete(@RequestBody ToDoRequest json) {
 		ToDo todo = new ToDo();
 		todo.setId(json.getId());

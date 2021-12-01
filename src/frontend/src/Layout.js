@@ -9,7 +9,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Locale from "./Locale";
 import Dialog from "./Dialog";
 import Progress from "./Progress";
-import {Name} from "./Authentication";
+import {LoginPage,Name} from "./Authentication";
 
 import "./css/Main.css"
 
@@ -28,8 +28,8 @@ const Layout =({children}) => {
 
   <Navbar bg="light">
     <Container>
-      <Navbar.Brand href="/">Demo</Navbar.Brand>
-      <Name/>
+      <Navbar.Brand href="/menu">Demo</Navbar.Brand>
+      <LoginPage> <Name/> </LoginPage>
     </Container>
   </Navbar>
 
@@ -60,8 +60,22 @@ const Layout =({children}) => {
 </Locale>
 
 </>)}
+export function ClearMessage() {
+  setMessage("");
+  setErrorDetail("");
+}
+
+export function UnknownErrorMessage(detail) {
+  let msg = detail;
+  if ( detail !== null && typeof detail === "object" ) {
+    msg = JSON.stringify(detail);
+  }
+  setMessage("PRFN00M000");
+  setErrorDetail(msg);
+}
 
 export function SystemMessage(id,detail) {
+    console.log(detail);
     setMessage(id);
     if (detail === undefined ) {
         detail = "";

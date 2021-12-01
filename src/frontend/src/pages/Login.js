@@ -10,7 +10,7 @@ import Col       from 'react-bootstrap/Col';
 import Alert     from 'react-bootstrap/Alert';
 
 import {SelectLanguage} from '../Locale';
-import {SystemMessage}  from "../Layout";
+import {SystemMessage,UnknownErrorMessage,ClearMessage}  from "../Layout";
 import {Save} from "../Authentication";
 
 import API from "../API";
@@ -33,6 +33,8 @@ class Login extends React.Component {
 
   handleLoginClick = (e) => {
 
+    ClearMessage();
+
     let data = {
         id : this.userId.current.value,
         password : this.password.current.value
@@ -43,23 +45,27 @@ class Login extends React.Component {
         Save(resp.data.result.user);
         window.location = '/menu';
     },data).catch( (err) => {
-        let resp = err.response;
-        let result = resp.data;
-        switch ( resp.status ) {
-          case 401:
-            let expiry = false;
-            let msgId = result.messageID;
-            if ( msgId === "PRFN00M102" ) {
-               expiry = true
-            }
-            this.setState({ expiry : expiry, messageId : msgId });
-            break;
-          default:
-            console.log(resp);
-            console.log(result);
-            SystemMessage(result.messageId,result);
-            break;
-        }
+
+      if ( API.isUnknownError(err) ) {
+        UnknownErrorMessage(err);
+        return;
+      }
+
+      let resp = err.response;
+      let result = resp.data;
+      switch ( resp.status ) {
+        case 401:
+          let expiry = false;
+          let msgId = result.messageID;
+          if ( msgId === "PRFN00M102" ) {
+             expiry = true
+          }
+          this.setState({ expiry : expiry, messageId : msgId });
+          break;
+        default:
+          SystemMessage(result.messageId,result);
+          break;
+      }
     });
 
     return false;
@@ -88,11 +94,14 @@ class Login extends React.Component {
         window.location = '/menu';
     },data).catch( (err) => {
 
+      if ( API.isUnknownError(err) ) {
+        UnknownErrorMessage(err);
+        return;
+      }
+
       let resp = err.response;
       let result = resp.data;
-
       SystemMessage(result.messageId);
-      console.log(result);
     });
 
     return false;

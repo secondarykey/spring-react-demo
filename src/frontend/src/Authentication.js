@@ -16,7 +16,7 @@ class Authentication extends React.Component {
 
       super(props)
       inst = this;
-      this.ignoreURLs = ["/"];
+      this.noAuthenticationURLs = ["/"];
 
       const {cookies} = this.props;
 
@@ -25,18 +25,28 @@ class Authentication extends React.Component {
 
       const l = global.location;
       if ( this.session !== undefined ) {
-          var now = new Date()
-          var ex = new Date(this.session.exiry)
-          if ( now <= ex ) {
-              //有効期限切れ
-              l.href = "/";
-          }
+        const l = global.location;
+        var now = new Date()
+        var ex = new Date(this.session.exiry)
+        if ( now <= ex ) {
+          //有効期限切れ
+          l.href = "/";
+          return;
+        }
       } else {
-          if ( !this.ignoreURLs.includes(l.pathname) ) {
-              //認証なしでのアクセス
-              l.href = "/";
-          }
+        if ( !this.noAuth() ) {
+          //認証なしでのアクセス
+          l.href = "/";
+        }
       }
+  }
+
+  noAuth() {
+    const l = global.location;
+    if ( this.noAuthenticationURLs.includes(l.pathname) ) {
+        return true;
+    }
+    return false;
   }
 
   save(obj) {
@@ -66,7 +76,7 @@ class Authentication extends React.Component {
   render() {
     return (<></>);
   }
-  
+
   SECRETKEY = 'aes-256-cbc-text';
 }
 
@@ -75,7 +85,7 @@ export function Save(obj) {
     return true;
 }
 
-export function Bearer() {
+export function CreateJWT() {
     var buf;
     if ( inst.session !== undefined ) {
       buf = inst.encode(inst.session);
@@ -97,6 +107,13 @@ export function Role(props) {
         }
     } 
     return (<></>)
+}
+
+export function LoginPage(props) {
+    if ( inst.noAuth() ) {
+      return (<></>);
+    }
+    return (<>{props.children}</>);
 }
 
 export function Name() {

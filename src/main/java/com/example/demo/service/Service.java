@@ -58,8 +58,6 @@ public class Service {
 	}
 
 	protected int update(String sql,Object ...objects) {
-		//TODO Model - BeanPropertySqlが動作しない
-		//SqlParameterSource param = new BeanPropertySqlParameterSource(model);
 		return template.update(sql, objects);
 	}
 }
