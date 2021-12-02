@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import {FormattedMessage} from "react-intl";
 import Alert     from 'react-bootstrap/Alert';
 import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
 
 import Locale from "./Locale";
 import Dialog from "./Dialog";
@@ -18,7 +19,7 @@ var setErrorDetail;
 
 function logout() {
   Logout();
-  global.location.href = "/";
+  global.location.href = "/error/LogoutID";
   return false;
 }
 
@@ -34,8 +35,12 @@ const Layout =({children}) => {
 
   <Navbar bg="light">
     <Container>
-      <Navbar.Brand href="/menu">Demo</Navbar.Brand>
-      <LoginPage> <div><Name/><br/><a href="/" onClick={logout}>ログアウト</a></div></LoginPage>
+      <Navbar.Brand href="/pages/menu">Demo</Navbar.Brand>
+      <LoginPage> 
+        <div><Name/><br/>
+          <Button className="linkText" onClick={logout}>ログアウト</Button>
+        </div>
+      </LoginPage>
     </Container>
   </Navbar>
 
@@ -79,6 +84,10 @@ export function UnknownErrorMessage(detail) {
   }
   setMessage("PRFN00M000");
   setErrorDetail(msg);
+}
+
+export function WriteMessage(id) {
+  setMessage(id);
 }
 
 export function WriteErrorMessage(err) {

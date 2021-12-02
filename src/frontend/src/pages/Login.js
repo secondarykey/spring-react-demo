@@ -42,7 +42,7 @@ class Login extends React.Component {
     API.post("/api/v1/login",
       resp => {
         Save(resp.data.result.user);
-        window.location = '/menu';
+        window.location = '/pages/menu';
     },data).catch( (err) => {
 
       if ( API.isUnknownError(err) ) {
@@ -89,7 +89,7 @@ class Login extends React.Component {
     API.put("/api/v1/password",
       resp => {
         console.log(resp.data);
-        window.location = '/menu';
+        window.location = '/pages/menu';
     },data).catch( (err) => {
       if ( API.isUnknownError(err) ) {
         return;

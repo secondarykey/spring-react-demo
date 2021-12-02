@@ -16,10 +16,10 @@ class Authentication extends React.Component {
 
       super(props)
       inst = this;
+
       this.noAuthenticationURLs = ["/"];
 
       const {cookies} = this.props;
-
       let session = cookies.get("session");
       this.session = this.decode(session);
 
@@ -37,8 +37,11 @@ class Authentication extends React.Component {
         if ( !this.noAuth() ) {
           //認証なしでのアクセス
           l.href = "/";
+          return;
         }
       }
+
+
   }
 
   noAuth() {
@@ -54,9 +57,10 @@ class Authentication extends React.Component {
       var buf = this.encode(obj)
       cookies.set("session",buf,{path: "/"});
   }
+
   remove() {
       const {cookies} = this.props;
-      cookies.removeCookie("session");
+      cookies.remove("session");
   }
 
   decode(buf) {

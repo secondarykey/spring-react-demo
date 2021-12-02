@@ -1,7 +1,5 @@
 import React from "react";
 
-import {FormattedMessage} from "react-intl";
-
 import Container from "react-bootstrap/container";
 import Card from "react-bootstrap/card";
 import Row from "react-bootstrap/row";
@@ -11,13 +9,15 @@ import Button from "react-bootstrap/button";
 import {Role} from "../Authentication";
 
 import "../css/Main.css";
-//import {FormattedMessage} from "react-intl";
-
 
 class Menu extends React.Component {
 
   handle = () => {
       return false;
+  }
+
+  gotoToDo = () => {
+    global.location.href="/pages/todo";
   }
 
   render() {
@@ -28,11 +28,13 @@ class Menu extends React.Component {
     <Col>
       <Card className="Menu-Card">
         <Card.Body>
-          <Card.Title>Function A</Card.Title>
+          <Card.Title>Sample TODO</Card.Title>
           <Card.Text> 
-            <FormattedMessage id="PRFN99M999"/>
+            Card Text
           </Card.Text>
-          <Button variant="primary">Go A</Button>
+
+          <Button variant="primary" onClick={this.gotoToDo}>Go SampleToDo </Button>
+
         </Card.Body>
       </Card>
     </Col>

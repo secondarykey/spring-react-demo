@@ -22,5 +22,6 @@
   "PRFN00M201" : "The new password has been re-entered incorrectly.",
   "PRFN00M202" : "Does not meet the password requirements.",
   "PRFN00M203" : "The user ID or old password is incorrect.",
+  "PRFN99M000" : "Page Not Found",
   "PRFN99M999" : "en"
 }

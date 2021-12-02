@@ -20,3 +20,15 @@ main {
     height:20px;
 }
 
+.linkText {
+  color : blue;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline;
+  height: auto;
+  width: auto;
+  padding: 0;
+  margin: 0;
+}

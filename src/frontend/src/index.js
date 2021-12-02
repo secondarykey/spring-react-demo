@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./css/Main.css";
 
 import Login  from './pages/Login';
+import Error  from './pages/Error';
 import Menu   from './pages/Menu';
 import ToDo   from './pages/Todo/View';
 import Layout from './Layout';
@@ -21,8 +22,10 @@ ReactDOM.render(
         <Router>
           <Routes>
             <Route path="/"     element={<Login/>} />
-            <Route path="/menu" element={<Menu/>} />
-            <Route path="/todo" element={<ToDo/>} />
+            <Route path="/pages/menu" element={<Menu/>} />
+            <Route path="/pages/todo" element={<ToDo/>} />
+            <Route path="/error/:id" element={<Error />} />
+            <Route path="*" element={<Error id="PRFN99M000"/>} />
           </Routes>
         </Router>
       </Layout>
