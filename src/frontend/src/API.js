@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {CreateJWT} from "./Authentication";
 import {Show,Hide} from "./Progress";
+import {UnknownErrorMessage}  from "./Layout";
 
-//import {SystemMessage}  from "./Layout";
 class API {
 
   static createInstance() {
@@ -45,20 +45,14 @@ class API {
 
   static isUnknownError(err) {
     var resp = err.response;
-    if ( resp === undefined ) {
-      return true;
+    if ( resp !== undefined ) {
+      var data = resp.data;
+      if ( data.messageID !== undefined ) {
+        return false;
+      }
     }
-    var data = resp.data;
-    if ( data === undefined ) {
-      return true;
-    }
-    var msgId = data.messageID;
-    if ( msgId === undefined ) {
-      return true;
-    }
-    return false;
+    UnknownErrorMessage(err);
+    return true;
   }
 }
-
-
 export default API

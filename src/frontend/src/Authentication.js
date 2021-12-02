@@ -54,6 +54,10 @@ class Authentication extends React.Component {
       var buf = this.encode(obj)
       cookies.set("session",buf,{path: "/"});
   }
+  remove() {
+      const {cookies} = this.props;
+      cookies.removeCookie("session");
+  }
 
   decode(buf) {
     if ( buf === undefined || buf === null || buf === "" ) {
@@ -114,6 +118,11 @@ export function LoginPage(props) {
       return (<></>);
     }
     return (<>{props.children}</>);
+}
+
+export function Logout(props) {
+    inst.remove();
+    return;
 }
 
 export function Name() {

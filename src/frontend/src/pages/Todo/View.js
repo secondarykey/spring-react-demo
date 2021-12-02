@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
+import {WriteErrorMessage} from '../../Layout';
 import API from "../../API"
 import {ShowDialog} from "../../Dialog"
 
@@ -33,7 +34,10 @@ class ToDo extends React.Component {
         todos : todos
       })
     },args).catch((err) => {
-      console.log(err.data);
+      if ( API.isUnknownError(err) ) {
+        return;
+      }
+      WriteErrorMessage(err);
     });
   }
 
@@ -54,7 +58,10 @@ class ToDo extends React.Component {
       });
       this.addText.current.value = "";
     },args).catch( (err) => {
-      console.log(err.data);
+      if ( API.isUnknownError(err) ) {
+        return;
+      }
+      WriteErrorMessage(err);
     }) 
   }
 
@@ -73,7 +80,10 @@ class ToDo extends React.Component {
           todos:todos
         });
       },args).catch( (err) => {
-        console.log(err.data);
+        if ( API.isUnknownError(err) ) {
+          return;
+        }
+        WriteErrorMessage(err);
       }) 
     });
   }    

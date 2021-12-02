@@ -10,9 +10,8 @@ import Col       from 'react-bootstrap/Col';
 import Alert     from 'react-bootstrap/Alert';
 
 import {SelectLanguage} from '../Locale';
-import {SystemMessage,UnknownErrorMessage,ClearMessage}  from "../Layout";
+import {WriteErrorMessage,ClearMessage}  from "../Layout";
 import {Save} from "../Authentication";
-
 import API from "../API";
 
 class Login extends React.Component {
@@ -47,7 +46,6 @@ class Login extends React.Component {
     },data).catch( (err) => {
 
       if ( API.isUnknownError(err) ) {
-        UnknownErrorMessage(err);
         return;
       }
 
@@ -63,7 +61,7 @@ class Login extends React.Component {
           this.setState({ expiry : expiry, messageId : msgId });
           break;
         default:
-          SystemMessage(result.messageId,result);
+          WriteErrorMessage(err);
           break;
       }
     });
@@ -93,15 +91,10 @@ class Login extends React.Component {
         console.log(resp.data);
         window.location = '/menu';
     },data).catch( (err) => {
-
       if ( API.isUnknownError(err) ) {
-        UnknownErrorMessage(err);
         return;
       }
-
-      let resp = err.response;
-      let result = resp.data;
-      SystemMessage(result.messageId);
+      WriteErrorMessage(err);
     });
 
     return false;

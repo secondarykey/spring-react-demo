@@ -9,12 +9,18 @@ import Accordion from 'react-bootstrap/Accordion';
 import Locale from "./Locale";
 import Dialog from "./Dialog";
 import Progress from "./Progress";
-import {LoginPage,Name} from "./Authentication";
+import {LoginPage,Name,Logout} from "./Authentication";
 
 import "./css/Main.css"
 
 var setMessage;
 var setErrorDetail;
+
+function logout() {
+  Logout();
+  global.location.href = "/";
+  return false;
+}
 
 const Layout =({children}) => {
 
@@ -29,7 +35,7 @@ const Layout =({children}) => {
   <Navbar bg="light">
     <Container>
       <Navbar.Brand href="/menu">Demo</Navbar.Brand>
-      <LoginPage> <Name/> </LoginPage>
+      <LoginPage> <div><Name/><br/><a href="/" onClick={logout}>ログアウト</a></div></LoginPage>
     </Container>
   </Navbar>
 
@@ -60,6 +66,7 @@ const Layout =({children}) => {
 </Locale>
 
 </>)}
+
 export function ClearMessage() {
   setMessage("");
   setErrorDetail("");
@@ -74,13 +81,19 @@ export function UnknownErrorMessage(detail) {
   setErrorDetail(msg);
 }
 
-export function SystemMessage(id,detail) {
-    console.log(detail);
-    setMessage(id);
-    if (detail === undefined ) {
-        detail = "";
-    }
-    setErrorDetail(detail);
+export function WriteErrorMessage(err) {
+  var resp = err.response;
+  var data = resp.data;
+
+  console.log(data);
+  var id = data.messageID
+  var detail = data.result;
+
+  setMessage(id);
+  if (detail === undefined ) {
+      detail = "";
+  }
+  setErrorDetail(detail);
 }
 
 export default Layout;
