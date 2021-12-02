@@ -4,36 +4,45 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.model.ToDo;
+import com.example.demo.repository.ToDoRepository;
+import com.example.demo.transfer.request.ToDoRequest;
+import com.example.demo.transfer.response.Result;
+import com.example.demo.transfer.response.ToDoViewResponse;
 
-@Repository
-public class ToDoService extends Service {
+@Service
+public class ToDoService extends BusinessService {
 
-	@Autowired(required = true)
-	public ToDoService(JdbcTemplate template) {
-		super(template);
+	@Autowired(required=true)
+	ToDoRepository repo;
+
+	public Result<ToDoViewResponse> find(ToDoRequest json) {
+		Result<ToDoViewResponse> result = new Result<>();
+		List<ToDo> list = repo.find();
+		ToDoViewResponse res = new ToDoViewResponse();
+		res.setTodos(list);
+		result.setResult(res);
+		return result;
 	}
 
-	public List<ToDo> find() {
-		String sql = "SELECT * FROM TODOS";
-		return this.select(ToDo.class,sql);
+	public Result<Integer> insert(ToDoRequest json) {
+		ToDo todo = new ToDo();
+		todo.setValue(json.getValue());
+		Result<Integer> result = new Result<>();
+		repo.insert(todo);
+		result.setResult(todo.getId());
+		return result;
 	}
 
-	@Transactional
-	public void insert(ToDo todo) {
-		String sql = "INSERT INTO TODOS(VALUE) VALUES (?)";
-		Number num = this.insert(sql,todo.getValue());
-		todo.setId(num.intValue());
-	}
-
-	@Transactional
-	public int delete(ToDo todo) {
-		String sql = "DELETE FROM TODOS WHERE id = ?";
-		return this.update(sql,todo.getId());
+	public Result<Integer> delete(ToDoRequest json) {
+		ToDo todo = new ToDo();
+		todo.setId(json.getId());
+		Result<Integer> result = new Result<>();
+		int ret = repo.delete(todo);
+		result.setResult(ret);
+		return result;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,10 +14,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-public class Service {
+public class AccessRepository {
+
 	//NamedParameterJdbcTemplate;
 	protected final JdbcTemplate template;
-	public Service(JdbcTemplate template) {
+	public AccessRepository(JdbcTemplate template) {
 		this.template = template;
 	}
 	

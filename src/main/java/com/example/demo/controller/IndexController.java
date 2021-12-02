@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 	
-	  @RequestMapping(value = {"/","/menu","/todo"}, method = RequestMethod.GET)
+	  @RequestMapping(
+			  value = {"/","/pages/*","/error/*"}, 
+			  method = RequestMethod.GET)
 	  String index() {
-	    return "index.html";
+	    return "/index.html";
 	  }
 
 }

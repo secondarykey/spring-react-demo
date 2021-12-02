@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.example.demo.KnownException;
+
 public class JSONController {
 	
 	protected void Unauthorized(String msgId,String reason) {

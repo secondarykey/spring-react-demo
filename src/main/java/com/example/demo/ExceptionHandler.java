@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
