@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +26,7 @@ public class ToDoController extends JSONController {
 		return todoService.find(json);
 	}
 	@RequestMapping(value = "/register",method = RequestMethod.POST)
-	public Result<Integer> register(@RequestBody ToDoRequest json) {
+	public Result<Integer> register(@Validated @RequestBody ToDoRequest json) {
 		return todoService.insert(json);
 	}
 	@RequestMapping(value = "/delete",method = RequestMethod.DELETE)

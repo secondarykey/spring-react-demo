@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -41,6 +42,16 @@ public class ExceptionHandler {
     	result.setError("PRFN00M000", ex.getMessage());
     	
         return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler({ MethodArgumentNotValidException.class })
+    @ResponseBody
+    public ResponseEntity<?> handleValidateError(Exception ex) {
+    	logger.error("handleValidateError()", ex);
+    	Result<String> result = new Result<>();
+    	result.setResult(getTrace(ex));
+    	result.setError("PRFN00M000", ex.getMessage());
+
+        return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
     }
 
     private String getTrace(Exception ex) {
