@@ -11,6 +11,7 @@ import Login  from './pages/Login';
 import Error  from './pages/Error';
 import Menu   from './pages/Menu';
 import ToDo   from './pages/Todo/View';
+import DateView from './pages/DateTime/View';
 import Layout from './Layout';
 import Authentication from './Authentication';
 
@@ -24,6 +25,7 @@ ReactDOM.render(
             <Route path="/"     element={<Login/>} />
             <Route path="/pages/menu" element={<Menu/>} />
             <Route path="/pages/todo" element={<ToDo/>} />
+            <Route path="/pages/date" element={<DateView/>} />
             <Route path="/error/:id" element={<Error />} />
             <Route path="*" element={<Error id="PRFN99M000"/>} />
           </Routes>
