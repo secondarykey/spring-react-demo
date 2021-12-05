@@ -1,7 +1,7 @@
 import React, { createRef } from "react";
 
-import Button from "react-bootstrap/Button";
-import DateTime from "../../DateTime"
+import {Button,Container} from "react-bootstrap";
+import DateTime from "../components/DateTime";
 
 class DateView extends React.Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class DateView extends React.Component {
 
     render() {
         return(
-        <>
+        <Container>
         日付のみ
           <br/>
           <DateTime type="date" ref={this.date} value={new Date().toString()}/>
@@ -37,7 +37,7 @@ class DateView extends React.Component {
           <br/>
           <br/>
           <Button onClick={this.show}>Val</Button>
-        </>
+        </Container>
     )}
 }
 
