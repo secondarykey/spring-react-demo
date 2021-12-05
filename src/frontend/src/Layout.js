@@ -72,6 +72,11 @@ const Layout =({children}) => {
 
 </>)}
 
+export function Redirect(path) {
+  const l = global.location;
+  l.href = "path";
+}
+
 export function ClearMessage() {
   setMessage("");
   setErrorDetail("");

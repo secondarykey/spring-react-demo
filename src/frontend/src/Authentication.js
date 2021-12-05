@@ -2,8 +2,11 @@ import React from "react";
 import CryptJS from "crypto-js";
 import AES from "crypto-js/aes";
 
+import { useParams  } from "react-router-dom";
 import { instanceOf } from "prop-types";
 import { withCookies,Cookies } from "react-cookie";
+
+//import { Redirect } from "./Layout";
 
 var inst;
 class Authentication extends React.Component {
@@ -17,38 +20,40 @@ class Authentication extends React.Component {
       super(props)
       inst = this;
 
-      this.noAuthenticationURLs = ["/"];
+      this.noAuthenticationURLs = ["/","/error/"];
 
       const {cookies} = this.props;
       let session = cookies.get("session");
       this.session = this.decode(session);
 
-      const l = global.location;
       if ( this.session !== undefined ) {
-        const l = global.location;
         var now = new Date()
         var ex = new Date(this.session.exiry)
         if ( now <= ex ) {
+          //TODO アプリに依存する為、書き方を変更
           //有効期限切れ
-          l.href = "/";
-          return;
+          //Redirect("/");
         }
       } else {
         if ( !this.noAuth() ) {
           //認証なしでのアクセス
-          l.href = "/";
-          return;
+          //Redirect("/");
         }
       }
-
-
   }
 
   noAuth() {
+      //TODO なんかだめ
     const l = global.location;
-    if ( this.noAuthenticationURLs.includes(l.pathname) ) {
+    let path = l.pathname;
+    if ( path === "/" ) {
         return true;
     }
+
+    if ( path.indexOf("/error/") !== -1 ) {
+        return true;
+    }
+
     return false;
   }
 
@@ -136,4 +141,15 @@ export function Name() {
     return "";
 }
 
-export default withCookies(Authentication)
+const withRouter = WrappedComponent => props => {
+    const params = useParams();
+    return (
+      <WrappedComponent
+        {...props}
+        params={params}
+      />
+    );
+  };
+
+
+export default withRouter(withCookies(Authentication))

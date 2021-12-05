@@ -7,6 +7,7 @@ import Col from "react-bootstrap/col";
 import Button from "react-bootstrap/button";
 
 import {Role} from "../Authentication";
+import {Redirect} from "../Layout";
 
 import "../css/Main.css";
 
@@ -17,7 +18,7 @@ class Menu extends React.Component {
   }
 
   gotoToDo = () => {
-    global.location.href="/pages/todo";
+    Redirect("/pages/todo");
   }
 
   render() {

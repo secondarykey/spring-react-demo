@@ -6,7 +6,6 @@ import Modal from "react-bootstrap/Modal";
 var inst;
 
 export function ShowDialog(title,message,fn) {
-	console.log(inst);
 	inst.handleShow(title,message,fn);
 }
 

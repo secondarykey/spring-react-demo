@@ -2,7 +2,7 @@ import React from 'react';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from 'react-dom';
 import { CookiesProvider } from "react-cookie";
-import { BrowserRouter as Router, Routes,Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes,Route,Navigate } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./css/Main.css";
@@ -27,7 +27,7 @@ ReactDOM.render(
             <Route path="/pages/todo" element={<ToDo/>} />
             <Route path="/pages/date" element={<DateView/>} />
             <Route path="/error/:id" element={<Error />} />
-            <Route path="*" element={<Error id="PRFN99M000"/>} />
+            <Route path="/*" element={<Navigate to="/error/PRFN98M000"/>} />
           </Routes>
         </Router>
       </Layout>

@@ -10,7 +10,7 @@ import Col       from 'react-bootstrap/Col';
 import Alert     from 'react-bootstrap/Alert';
 
 import {SelectLanguage} from '../Locale';
-import {WriteErrorMessage,ClearMessage}  from "../Layout";
+import {WriteErrorMessage,ClearMessage,Redirect}  from "../Layout";
 import {Save} from "../Authentication";
 import API from "../API";
 
@@ -89,7 +89,7 @@ class Login extends React.Component {
     API.put("/api/v1/password",
       resp => {
         console.log(resp.data);
-        window.location = '/pages/menu';
+        Redirect('/pages/menu');
     },data).catch( (err) => {
       if ( API.isUnknownError(err) ) {
         return;
