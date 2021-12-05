@@ -25,12 +25,27 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		logger.debug("preHandle()");
-		String authHeader = request.getHeader("Authorization");
-		logger.info(authHeader);
 
+		if ( isAuth(request) ) {
+			String authHeader = request.getHeader("Authorization");
+			logger.info(authHeader);
+		}
 		//LoginUser user = decodeJWT(authHeader);
+
 		return true;
+	}
+
+	private boolean isAuth(HttpServletRequest request) {
+		
+		String uri = request.getRequestURI();
+		String path = request.getContextPath();
+		
+		String pure = uri.replaceAll(path, "");
+		logger.info("request:"+pure);
+		if ( pure.indexOf("/api") != -1 ) {
+			return true;
+		}
+		return false;
 	}
 
 	private LoginUser decodeJWT(String value) {
