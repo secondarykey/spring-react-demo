@@ -1,11 +1,10 @@
 import { useState } from "react";
-import Navbar    from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-
+import { useParams } from "react-router-dom";
+import {
+  Container,Navbar,
+  Alert,Accordion,Button
+} from 'react-bootstrap';
 import {FormattedMessage} from "react-intl";
-import Alert     from 'react-bootstrap/Alert';
-import Accordion from 'react-bootstrap/Accordion';
-import Button from 'react-bootstrap/Button';
 
 import Locale from "./Locale";
 import Dialog from "./Dialog";
@@ -15,19 +14,21 @@ import {LoginPage,Name,Logout} from "./Authentication";
 import "./css/Main.css"
 
 var setMessage;
+var setMessageType;
 var setErrorDetail;
 
 function logout() {
   Logout();
-  global.location.href = "/error/LogoutID";
   return false;
 }
 
 const Layout =({children}) => {
 
   const [messageId,messageIdFunc] = useState("");
+  const [messageType,messageTypeFunc] = useState("danger");
   const [detail,detailFunc] = useState("");
   setMessage = messageIdFunc;
+  setMessageType = messageTypeFunc;
   setErrorDetail = detailFunc;
   return (<>
 
@@ -46,7 +47,7 @@ const Layout =({children}) => {
 
   <main>
     {messageId !== "" &&
-      <Alert key="1" variant="danger"> 
+      <Alert key="1" variant={messageType}> 
         <FormattedMessage id={messageId}/> 
         {detail !== "" &&
 
@@ -74,11 +75,12 @@ const Layout =({children}) => {
 
 export function Redirect(path) {
   const l = global.location;
-  l.href = "path";
+  l.href = path;
 }
 
 export function ClearMessage() {
   setMessage("");
+  setMessageType("danger");
   setErrorDetail("");
 }
 
@@ -88,26 +90,40 @@ export function UnknownErrorMessage(detail) {
     msg = JSON.stringify(detail);
   }
   setMessage("PRFN00M000");
+  setMessageType("danger");
   setErrorDetail(msg);
 }
 
-export function WriteMessage(id) {
+export function WriteMessage(id,type) {
+  setMessageType(type);
   setMessage(id);
 }
 
 export function WriteErrorMessage(err) {
+
   var resp = err.response;
   var data = resp.data;
 
-  console.log(data);
   var id = data.messageID
   var detail = data.result;
 
+  setMessageType("danger");
   setMessage(id);
   if (detail === undefined ) {
       detail = "";
   }
   setErrorDetail(detail);
 }
+
+
+export const withRouter = WrappedComponent => props => {
+    const params = useParams();
+    return (
+      <WrappedComponent
+        {...props}
+        params={params}
+      />
+    );
+  };
 
 export default Layout;

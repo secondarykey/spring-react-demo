@@ -33,14 +33,16 @@ function changeLanguage(e) {
   inst.set(e);
 }
 
-class Locale extends React.Component {
+export class Locale extends React.Component {
 
   static propTypes = {
       cookies : instanceOf(Cookies).isRequired
   };
 
   constructor(props) {
+
       super(props);
+
       inst = this;
       const { cookies } = this.props;
       let lang = cookies.get("language");
@@ -65,6 +67,7 @@ class Locale extends React.Component {
 }
 
 export function SelectLanguage() {
+
     return (
 <Dropdown onSelect={changeLanguage}>
   <Dropdown.Toggle variant="secondary" id="dropdown-basic">
@@ -83,6 +86,7 @@ export function SelectLanguage() {
     </Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
+
 );
 }
 

@@ -1,10 +1,8 @@
 import React from "react";
-
-import Container from "react-bootstrap/container";
-import Card from "react-bootstrap/card";
-import Row from "react-bootstrap/row";
-import Col from "react-bootstrap/col";
-import Button from "react-bootstrap/button";
+import { 
+  Container,
+  Card,Row,Col,Button
+} from "react-bootstrap";
 
 import {Role} from "../Authentication";
 import {Redirect} from "../Layout";
@@ -17,8 +15,14 @@ class Menu extends React.Component {
       return false;
   }
 
+  gotoDate = () => {
+    Redirect("/pages/date/");
+    return;
+  }
+
   gotoToDo = () => {
-    Redirect("/pages/todo");
+    Redirect("/pages/todo/");
+    return;
   }
 
   render() {
@@ -43,10 +47,10 @@ class Menu extends React.Component {
     <Col>
       <Card className="Menu-Card">
         <Card.Body>
-          <Card.Title>Function B</Card.Title>
+          <Card.Title>Sample Date</Card.Title>
           <Card.Text> 
           </Card.Text>
-          <Button variant="primary">Go B</Button>
+          <Button variant="primary" onClick={this.gotoDate}>Go Sample Date </Button>
         </Card.Body>
       </Card>
     </Col>

@@ -2,11 +2,10 @@ import React from "react";
 import CryptJS from "crypto-js";
 import AES from "crypto-js/aes";
 
-import { useParams  } from "react-router-dom";
 import { instanceOf } from "prop-types";
 import { withCookies,Cookies } from "react-cookie";
 
-//import { Redirect } from "./Layout";
+import { Redirect } from "./Layout";
 
 var inst;
 class Authentication extends React.Component {
@@ -32,12 +31,12 @@ class Authentication extends React.Component {
         if ( now <= ex ) {
           //TODO アプリに依存する為、書き方を変更
           //有効期限切れ
-          //Redirect("/");
+          Redirect("/message/Logout");
         }
       } else {
         if ( !this.noAuth() ) {
           //認証なしでのアクセス
-          //Redirect("/");
+          Redirect("/message/Logout");
         }
       }
   }
@@ -51,6 +50,9 @@ class Authentication extends React.Component {
     }
 
     if ( path.indexOf("/error/") !== -1 ) {
+        return true;
+    }
+    if ( path.indexOf("/message/") !== -1 ) {
         return true;
     }
 
@@ -131,6 +133,7 @@ export function LoginPage(props) {
 
 export function Logout(props) {
     inst.remove();
+    Redirect("/message/Logout");
     return;
 }
 
@@ -141,15 +144,4 @@ export function Name() {
     return "";
 }
 
-const withRouter = WrappedComponent => props => {
-    const params = useParams();
-    return (
-      <WrappedComponent
-        {...props}
-        params={params}
-      />
-    );
-  };
-
-
-export default withRouter(withCookies(Authentication))
+export default withCookies(Authentication)

@@ -1,13 +1,9 @@
 import React from "react";
-
 import {FormattedMessage} from "react-intl";
-
-import Form      from 'react-bootstrap/Form';
-import Button    from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Row       from 'react-bootstrap/Row';
-import Col       from 'react-bootstrap/Col';
-import Alert     from 'react-bootstrap/Alert';
+import {
+  Container,Row,Col,
+  Alert,Form,Button
+ } from 'react-bootstrap';
 
 import {SelectLanguage} from '../Locale';
 import {WriteErrorMessage,ClearMessage,Redirect}  from "../Layout";
