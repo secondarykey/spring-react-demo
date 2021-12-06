@@ -32,3 +32,16 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+task copyFE(type: Copy) {
+    from './src/frontend/build'
+    into './src/main/resources/static'
+}
+
+task buildFE(type: Exec) {
+    workingDir './src/frontend'
+    commandLine "npm.cmd","run", "build"
+}
+
+
+
