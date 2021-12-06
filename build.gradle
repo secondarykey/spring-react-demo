@@ -43,5 +43,3 @@ task buildFE(type: Exec) {
     commandLine "npm.cmd","run", "build"
 }
 
-
-
