@@ -7,6 +7,7 @@ import { withCookies,Cookies } from "react-cookie";
 
 import { Redirect } from "./Layout";
 
+const noAuthenticationURLs = ["/","/error/*","/message/*"];
 var inst;
 class Authentication extends React.Component {
 
@@ -18,8 +19,6 @@ class Authentication extends React.Component {
 
       super(props)
       inst = this;
-
-      this.noAuthenticationURLs = ["/","/error/"];
 
       const {cookies} = this.props;
       let session = cookies.get("session");
@@ -34,29 +33,52 @@ class Authentication extends React.Component {
           Redirect("/message/Logout");
         }
       } else {
-        if ( !this.noAuth() ) {
+        if ( this.isAuth() ) {
           //認証なしでのアクセス
           Redirect("/message/Logout");
         }
       }
   }
 
-  noAuth() {
-      //TODO なんかだめ
+  //文字列のGlob判定(*のみ)
+  isStringGlob(pattern,v) {
+    let idx = 0;
+    let strs = pattern.split("*")
+
+    let rtn = false;
+    strs.map( (key) => {
+      if ( rtn ) {
+        return rtn;
+      }
+      if ( key === "" ) {
+        return rtn;
+      }
+      let p = v.indexOf(key);
+      if ( idx > p ) {
+        rtn = true;
+        idx = p + key.length;
+      }
+      return rtn;
+    })
+    return rtn;
+  }
+
+  isAuth() {
+    //TODO なんかだめ
     const l = global.location;
     let path = l.pathname;
-    if ( path === "/" ) {
-        return true;
-    }
 
-    if ( path.indexOf("/error/") !== -1 ) {
-        return true;
-    }
-    if ( path.indexOf("/message/") !== -1 ) {
-        return true;
-    }
-
-    return false;
+    let rtn = true;
+    noAuthenticationURLs.map( (key) => {
+      if ( !rtn ) {
+        return rtn;
+      }
+      if ( this.isStringGlob(key,path) ) {
+        rtn = false;
+      }
+      return rtn;
+    })
+    return rtn;
   }
 
   save(obj) {
@@ -125,7 +147,7 @@ export function Role(props) {
 }
 
 export function LoginPage(props) {
-    if ( inst.noAuth() ) {
+    if ( !inst.isAuth() ) {
       return (<></>);
     }
     return (<>{props.children}</>);
