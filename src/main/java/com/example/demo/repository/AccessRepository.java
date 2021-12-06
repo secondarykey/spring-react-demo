@@ -62,17 +62,12 @@ public class AccessRepository {
 						ps.setString(idx, (String)obj);
 					} else if ( obj instanceof Date ) {
 						ps.setTimestamp(idx, new Timestamp(((Date)obj).getTime()));
-					} else if ( obj instanceof LocalDateTime ) {
-						LocalDateTime time = (LocalDateTime)obj;
-						DateUtil.debug("setObject()",time);
-					    ps.setObject(idx, time.atOffset(ZoneOffset.ofHours(-5)));
 					} else if ( obj instanceof Integer ) {
 						ps.setInt(idx, (Integer)obj);
 					} else if ( obj instanceof Long ) {
 						ps.setLong(idx, (Long)obj);
 					} else if ( obj instanceof Float ) {
 						ps.setFloat(idx, (Float)obj);
-
 					} else {
 						ps.setObject(idx, obj);
 					}

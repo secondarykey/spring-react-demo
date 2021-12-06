@@ -25,8 +25,4 @@ public class TimeRepositoryTest {
 		repository.insertText();
 	}
 
-	@Test
-	void testInsertOnlyTz() {
-		repository.insertTextOnlyTZ();
-	}
 }

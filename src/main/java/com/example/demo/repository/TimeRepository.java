@@ -1,7 +1,5 @@
 package com.example.demo.repository;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,16 +30,7 @@ public class TimeRepository extends AccessRepository {
 	public void insertText() {
 		String sql = "INSERT INTO TIMES(NAME,VALUE,VALUE_W_TZ,VALUE_WO_TZ) VALUES (?,?,?,?)";
 		Date now = new Date();
-		 LocalDateTime t = DateUtil.local(now, "PST");
-		this.insert(sql,"Send" + t,t,t,t);
+		var t = DateUtil.zone(now, "PST");
+		this.insert(sql,"Send " + t,t,t,t);
 	}
-
-	public void insertTextOnlyTZ() {
-		String sql = "INSERT INTO TIMES(NAME,VALUE_W_TZ) VALUES (?,?)";
-		Date now = new Date();
-		LocalDateTime t = DateUtil.local(now, "PST");
-		DateUtil.debug("insertText()", t);
-		this.insert(sql,"SendTimestamp only->" + t,t);
-	}
-
 }
