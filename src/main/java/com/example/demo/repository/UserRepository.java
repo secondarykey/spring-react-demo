@@ -24,6 +24,11 @@ public class UserRepository extends AccessRepository {
 		String sql = "SELECT * FROM USERS WHERE id = ? AND password = hash('sha256', stringtoutf8(?))";
 		return this.get(User.class,sql,id,password);
 	}
+	
+	public User joinRole(String id) {
+		String sql = "SELECT U.*,R.NAME AS ROLENAME FROM USERS U JOIN Role R ON U.ROLE = R.ID AND U.ID = ?";
+		return this.get(User.class,sql,id);
+	}
 
 	@Transactional
 	public int updatePassword(User user) {

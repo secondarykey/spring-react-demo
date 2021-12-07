@@ -2,8 +2,12 @@ package com.example.demo.model;
 
 import java.util.Date;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("users")
@@ -19,6 +23,16 @@ public class User {
 	private String role;
 	@Column("expiry")
 	private Date expiry;
+
+	@MappedCollection(idColumn="id")
+	private Role roleObj;
+
+	public Role getRoleObj() {
+		return roleObj;
+	}
+	public void setRoleObj(Role roleObj) {
+		this.roleObj = roleObj;
+	}
 	public String getId() {
 		return id;
 	}
