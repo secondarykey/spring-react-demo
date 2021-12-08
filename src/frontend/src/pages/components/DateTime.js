@@ -35,7 +35,6 @@ class DateTime extends React.Component {
         var minute = 0;
         if ( props.value !== undefined ) {
             day = new Date(props.value);
-            //day = new Date();
             hour = day.getHours();
             minute = day.getMinutes();
         } else {
@@ -123,7 +122,7 @@ class DateTime extends React.Component {
               <div className="DateTime">
               {this.state.showDay && 
                 <DatePicker 
-                  dateFormat="yyyy/MM/dd"
+                  dateFormat="yyyy-MM-dd"
                   customInput={
                     <Form.Control type="text" />
                   }
