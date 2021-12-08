@@ -5,7 +5,9 @@ class Select extends React.Component  {
     handleChange = (e) => {
         var idx = e.target.selectedIndex;
         var val = e.target.options[idx];
-        this.props.onChange(val.value);
+        if ( this.props.onChange !== undefined ) {
+          this.props.onChange(val.value);
+        }
     }
 
     render() {
