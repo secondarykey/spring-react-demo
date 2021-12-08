@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import {WriteErrorMessage} from '../../Layout';
-import {Refresh} from '../../Authentication';
+import {ExtendRefresh} from '../../Authentication';
 import API from "../../API"
 import {ShowDialog} from "../../Dialog"
 
@@ -48,7 +48,7 @@ class ToDo extends React.Component {
       value : val
     };
 
-    Refresh();
+    ExtendRefresh();
 
     API.post("/api/demo/todo/register",resp => {
       let todos = [...this.state.todos]
@@ -70,7 +70,7 @@ class ToDo extends React.Component {
 
   del(id) {
 
-    Refresh();
+    ExtendRefresh();
 
     var args = {
       id : id

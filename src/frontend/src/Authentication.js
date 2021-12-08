@@ -47,11 +47,11 @@ class Authentication extends React.Component {
 
   componentDidMount() {
       this.refreshReload = undefined;
-      this.refresh();
+      this.refreshTimer();
   }
 
-  refresh() {
-    if ( !this.isAuth() ) {
+  refreshTimer() {
+    if ( !this.isAuthPage() ) {
       return;
     }
     if ( this.refreshReload !== undefined ) {
@@ -84,8 +84,8 @@ class Authentication extends React.Component {
   }
 }
 
-export function Refresh() {
-  inst.refresh();
+export function ExtendRefresh() {
+  inst.refreshTimer();
 }
 
 export function Save(obj) {
