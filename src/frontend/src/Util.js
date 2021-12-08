@@ -1,4 +1,19 @@
 class Util {
+
+  static formatDate(date) {
+    return date.getFullYear() + "-" + 
+              this.zeroPadding((date.getMonth() + 1),2) + "-" + 
+              this.zeroPadding(date.getDate(),2);
+  }
+
+  static nowString() {
+    return this.formatDate(new Date());
+  }
+ 
+  static zeroPadding(num,len) {
+    return ( Array(len).join("0") + num ).slice(-1 * len);
+  }
+
   //文字列のGlob判定(*のみ)
   static matchStringGlob(pattern,v) {
 
