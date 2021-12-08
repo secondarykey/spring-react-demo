@@ -75,7 +75,8 @@ const Layout =({children}) => {
 
 </>)}
 
-export function Redirect(path) {
+export function Redirect(path,cause) {
+  console.log(cause);
   const l = global.location;
   l.href = process.env.PUBLIC_URL + path;
 }
