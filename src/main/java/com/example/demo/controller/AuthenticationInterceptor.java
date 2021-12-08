@@ -1,14 +1,8 @@
 package com.example.demo.controller;
 
-import java.util.Arrays;
-import java.util.Base64;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.example.demo.transfer.response.LoginUser;
+import com.example.demo.util.DateUtil;
+import com.example.demo.util.EncryptUtil;
+import com.example.demo.util.Util;
+
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 	
@@ -28,52 +26,36 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
 		if ( isAuth(request) ) {
 			String authHeader = request.getHeader("Authorization");
-			logger.info(authHeader);
+			if ( Util.isEmpty(authHeader) ) {
+				//認証エラー
+				return false;
+			}
+			try {
+				LoginUser user = EncryptUtil.decodeUser(authHeader);
+				Date expiry = DateUtil.parse(user.getExpiry());
+				Date now = new Date();
+				if ( expiry.before(now) ) {
+					//有効期限切れエラーへ
+					return false;
+				}
+			} catch ( Exception ex ) {
+				logger.error("APIの認証データ復号化に失敗",ex);
+				return false;
+			}
 		}
-		//LoginUser user = decodeJWT(authHeader);
 
 		return true;
 	}
 
 	private boolean isAuth(HttpServletRequest request) {
-		
 		String uri = request.getRequestURI();
 		String path = request.getContextPath();
-		
 		String pure = uri.replaceAll(path, "");
 		logger.info("request:"+pure);
 		if ( pure.indexOf("/api") != -1 ) {
 			return true;
 		}
+
 		return false;
-	}
-
-	private LoginUser decodeJWT(String value) {
-
-        String encKey = "aes-256-cbc-text";
-
-        try {
-        byte[] keydata = encKey.getBytes();
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        PBEKeySpec spec = new PBEKeySpec(encKey.toCharArray(), keydata, 100, 256);
-        SecretKey secretKey = factory.generateSecret(spec);
-        SecretKeySpec key = new SecretKeySpec(secretKey.getEncoded(), "AES");
-        byte[] ivary = Arrays.copyOf(key.getEncoded(), 16);
-        IvParameterSpec iv = new IvParameterSpec(ivary);	
- 
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, key, iv);
-
-            //byte[] byteResult = cipher.doFinal(Base64.getDecoder().decode(value));
-            byte[] byteResult = cipher.doFinal(value.getBytes());
-
-            String buf = new String(byteResult,"UTF-8");
-          
-            logger.info(buf);
-            
-        } catch (Exception e) {
-        	throw new RuntimeException(e);
-        }
-		return null;
 	}
 }

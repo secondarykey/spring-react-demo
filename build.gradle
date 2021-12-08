@@ -5,8 +5,8 @@ plugins {
 	id 'war'
 }
 
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+group = 'com.example.demo'
+version = '0.2.0-SNAPSHOT'
 
 sourceCompatibility = '17'
 
@@ -19,9 +19,11 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	
+    implementation 'com.google.code.gson:gson:2.8.9'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
