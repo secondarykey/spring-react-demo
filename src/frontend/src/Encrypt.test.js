@@ -16,8 +16,11 @@ describe("Encrypt Test", () => {
       var obj = {}
       obj.num = 19;
       obj.expiry = "2020/10/20 20:20:30";
+
       var data = Encrypt.encode(obj);
+      console.log(data);
       var decObj = Encrypt.decode(data);
+
       expect(decObj.num).toBe(obj.num);
       expect(decObj.expiry).toBe(obj.expiry);
     });

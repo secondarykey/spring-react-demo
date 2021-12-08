@@ -33,8 +33,10 @@ class API {
 
     let inst = this.createInstance();
     Show();
+
+    var ctx = process.env.PUBLIC_URL + url;
     return await inst.request({
-      method : method, url : url, data : data}).then(response => {
+      method : method, url : ctx, data : data}).then(response => {
         return callback(response)
       }).catch( (error) => {
         return Promise.reject(error)

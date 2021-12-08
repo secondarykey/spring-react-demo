@@ -20,7 +20,7 @@ ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider> 
       <Layout> 
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
           <Routes>
             <Route path="/"     element={<Login/>} />
             <Route path="/pages/menu" element={<Menu/>} />
@@ -28,7 +28,7 @@ ReactDOM.render(
             <Route path="/pages/date/" element={<DateView/>} />
             <Route path="/message/:id" element={<Message type="success" />} />
             <Route path="/error/:id" element={<Message type="danger" />} />
-            <Route path="/*" element={<Navigate to="/error/PRFN98M000"/>} />
+            <Route path="*" element={<Navigate to="/error/PRFN98M000"/>} />
           </Routes>
         </Router>
       </Layout>

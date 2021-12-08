@@ -38,7 +38,7 @@ const Layout =({children}) => {
 
   <Navbar bg="light">
     <Container>
-      <Navbar.Brand href="/pages/menu">Demo</Navbar.Brand>
+      <Navbar.Brand href={process.env.PUBLIC_URL + "/pages/menu"}>Demo</Navbar.Brand>
       <LoginPage> 
         <div><Name/><br/>
           <Button className="linkText" onClick={logout}>ログアウト</Button>
@@ -77,7 +77,7 @@ const Layout =({children}) => {
 
 export function Redirect(path) {
   const l = global.location;
-  l.href = path;
+  l.href = process.env.PUBLIC_URL + path;
 }
 
 export function ClearMessage() {

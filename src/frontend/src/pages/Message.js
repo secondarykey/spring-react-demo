@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import { withRouter,WriteMessage } from "../Layout";
 
 class Message extends React.Component {
@@ -15,7 +16,7 @@ class Message extends React.Component {
 
   render() {
     return ( <>
-    <a href="/">ログインする</a>
+    <Link to="/">ログインする</Link>
 </>
   )}
 }

@@ -22,6 +22,11 @@ class Authentication extends React.Component {
       super(props)
       inst = this;
 
+      this.urls = [];
+      noAuthenticationURLs.map( (v) => {
+        this.urls.push(process.env.PUBLIC_URL + v);
+      })
+
       const {cookies} = this.props;
       let session = cookies.get("session");
       this.session = Encrypt.decode(session);
@@ -65,12 +70,12 @@ class Authentication extends React.Component {
   isAuthPage() {
     const l = global.location;
     let path = l.pathname;
-    return !Util.match(path,noAuthenticationURLs)
+    return !Util.match(path,this.urls);
   }
 
   save(obj) {
       const {cookies} = this.props;
-      var buf = Encrypt.encode(inst.session);
+      var buf = Encrypt.encode(obj);
       cookies.set("session",buf,{path: "/"});
   }
 
