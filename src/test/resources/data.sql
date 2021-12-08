@@ -23,3 +23,13 @@ values(
 
 insert into todos(value) values ('TODO1');
 insert into todos(value) values ('TODO2');
+
+insert into places(id,name,timezone)
+values(
+    1, '日本','Asia/Tokyo'
+);
+
+insert into places(id,name,timezone)
+values(
+    2, '中国','Asia/Shanghai'
+);
