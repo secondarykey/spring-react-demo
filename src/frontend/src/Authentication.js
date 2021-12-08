@@ -37,13 +37,13 @@ class Authentication extends React.Component {
         if ( now <= ex ) {
           //TODO アプリに依存する為、書き方を変更
           //有効期限切れ
-          Redirect("/message/Logout");
+          Redirect("/message/expiry","Authentication 有効期限切れ");
           return;
         }
       } else {
         if ( this.isAuthPage() ) {
           //認証なしでのアクセス
-          Redirect("/message/Logout");
+          Redirect("/message/noneAuth","Authentication 認証なしアクセス");
           return;
         }
       }
@@ -63,7 +63,7 @@ class Authentication extends React.Component {
       clearTimeout(this.refreshReload);
     }
     this.refreshReload = setTimeout(function() {
-      Redirect("/message/logout")
+      Redirect("/error/refresh","Authentication refresh")
     },1000 * Package.clientExpiry);
   }
 
@@ -130,7 +130,7 @@ export function LoginPage(props) {
 
 export function Logout(props) {
     inst.remove();
-    Redirect("/message/Logout");
+    Redirect("/message/Logout","Logout");
     return;
 }
 
