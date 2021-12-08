@@ -70,7 +70,7 @@ class Authentication extends React.Component {
 
   save(obj) {
       const {cookies} = this.props;
-      var buf = this.encode(obj)
+      var buf = Encrypt.encode(inst.session);
       cookies.set("session",buf,{path: "/"});
   }
 

@@ -9,6 +9,7 @@ class Encrypt {
         }
         var bytes = AES.decrypt(buf,this.SECRETKEY);
         var obj = JSON.parse(bytes.toString(CryptJS.enc.Utf8));
+        console.log(obj);
         return obj;
     }
     static encode(obj) {
@@ -17,6 +18,7 @@ class Encrypt {
         }
         var buf = JSON.stringify(obj);
         var ret = AES.encrypt(buf,this.SECRETKEY);
+        console.log(ret.toString())
         return ret.toString();
     }
 }
