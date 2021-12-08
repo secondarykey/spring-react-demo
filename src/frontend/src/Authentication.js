@@ -23,7 +23,7 @@ class Authentication extends React.Component {
       inst = this;
 
       this.urls = [];
-      noAuthenticationURLs.map( (v) => {
+      noAuthenticationURLs.forEach( (v) => {
         this.urls.push(process.env.PUBLIC_URL + v);
       })
 
