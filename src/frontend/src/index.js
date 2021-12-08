@@ -7,20 +7,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./css/Main.css";
 
 import Login    from './pages/Login';
-import Message    from './pages/Message';
+import Message  from './pages/Message';
 import Menu     from './pages/Menu';
 import ToDo     from './pages/Todo/View';
 import DateView from './pages/DateTime/View';
 
 import Layout   from './Layout';
-import Authentication from './Authentication';
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider> 
-      <Authentication />
       <Layout> 
         <Router>
           <Routes>

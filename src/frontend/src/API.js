@@ -44,13 +44,16 @@ class API {
   }
 
   static isUnknownError(err) {
-    var resp = err.response;
-    if ( resp !== undefined ) {
-      var data = resp.data;
-      if ( data.messageID !== undefined ) {
-        return false;
+    if ( err !== undefined ) {
+      var resp = err.response;
+      if ( resp !== undefined ) {
+        var data = resp.data;
+        if ( data.messageID !== undefined ) {
+          return false;
+        }
       }
     }
+
     UnknownErrorMessage(err);
     return true;
   }

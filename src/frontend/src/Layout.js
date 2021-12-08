@@ -7,6 +7,7 @@ import {
 import {FormattedMessage} from "react-intl";
 
 import Locale from "./Locale";
+import Authentication from "./Authentication";
 import Dialog from "./Dialog";
 import Progress from "./Progress";
 import {LoginPage,Name,Logout} from "./Authentication";
@@ -30,8 +31,9 @@ const Layout =({children}) => {
   setMessage = messageIdFunc;
   setMessageType = messageTypeFunc;
   setErrorDetail = detailFunc;
-  return (<>
 
+  return (<>
+<Authentication />
 <Locale>
 
   <Navbar bg="light">
@@ -114,7 +116,6 @@ export function WriteErrorMessage(err) {
   }
   setErrorDetail(detail);
 }
-
 
 export const withRouter = WrappedComponent => props => {
     const params = useParams();

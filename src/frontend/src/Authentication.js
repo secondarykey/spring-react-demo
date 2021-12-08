@@ -1,13 +1,15 @@
 import React from "react";
-import CryptJS from "crypto-js";
-import AES from "crypto-js/aes";
 
 import { instanceOf } from "prop-types";
 import { withCookies,Cookies } from "react-cookie";
 
 import { Redirect } from "./Layout";
+import Package from "../package.json";
+import Encrypt from "./Encrypt";
+import Util from "./Util";
 
 const noAuthenticationURLs = ["/","/error/*","/message/*"];
+
 var inst;
 class Authentication extends React.Component {
 
@@ -22,7 +24,7 @@ class Authentication extends React.Component {
 
       const {cookies} = this.props;
       let session = cookies.get("session");
-      this.session = this.decode(session);
+      this.session = Encrypt.decode(session);
 
       if ( this.session !== undefined ) {
         var now = new Date()
@@ -31,54 +33,39 @@ class Authentication extends React.Component {
           //TODO アプリに依存する為、書き方を変更
           //有効期限切れ
           Redirect("/message/Logout");
+          return;
         }
       } else {
-        if ( this.isAuth() ) {
+        if ( this.isAuthPage() ) {
           //認証なしでのアクセス
           Redirect("/message/Logout");
+          return;
         }
       }
+
   }
 
-  //文字列のGlob判定(*のみ)
-  isStringGlob(pattern,v) {
-    let idx = 0;
-    let strs = pattern.split("*")
-
-    let rtn = false;
-    strs.map( (key) => {
-      if ( rtn ) {
-        return rtn;
-      }
-      if ( key === "" ) {
-        return rtn;
-      }
-      let p = v.indexOf(key);
-      if ( idx > p ) {
-        rtn = true;
-        idx = p + key.length;
-      }
-      return rtn;
-    })
-    return rtn;
+  componentDidMount() {
+      this.refreshReload = undefined;
+      this.refresh();
   }
 
-  isAuth() {
-    //TODO なんかだめ
+  refresh() {
+    if ( !this.isAuth() ) {
+      return;
+    }
+    if ( this.refreshReload !== undefined ) {
+      clearTimeout(this.refreshReload);
+    }
+    this.refreshReload = setTimeout(function() {
+      Redirect("/message/logout")
+    },1000 * Package.clientExpiry);
+  }
+
+  isAuthPage() {
     const l = global.location;
     let path = l.pathname;
-
-    let rtn = true;
-    noAuthenticationURLs.map( (key) => {
-      if ( !rtn ) {
-        return rtn;
-      }
-      if ( this.isStringGlob(key,path) ) {
-        rtn = false;
-      }
-      return rtn;
-    })
-    return rtn;
+    return !Util.match(path,noAuthenticationURLs)
   }
 
   save(obj) {
@@ -92,29 +79,13 @@ class Authentication extends React.Component {
       cookies.remove("session");
   }
 
-  decode(buf) {
-    if ( buf === undefined || buf === null || buf === "" ) {
-        return undefined;
-    }
-    var bytes = AES.decrypt(buf,this.SECRETKEY);
-    var obj = JSON.parse(bytes.toString(CryptJS.enc.Utf8));
-    return obj;
-  }
-
-  encode(obj) {
-    if ( obj === undefined ) {
-        return undefined;
-    }
-    var buf = JSON.stringify(obj);
-    var ret = AES.encrypt(buf,this.SECRETKEY);
-    return ret.toString();
-  }
-
   render() {
     return (<></>);
   }
+}
 
-  SECRETKEY = 'aes-256-cbc-text';
+export function Refresh() {
+  inst.refresh();
 }
 
 export function Save(obj) {
@@ -123,11 +94,10 @@ export function Save(obj) {
 }
 
 export function CreateJWT() {
-    var buf;
     if ( inst.session !== undefined ) {
-      buf = inst.encode(inst.session);
+      return Encrypt.encode(inst.session);
     }
-    return buf;
+    return "";
 }
 
 export function Role(props) {
@@ -147,7 +117,7 @@ export function Role(props) {
 }
 
 export function LoginPage(props) {
-    if ( !inst.isAuth() ) {
+    if ( !inst.isAuthPage() ) {
       return (<></>);
     }
     return (<>{props.children}</>);
