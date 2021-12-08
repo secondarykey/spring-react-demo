@@ -11,8 +11,9 @@ import "../css/Main.css";
 
 class Menu extends React.Component {
 
-  handle = () => {
-      return false;
+  gotoPlan = () => {
+    Redirect("/pages/plan/");
+    return;
   }
 
   gotoDate = () => {
@@ -51,6 +52,17 @@ class Menu extends React.Component {
           <Card.Text> 
           </Card.Text>
           <Button variant="primary" onClick={this.gotoDate}>Go Sample Date </Button>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col>
+      <Card className="Menu-Card">
+        <Card.Body>
+          <Card.Title>Sample Plan</Card.Title>
+          <Card.Text> 
+          </Card.Text>
+          <Button variant="primary" onClick={this.gotoPlan}>Go Plan </Button>
         </Card.Body>
       </Card>
     </Col>
