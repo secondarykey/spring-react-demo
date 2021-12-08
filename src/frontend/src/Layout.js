@@ -7,6 +7,7 @@ import {
 import {FormattedMessage} from "react-intl";
 
 import Locale from "./Locale";
+import Authentication from "./Authentication";
 import Dialog from "./Dialog";
 import Progress from "./Progress";
 import {LoginPage,Name,Logout} from "./Authentication";
@@ -30,13 +31,14 @@ const Layout =({children}) => {
   setMessage = messageIdFunc;
   setMessageType = messageTypeFunc;
   setErrorDetail = detailFunc;
-  return (<>
 
+  return (<>
+<Authentication />
 <Locale>
 
   <Navbar bg="light">
     <Container>
-      <Navbar.Brand href="/pages/menu">Demo</Navbar.Brand>
+      <Navbar.Brand href={process.env.PUBLIC_URL + "/pages/menu"}>Demo</Navbar.Brand>
       <LoginPage> 
         <div><Name/><br/>
           <Button className="linkText" onClick={logout}>ログアウト</Button>
@@ -75,7 +77,7 @@ const Layout =({children}) => {
 
 export function Redirect(path) {
   const l = global.location;
-  l.href = path;
+  l.href = process.env.PUBLIC_URL + path;
 }
 
 export function ClearMessage() {
@@ -114,7 +116,6 @@ export function WriteErrorMessage(err) {
   }
   setErrorDetail(detail);
 }
-
 
 export const withRouter = WrappedComponent => props => {
     const params = useParams();

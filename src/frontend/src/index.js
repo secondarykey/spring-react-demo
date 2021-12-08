@@ -7,22 +7,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./css/Main.css";
 
 import Login    from './pages/Login';
-import Message    from './pages/Message';
+import Message  from './pages/Message';
 import Menu     from './pages/Menu';
 import ToDo     from './pages/Todo/View';
 import DateView from './pages/DateTime/View';
 
 import Layout   from './Layout';
-import Authentication from './Authentication';
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider> 
-      <Authentication />
       <Layout> 
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
           <Routes>
             <Route path="/"     element={<Login/>} />
             <Route path="/pages/menu" element={<Menu/>} />
@@ -30,7 +28,7 @@ ReactDOM.render(
             <Route path="/pages/date/" element={<DateView/>} />
             <Route path="/message/:id" element={<Message type="success" />} />
             <Route path="/error/:id" element={<Message type="danger" />} />
-            <Route path="/*" element={<Navigate to="/error/PRFN98M000"/>} />
+            <Route path="*" element={<Navigate to="/error/PRFN98M000"/>} />
           </Routes>
         </Router>
       </Layout>

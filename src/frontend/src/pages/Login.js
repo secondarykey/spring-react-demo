@@ -23,6 +23,7 @@ class Login extends React.Component {
       this.newPassword2 = React.createRef(); 
 
       this.state = { expiry : false, messageId : "" }
+      ClearMessage();
   }
 
 
@@ -38,7 +39,7 @@ class Login extends React.Component {
     API.post("/api/v1/login",
       resp => {
         Save(resp.data.result.user);
-        window.location = '/pages/menu';
+        Redirect('/pages/menu');
     },data).catch( (err) => {
 
       if ( API.isUnknownError(err) ) {
