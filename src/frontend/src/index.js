@@ -11,6 +11,8 @@ import Message  from './pages/Message';
 import Menu     from './pages/Menu';
 import ToDo     from './pages/Todo/View';
 import DateView from './pages/DateTime/View';
+import PlanView  from './pages/Plan/View';
+import PlanInput from './pages/Plan/Input';
 
 import Layout   from './Layout';
 
@@ -26,6 +28,8 @@ ReactDOM.render(
             <Route path="/pages/menu" element={<Menu/>} />
             <Route path="/pages/todo/" element={<ToDo/>} />
             <Route path="/pages/date/" element={<DateView/>} />
+            <Route path="/pages/plan/" element={<PlanView/>} />
+            <Route path="/pages/plan/input/:date" element={<PlanInput/>} />
             <Route path="/message/:id" element={<Message type="success" />} />
             <Route path="/error/:id" element={<Message type="danger" />} />
             <Route path="*" element={<Navigate to="/error/PRFN98M000"/>} />
