@@ -1,5 +1,11 @@
 class Util {
 
+  static formatTime(date) {
+    let d = new Date(Date.parse(date));
+    return this.zeroPadding(d.getHours(),2) + ":" + 
+              this.zeroPadding(d.getMinutes(),2);
+  }
+
   static formatDate(date) {
     return date.getFullYear() + "-" + 
               this.zeroPadding((date.getMonth() + 1),2) + "-" + 

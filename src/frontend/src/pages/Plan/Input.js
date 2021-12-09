@@ -1,8 +1,12 @@
 import React from "react";
-import {Button} from "react-bootstrap";
+import {Button,Container,Table} from "react-bootstrap";
+import PlanInputDialog,{ShowInput} from "./Dialog";
+
 import {withRouter} from "../../Layout";
 import DateTime from "../components/DateTime";
-import {PlanInputDialog,ShowInput} from "./Dialog";
+import API from "../../API";
+import Util from "../../Util";
+import {WriteErrorMessage} from '../../Layout';
 
 class PlanInput extends React.Component {
 
@@ -10,10 +14,27 @@ class PlanInput extends React.Component {
         super(props);
 
         this.state = {
-            targetDate : props.params.date
+            targetDate : props.params.date,
+            details : []
         }
     }
-
+    componentDidMount() {
+        var args = {
+            placeId : 1,
+            date : this.state.targetDate
+        };
+        API.post("/api/demo/plan/detail/view",resp => {
+          let details = resp.data.result.details;
+          this.setState({
+            details : details
+          })
+        },args).catch((err) => {
+          if ( API.isUnknownError(err) ) {
+            return;
+          }
+          WriteErrorMessage(err);
+        });
+      }
     handleInput = () => {
         //ダイアログを呼ぶ
         ShowInput(this.state.targetDate);
@@ -23,6 +44,23 @@ class PlanInput extends React.Component {
         return (<>
         <DateTime type="date" value={this.state.targetDate}></DateTime>
         <Button onClick={this.handleInput}>追加</Button>
+        <Container>
+            <Table>
+                <tbody>
+
+       { this.state.details.map( (obj,idx) => {
+           return (
+           <tr key={idx}>
+              <td> {Util.formatTime(obj.start)} </td>
+              <td> {Util.formatTime(obj.end)} </td>
+              <td> {obj.name} </td>
+            </tr>
+           )
+       })} 
+                    </tbody>
+            </Table>
+        </Container>
+
         <PlanInputDialog/>
         </>)
     }
