@@ -1,8 +1,14 @@
 package com.example.demo.transfer.response;
 
+import java.io.Serializable;
+
 import com.example.demo.model.User;
 
-public class LoginUser {
+public class LoginUser implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
 	private String role;

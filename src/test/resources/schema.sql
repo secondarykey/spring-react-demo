@@ -8,7 +8,7 @@ create table users(
     name varchar(255),
     password varchar(255),
     role varchar(16),
-    expiry timestamp,
+    expiry timestamp with time zone,
     foreign key(role) references role(id)
 );
 
@@ -33,8 +33,9 @@ create table plans (
 create table plan_details (
   id Serial primary key,
   plans_id Serial,
+  name varchar(128),
   start timestamp without time zone,
-  end timestamp without time zone,
+  "end" timestamp without time zone,
   foreign key(plans_id) references plans(id)
 );
 

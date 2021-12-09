@@ -30,6 +30,25 @@ public class DateUtil {
 	}
 
 	/**
+	 * 日付、時刻変換
+	 * @param d "yyyy-MM-dd" 形式の日付
+	 * @param t "HH:mm" 形式の日付
+	 * @return d + t の0秒のDate型
+	 */
+	public static Date parse(String d,String t) {
+		return DateUtil.parse(d + " " + t + ":00");
+	}
+
+	/**
+	 * 日付のみ時刻変換
+	 * @param d "yyyy-MM-dd" 形式をDateに変換
+	 * @return 指定日の12:00のDate
+	 */
+	public static Date parseDate(String d) {
+		return DateUtil.parse(d + " 12:00:00");
+	}
+
+	/**
 	 * ローカルタイム変換
 	 * @param v 時刻
 	 * @return ローカルタイム変換

@@ -47,15 +47,24 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		return true;
 	}
 
+	/**
+	 * 認証ヘッダが必要か
+	 * @param request
+	 * @return true = 必要
+	 */
 	private boolean isAuth(HttpServletRequest request) {
+
 		String uri = request.getRequestURI();
 		String path = request.getContextPath();
 		String pure = uri.replaceAll(path, "");
+
 		logger.info("request:"+pure);
 		if ( pure.indexOf("/api") != -1 ) {
+			if ( pure.equals("/api/v1/login") ) {
+				return false;
+			}
 			return true;
 		}
-
 		return false;
 	}
 }

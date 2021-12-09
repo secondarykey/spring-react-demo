@@ -21,7 +21,7 @@ public class UserRepository extends AccessRepository {
 	}
 
 	public User findByPassword(String id, String password) {
-		String sql = "SELECT * FROM USERS WHERE id = ? AND password = hash('sha256', stringtoutf8(?))";
+		String sql = "SELECT * FROM USERS WHERE id = ? AND password = md5(?)";
 		return this.get(User.class,sql,id,password);
 	}
 	
@@ -33,7 +33,7 @@ public class UserRepository extends AccessRepository {
 	@Transactional
 	public int updatePassword(User user) {
 		//String sql = "UPDATE USERS SET password = hash('sha256', stringtoutf8(:password)), expiry = :expiry WHERE id = :id";
-		String sql = "UPDATE USERS SET password = hash('sha256', stringtoutf8(?)), expiry = ? WHERE id = ?";
+		String sql = "UPDATE USERS SET password = md5(?), expiry = ? WHERE id = ?";
 		return this.update(sql,user.getPassword(),user.getExpiry(),user.getId());
 	}
 
