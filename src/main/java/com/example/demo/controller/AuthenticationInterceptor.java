@@ -19,6 +19,9 @@ import com.example.demo.util.Util;
 public class AuthenticationInterceptor implements HandlerInterceptor {
 	
 	public static Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
+	
+	private static String[] ignoreURLPrefix = {"/api"};
+	private static String[] ignoreURLs = {"/api/v1/login","/api/v1/password"};
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -52,10 +55,25 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		String path = request.getContextPath();
 		String pure = uri.replaceAll(path, "");
 		logger.info("request:"+pure);
-		if ( pure.indexOf("/api") != -1 ) {
-			return true;
-		}
+		return !ignoreURL(pure);
+	}
 
+	/**
+	 * 排他URL判定
+	 * @param url 対象URL
+	 * @return 
+	 */
+	private boolean ignoreURL(String url) {
+		for ( String ignore : ignoreURLPrefix ) {
+			if ( url.indexOf(ignore) == 0 ) {
+				return true;
+			}
+		}
+		for ( String ignore : ignoreURLs ) {
+			if ( url.equals(ignore) ) {
+				return true;
+			}
+		}
 		return false;
 	}
 }
