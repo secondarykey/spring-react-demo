@@ -1,3 +1,10 @@
+drop table users;
+drop table role;
+drop table todos;
+drop table plan_details;
+drop table plans;
+drop table places;
+
 create table role(
     id varchar(16) primary key,
     name varchar(128)
@@ -13,7 +20,7 @@ create table users(
 );
 
 create table todos(
-    id SERIAL,
+    id SERIAL primary key,
     value varchar(32)
 );
 
@@ -25,14 +32,14 @@ create table places (
 
 create table plans (
   id Serial primary key,
-  places_id Serial,
+  places_id integer,
   date timestamp without time zone,
   foreign key(places_id) references places(id)
 );
 
 create table plan_details (
   id Serial primary key,
-  plans_id Serial,
+  plans_id integer,
   name varchar(128),
   start timestamp without time zone,
   "end" timestamp without time zone,

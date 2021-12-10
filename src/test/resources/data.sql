@@ -33,3 +33,8 @@ insert into places(id,name,timezone)
 values(
     2, '中国','Asia/Shanghai'
 );
+
+insert into plans(id,places_id,date)
+values(
+    1, 1, '2021-10-10T12:00:00'
+);
