@@ -15,7 +15,7 @@ public class IndexController {
 			  value = {"/","/pages/*","/message/*","/error/*"}, 
 			  method = RequestMethod.GET)
 	  String index() {
-		  logger.info("index()");
+	    logger.info("index()");
 	    return "/index.html";
 	  }
 
