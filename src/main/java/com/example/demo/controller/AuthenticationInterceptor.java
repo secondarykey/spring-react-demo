@@ -26,26 +26,28 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
+		if ( !isAuth(request) ) {
+			logger.debug("対象URLでないのでOK");
+			return true;
+		}
 
-		if ( isAuth(request) ) {
+		String authHeader = request.getHeader("Authorization");
+		logger.info(authHeader);
 
-			String authHeader = request.getHeader("Authorization");
-			logger.info(authHeader);
-
-			if ( Util.isEmpty(authHeader) ) {
+		if ( Util.isEmpty(authHeader) ) {
+			return false;
+		}
+		try {
+			LoginUser user = EncryptUtil.decodeUser(authHeader);
+			Date expiry = DateUtil.parse(user.getExpiry());
+			Date now = new Date();
+			if ( expiry.before(now) ) {
 				return false;
 			}
-			try {
-				LoginUser user = EncryptUtil.decodeUser(authHeader);
-				Date expiry = DateUtil.parse(user.getExpiry());
-				Date now = new Date();
-				if ( expiry.before(now) ) {
-					return false;
-				}
-			} catch ( Exception ex ) {
-				logger.error("APIの認証データ復号化に失敗",ex);
-				return false;
-			}
+		} catch ( Exception ex ) {
+			logger.error("APIの認証データ復号化に失敗",ex);
+			return false;
 		}
 
 		return true;
@@ -57,6 +59,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		String path = request.getContextPath();
 		String pure = uri.replaceAll(path, "");
 		logger.info("request:"+pure);
+
 		for ( String ignore : targetURLPrefix ) {
 			if ( pure.indexOf(ignore) == 0 ) {
 				if ( !ignoreURL(pure) ) {
@@ -64,7 +67,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 				}
 			}
 		}
-
 		return false;
 	}
 
