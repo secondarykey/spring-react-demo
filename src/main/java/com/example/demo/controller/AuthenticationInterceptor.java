@@ -20,7 +20,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	
 	public static Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
 	
-	private static String[] ignoreURLPrefix = {"/api"};
+	private static String[] targetURLPrefix = {"/api"};
 	private static String[] ignoreURLs = {"/api/v1/login","/api/v1/password"};
 
 	@Override
@@ -28,9 +28,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 			throws Exception {
 
 		if ( isAuth(request) ) {
+
 			String authHeader = request.getHeader("Authorization");
+			logger.info(authHeader);
+
 			if ( Util.isEmpty(authHeader) ) {
-				//認証エラー
 				return false;
 			}
 			try {
@@ -38,7 +40,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 				Date expiry = DateUtil.parse(user.getExpiry());
 				Date now = new Date();
 				if ( expiry.before(now) ) {
-					//有効期限切れエラーへ
 					return false;
 				}
 			} catch ( Exception ex ) {
@@ -51,11 +52,20 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	}
 
 	private boolean isAuth(HttpServletRequest request) {
+
 		String uri = request.getRequestURI();
 		String path = request.getContextPath();
 		String pure = uri.replaceAll(path, "");
 		logger.info("request:"+pure);
-		return !ignoreURL(pure);
+		for ( String ignore : targetURLPrefix ) {
+			if ( pure.indexOf(ignore) == 0 ) {
+				if ( !ignoreURL(pure) ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -64,16 +74,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	 * @return 
 	 */
 	private boolean ignoreURL(String url) {
-		for ( String ignore : ignoreURLPrefix ) {
-			if ( url.indexOf(ignore) == 0 ) {
-				return true;
-			}
-		}
+
 		for ( String ignore : ignoreURLs ) {
 			if ( url.equals(ignore) ) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 }
