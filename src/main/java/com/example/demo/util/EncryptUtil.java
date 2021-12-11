@@ -16,8 +16,24 @@ import com.google.gson.Gson;
 
 public class EncryptUtil {
 
-	private static String Alg = "AES/CBC/PKCS5Padding";
-	private static String KEY = "aes-256-cbc-text";
+	private static String SessionEncryptAlg = "AES/CBC/PKCS5Padding";
+	private static String SessionEncryptKEY = "aes-256-cbc-text";
+	
+	private static String PasswordHashSalt = "salt";
+	public static String hashPassword(String password) {
+        MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("SHA-512");
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException("アルゴリズム生成時のエラー",e);
+		}
+
+		String target = password + PasswordHashSalt;
+        md.update(target.getBytes());
+        byte[] cipher_byte = md.digest();
+		return convertHex(cipher_byte);
+	}
+	
 
 	public static String decode(String buf) {
 
@@ -30,12 +46,12 @@ public class EncryptUtil {
 			throw new RuntimeException("アルゴリズムエラー", e);
 		}
 
-		final byte[][] keyAndIV = generateKeyAndIV(32, 16, 1, saltData, KEY.getBytes(StandardCharsets.UTF_8), md5);
+		final byte[][] keyAndIV = generateKeyAndIV(32, 16, 1, saltData, SessionEncryptKEY.getBytes(StandardCharsets.UTF_8), md5);
 		SecretKeySpec key = new SecretKeySpec(keyAndIV[0], "AES");
 		IvParameterSpec iv = new IvParameterSpec(keyAndIV[1]);
 		byte[] encrypted = Arrays.copyOfRange(chipperd, 16, chipperd.length);
 		try {
-			Cipher c = Cipher.getInstance(Alg);
+			Cipher c = Cipher.getInstance(SessionEncryptAlg);
 			c.init(Cipher.DECRYPT_MODE, key, iv);
 			byte[] decrypted = c.doFinal(encrypted);
 			return new String(decrypted);
@@ -110,5 +126,13 @@ public class EncryptUtil {
 			// Clean out temporary data
 			Arrays.fill(generatedData, (byte) 0);
 		}
+	}
+
+	private static String convertHex(byte[] data) {
+		StringBuilder sb = new StringBuilder(2 * data.length);
+		for(byte b: data) {
+            sb.append(String.format("%02x", b&0xff) );
+		}
+		return sb.toString();
 	}
 }
