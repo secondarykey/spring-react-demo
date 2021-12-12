@@ -1,14 +1,20 @@
 package com.example.demo.model;
 
+import javax.persistence.Transient;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("places")
 public class Place {
 	@Id
-	int id;
-	String name;
-	String timezone;
+	private int id;
+	private String name;
+	private String timezone;
+
+	@Transient
+	private Plan plan;
+
 	public int getId() {
 		return id;
 	}
@@ -27,4 +33,5 @@ public class Place {
 	public void setTimezone(String timezone) {
 		this.timezone = timezone;
 	}
+
 }

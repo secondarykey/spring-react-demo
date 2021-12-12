@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.model.Plan;
 import com.example.demo.model.PlanDetail;
 import com.example.demo.repository.PlanDetailRepository;
+import com.example.demo.repository.PlanQueryRepository;
 import com.example.demo.repository.PlanRepository;
 import com.example.demo.transfer.request.PlanDetailViewRequest;
 import com.example.demo.transfer.request.PlanEditRequest;
@@ -28,6 +29,8 @@ public class PlanService extends BusinessService {
 	@Autowired(required=true)
 	PlanRepository planRepo;
 	@Autowired(required=true)
+	PlanQueryRepository queryRepo;
+	@Autowired(required=true)
 	PlanDetailRepository detailRepo;
 
 	@Transactional
@@ -36,7 +39,7 @@ public class PlanService extends BusinessService {
 		int placeId = json.getPlace();
 		Date date = DateUtil.parseDate(json.getDate());
 		//place と date で存在を確認
-		Plan plan = planRepo.findByPlaceDate(placeId, date);
+		Plan plan = queryRepo.findByPlaceDate(placeId, date);
 		if ( plan == null ) {
 			plan = new Plan();
 			plan.setDate(date);
@@ -50,7 +53,7 @@ public class PlanService extends BusinessService {
 		String start = json.getStart();
 		String end = json.getEnd();
 
-		detail.setPlans_id(plan.getId());
+		detail.setPlansId(plan.getId());
 		detail.setStart(DateUtil.parse(json.getDate(),start));
 		detail.setEnd(DateUtil.parse(json.getDate(),end));
 		detail.setName(json.getName());
@@ -70,7 +73,7 @@ public class PlanService extends BusinessService {
 		logger.info("view() findByPlace()");
 		
 		int placeId = json.getPlaceId();
-		List<Plan> planList = planRepo.findByPlace(placeId);
+		List<Plan> planList = queryRepo.findByPlace(placeId);
 		
 		Result<PlanViewResponse> result = new Result<>();
 		PlanViewResponse res = new PlanViewResponse();

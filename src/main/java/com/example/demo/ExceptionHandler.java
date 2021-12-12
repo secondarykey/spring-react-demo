@@ -22,7 +22,7 @@ public class ExceptionHandler {
     @ResponseBody
     public ResponseEntity<?> handleKnownError(KnownException ex) {
 
-    	logger.info("handleKnownError()");
+    	logger.info("handleKnownError()",ex);
 
     	Result<String> result = new Result<>();
     	result.setResult(getTrace(ex));
@@ -43,6 +43,7 @@ public class ExceptionHandler {
     	
         return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @org.springframework.web.bind.annotation.ExceptionHandler({ MethodArgumentNotValidException.class })
     @ResponseBody
     public ResponseEntity<?> handleValidateError(Exception ex) {
