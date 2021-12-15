@@ -3,7 +3,7 @@ package com.example.demo.util;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import com.example.demo.transfer.response.LoginUser;
+import com.example.demo.transfer.LoginUser;
 
 public class EncryptUtilTest {
 

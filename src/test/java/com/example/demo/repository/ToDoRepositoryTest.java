@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,9 @@ public class ToDoRepositoryTest {
 
 	@Test
 	void testFind() {
-		List<ToDo> list = todoRepository.find();
+		Iterable<ToDo> itr = todoRepository.findAll();
+		List<ToDo> list = new ArrayList<>();
+		itr.forEach(list::add);
 		assertNotNull(list);
 		assertEquals(list.size(),2);
 	}
