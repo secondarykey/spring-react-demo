@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 
 import { Form } from "react-bootstrap";
 import Select from "./Select";
+import Util from "../../Util";
 
 import "react-datepicker/dist/react-datepicker.css"
 import "../../css/Main.css";
@@ -72,15 +73,25 @@ class DateTime extends React.Component {
         })
     }
 
+    set(date) {
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        this.setState({
+            day : date,
+            hour: hour,
+            minute : minute
+        })
+    }
+
     get() {
         let rtn = "";
         let day = this.state.day;
-        let hour = this.state.hour;
-        let minute = this.state.minute;
+        let hour = Util.zeroPadding(this.state.hour,2);
+        let minute = Util.zeroPadding(this.state.minute,2);
 
         if ( this.state.showDay ) {
             if ( day != null ) {
-                rtn = day.getFullYear() +"/" + (day.getMonth()+1) + "/"+day.getDate();
+                rtn = day.getFullYear() +"-" + (day.getMonth()+1) + "-"+day.getDate();
             } else {
                 return undefined;
             }
