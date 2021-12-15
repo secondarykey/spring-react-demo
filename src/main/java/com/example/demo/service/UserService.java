@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import com.example.demo.KnownException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.transfer.LoginUser;
 import com.example.demo.transfer.request.LoginRequest;
 import com.example.demo.transfer.request.PasswordRequest;
 import com.example.demo.transfer.response.LoginResponse;
-import com.example.demo.transfer.response.LoginUser;
 import com.example.demo.transfer.response.Result;
 
 @Service

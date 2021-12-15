@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Plan;
 import com.example.demo.model.PlanDetail;
+import com.example.demo.repository.PlanDetailQueryRepository;
 import com.example.demo.repository.PlanDetailRepository;
 import com.example.demo.repository.PlanQueryRepository;
 import com.example.demo.repository.PlanRepository;
@@ -25,11 +26,15 @@ import com.example.demo.util.DateUtil;
 @Service
 public class PlanService extends BusinessService {
 
+	@SuppressWarnings("unused")
 	private static Logger logger = LoggerFactory.getLogger(PlanService.class);
+
 	@Autowired(required=true)
 	PlanRepository planRepo;
 	@Autowired(required=true)
 	PlanQueryRepository queryRepo;
+	@Autowired(required=true)
+	PlanDetailQueryRepository detailQueryRepo;
 	@Autowired(required=true)
 	PlanDetailRepository detailRepo;
 
@@ -66,15 +71,9 @@ public class PlanService extends BusinessService {
 
 	public Result<PlanViewResponse> view(PlanViewRequest json) {
 		
-		logger.info("view() findAll()");
-	
-		planRepo.findById(1);
-		
-		logger.info("view() findByPlace()");
-		
 		int placeId = json.getPlaceId();
 		List<Plan> planList = queryRepo.findByPlace(placeId);
-		
+
 		Result<PlanViewResponse> result = new Result<>();
 		PlanViewResponse res = new PlanViewResponse();
 		res.setPlans(planList);
@@ -86,11 +85,8 @@ public class PlanService extends BusinessService {
 		int placeId = json.getPlaceId();
 		Date date = DateUtil.parseDate(json.getDate());
 		
-		logger.info(String.valueOf(placeId));
-		logger.info(date.toString());
+		List<PlanDetail> details = detailQueryRepo.findByPlaceDate(placeId, date);
 
-		List<PlanDetail> details = detailRepo.findByPlaceDate(placeId, date);
-		
 		Result<PlanDetailViewResponse> result = new Result<>();
 		PlanDetailViewResponse res = new PlanDetailViewResponse();
 		res.setDetails(details);
