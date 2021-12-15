@@ -1,9 +1,10 @@
-drop table users;
-drop table role;
-drop table todos;
-drop table plan_details;
-drop table plans;
-drop table places;
+drop table if exists users;
+drop table if exists role;
+drop table if exists todos;
+drop table if exists times;
+drop table if exists plan_details;
+drop table if exists plans;
+drop table if exists places;
 
 create table role(
     id varchar(16) primary key,
@@ -22,6 +23,17 @@ create table users(
 create table todos(
     id SERIAL primary key,
     value varchar(32)
+);
+
+create table times(
+    id SERIAL primary key,
+    value varchar(32),
+    "date" date,
+    "time" time,
+    date_without timestamp without time zone,
+    date_with timestamp with time zone,
+    offset_without timestamp without time zone,
+    offset_with timestamp with time zone
 );
 
 create table places (
