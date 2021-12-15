@@ -11,7 +11,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.example.demo.transfer.response.LoginUser;
+import com.example.demo.transfer.LoginUser;
 import com.google.gson.Gson;
 
 public class EncryptUtil {
