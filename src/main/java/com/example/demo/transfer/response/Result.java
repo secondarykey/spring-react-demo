@@ -1,7 +1,6 @@
 package com.example.demo.transfer.response;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Result<T> implements Serializable {
 
@@ -61,10 +60,4 @@ public class Result<T> implements Serializable {
 		this.result = result;
 	}
 
-	public static String convertDate(Date expirs) {
-		if (expirs == null ) {
-			return "";
-		}
-		return expirs.toString();
-	}
 }
