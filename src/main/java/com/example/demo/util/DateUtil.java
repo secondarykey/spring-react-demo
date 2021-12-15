@@ -36,7 +36,11 @@ public class DateUtil {
 	 * @return d + t の0秒のDate型
 	 */
 	public static Date parse(String d,String t) {
-		return DateUtil.parse(d + " " + t + ":00");
+		return DateUtil.parseClient(d + " " + t);
+	}
+
+	public static Date parseClient(String d) {
+		return DateUtil.parse(d+":00");
 	}
 
 	/**
@@ -71,5 +75,12 @@ public class DateUtil {
 	    ZoneOffset offset = id.getRules().getOffset(intant);
 	    LocalDateTime local = local(v);
 	    return OffsetDateTime.of(local, offset);
+	}
+
+	public static String formatClient(Date date) {
+		if (date == null) {
+			return "";
+		}
+		return sdf.format(date);
 	}
 }
