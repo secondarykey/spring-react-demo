@@ -20,8 +20,8 @@ public class MappingUtil {
 		detail.setId(rs.getInt(prefix + "id"));
 		detail.setName(rs.getString(prefix + "name"));
 		detail.setPlansId(rs.getInt(prefix + "plans_id"));
-		detail.setStart(rs.getDate(prefix + "start"));
-		detail.setEnd(rs.getDate(prefix + "end"));
+		detail.setStart(rs.getTimestamp(prefix + "start"));
+		detail.setEnd(rs.getTimestamp(prefix + "end"));
 		return detail;
 	}
 
@@ -44,8 +44,7 @@ public class MappingUtil {
 	public static void printColumn(ResultSet rs) throws SQLException {
 		ResultSetMetaData rsmd= rs.getMetaData();	
 		for ( int idx = 1; idx <= rsmd.getColumnCount(); ++idx ) {
-			logger.error("{}-{}:[{}]",idx,rsmd.getColumnClassName(idx),rsmd.getColumnClassName(idx));
-			//System.out.println(idx + "-" + rsmd.getColumnName(idx) + "[" + rsmd.getColumnClassName(idx) + "]");
+			logger.info("{}-{}:[{}]",idx,rsmd.getColumnName(idx),rsmd.getColumnClassName(idx));
 		}
 	}
 	
