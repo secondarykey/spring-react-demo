@@ -35,12 +35,28 @@ public class AccessRepository {
 		}
 	}
 
+	/**
+	 * カラム名と違う場合、エラーになる為、廃止
+	 * @param <T>
+	 * @param zz
+	 * @param sql
+	 * @param objects
+	 * @return
+	 */
+	@Deprecated
 	protected <T> List<T> select(Class<T> zz,String sql,Object ...objects) {
 		RowMapper<T> rowMapper = new BeanPropertyRowMapper<T>(zz);
 		List<T> rtns = template.query(sql, rowMapper,objects);
 		return rtns;
 	}
 
+	/**
+	 * 非推奨 CrudRepositoryを利用すること
+	 * @param sql
+	 * @param objects
+	 * @return
+	 */
+	@Deprecated
 	protected Number insert(String sql,Object ...objects) {
 		
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {
@@ -80,7 +96,13 @@ public class AccessRepository {
 	
 		return keyHolder.getKey();
 	}
-
+	/**
+	 * 非推奨 CrudRepositoryを利用すること
+	 * @param sql
+	 * @param objects
+	 * @return
+	 */
+	@Deprecated
 	protected int update(String sql,Object ...objects) {
 		return template.update(sql, objects);
 	}
