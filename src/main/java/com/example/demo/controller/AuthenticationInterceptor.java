@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.example.demo.transfer.response.LoginUser;
+import com.example.demo.transfer.LoginUser;
 import com.example.demo.util.DateUtil;
 import com.example.demo.util.EncryptUtil;
 import com.example.demo.util.Util;
@@ -53,18 +53,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	 * @return true = 必要
 	 */
 	private boolean isAuth(HttpServletRequest request) {
-
-		String uri = request.getRequestURI();
-		String path = request.getContextPath();
-		String pure = uri.replaceAll(path, "");
-
-		logger.info("request:"+pure);
-		if ( pure.indexOf("/api") != -1 ) {
-			if ( pure.equals("/api/v1/login") ) {
-				return false;
-			}
-			return true;
-		}
-		return false;
+		return true;
 	}
 }
