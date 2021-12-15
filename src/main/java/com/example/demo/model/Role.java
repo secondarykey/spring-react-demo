@@ -1,14 +1,14 @@
 package com.example.demo.model;
 
-import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("role")
 public class Role {
-	@Column("id")
+	@Id
 	private String id;
-	@Column("name")
 	private String name;
+
 	public String getId() {
 		return id;
 	}

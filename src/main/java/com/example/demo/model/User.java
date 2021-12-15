@@ -3,21 +3,16 @@ package com.example.demo.model;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("users")
 public class User {
+
 	@Id
-	@Column("id")
 	private String id;
-	@Column("name")
 	private String name;
-	@Column("password")
 	private String password;
-	@Column("role")
 	private String role;
-	@Column("expiry")
 	private Date expiry;
 
 	public String getId() {
