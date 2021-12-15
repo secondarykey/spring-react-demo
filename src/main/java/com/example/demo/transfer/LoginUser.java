@@ -1,8 +1,9 @@
-package com.example.demo.transfer.response;
+package com.example.demo.transfer;
 
 import java.io.Serializable;
 
 import com.example.demo.model.User;
+import com.example.demo.util.DateUtil;
 
 public class LoginUser implements Serializable {
 	/**
@@ -44,7 +45,7 @@ public class LoginUser implements Serializable {
 		lu.id = user.getId();
 		lu.name = user.getName();
 		lu.role = user.getRole();
-		lu.expiry = Result.convertDate(user.getExpiry());
+		lu.expiry = DateUtil.formatClient(user.getExpiry());
 		
 		return lu;
 	}
