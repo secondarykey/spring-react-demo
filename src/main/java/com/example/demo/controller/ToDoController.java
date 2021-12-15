@@ -30,8 +30,7 @@ public class ToDoController extends JSONController {
 		return todoService.insert(json);
 	}
 	@RequestMapping(value = "/delete",method = RequestMethod.DELETE)
-	public Result<Integer> delete(@RequestBody ToDoRequest json) {
+	public Result<String> delete(@RequestBody ToDoRequest json) {
 		return todoService.delete(json);
-
 	}
 }
