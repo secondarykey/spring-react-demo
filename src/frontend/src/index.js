@@ -13,6 +13,7 @@ import ToDo     from './pages/Todo/View';
 import DateView from './pages/DateTime/View';
 import PlanView  from './pages/Plan/View';
 import PlanInput from './pages/Plan/Input';
+import Paging from './pages/Paging/View';
 
 import Layout   from './Layout';
 
@@ -30,6 +31,7 @@ ReactDOM.render(
             <Route path="/pages/date/" element={<DateView/>} />
             <Route path="/pages/plan/" element={<PlanView/>} />
             <Route path="/pages/plan/input/:date" element={<PlanInput/>} />
+            <Route path="/pages/paging/" element={<Paging/>} />
             <Route path="/message/:id" element={<Message type="success" />} />
             <Route path="/error/:id" element={<Message type="danger" />} />
             <Route path="*" element={<Navigate to="/error/PRFN98M000"/>} />

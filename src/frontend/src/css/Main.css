@@ -20,6 +20,18 @@ main {
     width:70px;
 }
 
+.Paging-Limit {
+    display: inline-flex;
+    width:100px;
+    height:38px;
+}
+
+.Paging-Timezone {
+    display: inline-flex;
+    width:200px;
+    height:38px;
+}
+
 .Progress {
     z-index  : 1024;
     position : fixed;

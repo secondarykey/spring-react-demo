@@ -26,6 +26,11 @@ class Menu extends React.Component {
     return;
   }
 
+  gotoPaging = () => {
+    Redirect("/pages/paging/");
+    return;
+  }
+
   render() {
     return (<>
 
@@ -63,6 +68,17 @@ class Menu extends React.Component {
           <Card.Text> 
           </Card.Text>
           <Button variant="primary" onClick={this.gotoPlan}>Go Plan </Button>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col>
+      <Card className="Menu-Card">
+        <Card.Body>
+          <Card.Title>Sample Paging</Card.Title>
+          <Card.Text> 
+          </Card.Text>
+          <Button variant="primary" onClick={this.gotoPaging}>Go Database Date</Button>
         </Card.Body>
       </Card>
     </Col>
