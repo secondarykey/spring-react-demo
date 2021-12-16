@@ -4,9 +4,8 @@ import {
   Container,Navbar,
   Alert,Accordion,Button
 } from 'react-bootstrap';
-import {FormattedMessage} from "react-intl";
 
-import Locale from "./Locale";
+import Locale,{Label,Message} from "./Locale";
 import Authentication from "./Authentication";
 import Dialog from "./Dialog";
 import Progress from "./Progress";
@@ -50,13 +49,13 @@ const Layout =({children}) => {
   <main>
     {messageId !== "" &&
       <Alert key="1" variant={messageType}> 
-        <FormattedMessage id={messageId}/> 
+        <Message id={messageId}/> 
         {detail !== "" &&
 
         <Accordion>
           <Accordion.Item eventKey="0">
             <Accordion.Header className="Layout-SystemDetail">
-              <FormattedMessage id="PRFN00L000"/> 
+              <Label id="PRFN00L000"/> 
             </Accordion.Header>
             <Accordion.Body>{detail}</Accordion.Body>
           </Accordion.Item>

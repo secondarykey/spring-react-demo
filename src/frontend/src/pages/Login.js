@@ -1,11 +1,12 @@
 import React from "react";
-import {FormattedMessage} from "react-intl";
 import {
   Container,Row,Col,
   Alert,Form,Button
  } from 'react-bootstrap';
 
-import Locale,{SelectLanguage,Get} from '../Locale';
+import {SelectLanguage,
+        GetLabel,Label,Message} from '../Locale';
+
 import {WriteErrorMessage,ClearMessage,Redirect}  from "../Layout";
 import {Save} from "../Authentication";
 import API from "../API";
@@ -108,14 +109,14 @@ class Login extends React.Component {
   <Container>
     <SpaceRow>
       <Form.Group>
-        <Form.Label> <FormattedMessage id="PRFN00L101"/> </Form.Label>
-        <Form.Control type="email" placeholder={Get("PRFN00L101")} ref={this.userId} />
+        <Form.Label> <Label id="PRFN00L101"/> </Form.Label>
+        <Form.Control type="email" placeholder={GetLabel("PRFN00L101")} ref={this.userId} />
       </Form.Group>
     </SpaceRow>
 
     <SpaceRow>
       <Form.Group>
-        <Form.Label> <FormattedMessage id="PRFN00L102"/> </Form.Label>
+        <Form.Label> <Label id="PRFN00L102"/> </Form.Label>
         <Form.Control type="password" placeholder="" ref={this.password} />
       </Form.Group>
     </SpaceRow>
@@ -127,7 +128,7 @@ class Login extends React.Component {
     {/*メッセージ表示 */}
     {msgId !== "" &&
     <SpaceRow>
-      <Alert key="1" variant="danger"> <FormattedMessage id={msgId}/> </Alert>
+      <Alert key="1" variant="danger"> <Message id={msgId}/> </Alert>
     </SpaceRow>
     }
 
@@ -135,7 +136,7 @@ class Login extends React.Component {
     {!expiry &&
     <SpaceRow>
       <Button variant="primary" onClick={this.handleLoginClick}> 
-        <FormattedMessage id="PRFN00L104"/>
+        <Label id="PRFN00L104"/>
       </Button>
     </SpaceRow>
     }
@@ -145,28 +146,28 @@ class Login extends React.Component {
 <>
     <SpaceRow>
       <Form.Group>
-        <Form.Label> <FormattedMessage id="PRFN00L201"/> </Form.Label>
+        <Form.Label> <Label id="PRFN00L201"/> </Form.Label>
         <Form.Control type="password" placeholder="Password" ref={this.oldPassword} />
       </Form.Group>
     </SpaceRow>
 
     <SpaceRow>
       <Form.Group>
-        <Form.Label> <FormattedMessage id="PRFN00L202"/> </Form.Label>
+        <Form.Label> <Label id="PRFN00L202"/> </Form.Label>
         <Form.Control type="password" placeholder="Password" ref={this.newPassword1} />
       </Form.Group>
     </SpaceRow>
 
     <SpaceRow>
       <Form.Group>
-        <Form.Label> <FormattedMessage id="PRFN00L203"/> </Form.Label>
+        <Form.Label> <Label id="PRFN00L203"/> </Form.Label>
         <Form.Control type="password" placeholder="Password" ref={this.newPassword2} />
       </Form.Group>
     </SpaceRow>
 
     <SpaceRow>
       <Button variant="primary" onClick={this.handleUpdateClick}> 
-        <FormattedMessage id="PRFN00L204"/>
+        <Label id="PRFN00L204"/>
       </Button>
     </SpaceRow>
 </>

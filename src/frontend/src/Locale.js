@@ -5,8 +5,6 @@ import { instanceOf } from "prop-types";
 import { withCookies,Cookies } from "react-cookie";
 import Select from "./pages/components/Select";
 
-import Dropdown  from 'react-bootstrap/Dropdown';
-
 import ja from './locale-data/ja.json';
 import en from './locale-data/en.json';
 import zh from './locale-data/zh.json';
@@ -67,16 +65,37 @@ export class Locale extends React.Component {
     )
   }
 }
-export function Get(id) {
+
+function get(id) {
   return inst.state.intl.formatMessage({id:id});
+}
+
+export function GetMessage(id) {
+  return get(id);
+}
+
+export function GetLabel(id) {
+  return get(id);
+}
+
+export function Label(props) {
+  return (
+    <FormattedMessage id={props.id}/>
+  )
+}
+
+export function Message(props) {
+  return (
+    <FormattedMessage id={props.id}/>
+  )
 }
 
 export function SelectLanguage() {
 
   let languages = {};
-  languages["en"] = Get("PRFN00L001");
-  languages["zh"] = Get("PRFN00L002");
-  languages["ja"] = Get("PRFN00L003");
+  languages["en"] = GetLabel("PRFN00L001");
+  languages["zh"] = GetLabel("PRFN00L002");
+  languages["ja"] = GetLabel("PRFN00L003");
 
   return (<>
     <FormattedMessage id="PRFN00L103"/>
