@@ -5,11 +5,16 @@ import {
 } from "react-bootstrap";
 
 import {Role} from "../Authentication";
-import {Redirect} from "../Layout";
+import {Redirect,ChangeTitle} from "../Layout";
 
 import "../css/Main.css";
 
 class Menu extends React.Component {
+
+  constructor(props) {
+    super(props)
+    ChangeTitle("メニュー")
+  }
 
   handle = () => {
       return false;

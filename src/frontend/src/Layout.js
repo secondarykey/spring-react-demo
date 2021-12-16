@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { Helmet,HelmetProvider } from "react-helmet-async";
+
 import {
   Container,Navbar,
   Alert,Accordion,Button
@@ -16,22 +18,29 @@ import "./css/Main.css"
 var setMessage;
 var setMessageType;
 var setErrorDetail;
+var changeStateTitle;
 
 function logout() {
   Logout();
   return false;
 }
 
-const Layout =({children}) => {
+const Layout = ({children}) => {
 
+  const [title,setTitle] = useState("Loaging... PAS")
   const [messageId,messageIdFunc] = useState("");
   const [messageType,messageTypeFunc] = useState("danger");
   const [detail,detailFunc] = useState("");
+
   setMessage = messageIdFunc;
   setMessageType = messageTypeFunc;
   setErrorDetail = detailFunc;
+  changeStateTitle = setTitle;
 
   return (<>
+<HelmetProvider>
+  <Helmet title={ title } />
+</HelmetProvider>
 <Authentication />
 <Locale>
 
@@ -64,7 +73,9 @@ const Layout =({children}) => {
         }
       </Alert>
     }
+
     {children}
+
   </main>
 
   <Dialog/>
@@ -117,13 +128,17 @@ export function WriteErrorMessage(err) {
 }
 
 export const withRouter = WrappedComponent => props => {
-    const params = useParams();
-    return (
-      <WrappedComponent
-        {...props}
-        params={params}
-      />
-    );
-  };
+  const params = useParams();
+  return (
+    <WrappedComponent
+      {...props}
+      params={params}
+    />
+  );
+};
 
-export default Layout;
+export function ChangeTitle(title) {
+  changeStateTitle(title + "[人員配置システム]");
+}
+
+export default withRouter(Layout);

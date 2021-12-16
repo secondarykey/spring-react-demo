@@ -7,7 +7,7 @@ import {
 import {SelectLanguage,
         GetLabel,Label,Message} from '../Locale';
 
-import {WriteErrorMessage,ClearMessage,Redirect}  from "../Layout";
+import {WriteErrorMessage,ClearMessage,Redirect,ChangeTitle}  from "../Layout";
 import {Save} from "../Authentication";
 import API from "../API";
 
@@ -25,6 +25,7 @@ class Login extends React.Component {
 
       this.state = { expiry : false, messageId : "" }
       ClearMessage();
+      ChangeTitle("ログイン")
   }
 
 
