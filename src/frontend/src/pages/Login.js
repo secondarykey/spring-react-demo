@@ -5,7 +5,7 @@ import {
   Alert,Form,Button
  } from 'react-bootstrap';
 
-import {SelectLanguage} from '../Locale';
+import Locale,{SelectLanguage,Get} from '../Locale';
 import {WriteErrorMessage,ClearMessage,Redirect}  from "../Layout";
 import {Save} from "../Authentication";
 import API from "../API";
@@ -109,7 +109,7 @@ class Login extends React.Component {
     <SpaceRow>
       <Form.Group>
         <Form.Label> <FormattedMessage id="PRFN00L101"/> </Form.Label>
-        <Form.Control type="email" placeholder="" ref={this.userId} />
+        <Form.Control type="email" placeholder={Get("PRFN00L101")} ref={this.userId} />
       </Form.Group>
     </SpaceRow>
 
