@@ -2,10 +2,13 @@ import React from "react";
 
 class Select extends React.Component  {
 
+
     handleChange = (e) => {
         var idx = e.target.selectedIndex;
         var val = e.target.options[idx];
-        this.props.onChange(val.value);
+        if ( this.props.onChange !== undefined ) {
+          this.props.onChange(val.value);
+        }
     }
 
     render() {
@@ -20,7 +23,17 @@ class Select extends React.Component  {
             clazz += " " + this.props.className;
         }
 
-        if ( !Array.isArray(vals) ) {
+        var optionList = []
+        if ( Array.isArray(vals) ) {
+          vals.map( (text,key)  => {
+            optionList.push(<option value={key} key={key}>{text}</option>)
+            return true;
+          })
+        } else if ( (typeof vals) == "object" )  {
+          for ( let key in vals ) {
+            optionList.push(<option value={key} key={key}>{vals[key]}</option>)
+          }
+        } else {
             return (<>
             SelectTag values is not array
             </>)
@@ -34,9 +47,7 @@ class Select extends React.Component  {
               { this.props.empty &&
                 <option value=""></option>
               }
-              { vals.map( (text,key)  => {
-                return <option value={key} key={key}>{text}</option>
-              })}
+              {optionList}
           </select>
         </>)
     }
