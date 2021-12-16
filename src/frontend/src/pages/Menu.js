@@ -25,6 +25,11 @@ class Menu extends React.Component {
     return;
   }
 
+  gotoFloat = () => {
+    Redirect("/pages/floating/");
+    return;
+  }
+
   render() {
     return (<>
 
@@ -51,6 +56,17 @@ class Menu extends React.Component {
           <Card.Text> 
           </Card.Text>
           <Button variant="primary" onClick={this.gotoDate}>Go Sample Date </Button>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col>
+      <Card className="Menu-Card">
+        <Card.Body>
+          <Card.Title>Sample Float</Card.Title>
+          <Card.Text> 
+          </Card.Text>
+          <Button variant="primary" onClick={this.gotoFloat}>Go Sample Float </Button>
         </Card.Body>
       </Card>
     </Col>

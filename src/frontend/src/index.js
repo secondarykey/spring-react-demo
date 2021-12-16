@@ -11,6 +11,7 @@ import Message  from './pages/Message';
 import Menu     from './pages/Menu';
 import ToDo     from './pages/Todo/View';
 import DateView from './pages/DateTime/View';
+import FloatingView from './pages/Floating/View';
 
 import Layout   from './Layout';
 
@@ -26,9 +27,11 @@ ReactDOM.render(
             <Route path="/pages/menu" element={<Menu/>} />
             <Route path="/pages/todo/" element={<ToDo/>} />
             <Route path="/pages/date/" element={<DateView/>} />
+            <Route path="/pages/floating/" element={<FloatingView/>} />
             <Route path="/message/:id" element={<Message type="success" />} />
             <Route path="/error/:id" element={<Message type="danger" />} />
             <Route path="*" element={<Navigate to="/error/PRFN98M000"/>} />
+
           </Routes>
         </Router>
       </Layout>
