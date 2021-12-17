@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import {WriteErrorMessage} from '../../Layout';
 import {ExtendRefresh} from '../../Authentication';
 import API from "../../API"
-import {ShowDialog} from "../../Dialog"
+import {ShowConfirm} from "../../Dialog"
 
 class ToDo extends React.Component {
 
@@ -79,7 +79,7 @@ class ToDo extends React.Component {
     let todos = this.state.todos.filter((x) => { return x.id !== id });
     var self = this;
 
-    ShowDialog("タイトル","メッセージ",function() {
+    ShowConfirm("タイトル","メッセージ").then( () => {
       API.delete("/api/demo/todo/delete",resp => {
         self.setState({
           todos:todos
@@ -89,7 +89,7 @@ class ToDo extends React.Component {
           return;
         }
         WriteErrorMessage(err);
-      }) 
+      });
     });
   }    
 
