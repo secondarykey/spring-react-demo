@@ -35,6 +35,11 @@ class Menu extends React.Component {
     return;
   }
 
+  gotoDialogs = () => {
+    Redirect("/pages/dialogs/");
+    return;
+  }
+
   render() {
     return (<>
 
@@ -72,6 +77,17 @@ class Menu extends React.Component {
           <Card.Text> 
           </Card.Text>
           <Button variant="primary" onClick={this.gotoFloat}>Go Sample Float </Button>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col>
+      <Card className="Menu-Card">
+        <Card.Body>
+          <Card.Title>Sample Dialog</Card.Title>
+          <Card.Text> 
+          </Card.Text>
+          <Button variant="primary" onClick={this.gotoDialogs}>Go Sample Dialog</Button>
         </Card.Body>
       </Card>
     </Col>
