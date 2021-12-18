@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { Helmet,HelmetProvider } from "react-helmet-async";
+
 import {
   Container,Navbar,
   Alert,Accordion,Button
 } from 'react-bootstrap';
-import {FormattedMessage} from "react-intl";
 
-import Locale from "./Locale";
+import Locale,{Label,Message} from "./Locale";
 import Authentication from "./Authentication";
 import Dialog from "./Dialog";
 import Progress from "./Progress";
@@ -17,22 +18,29 @@ import "./css/Main.css"
 var setMessage;
 var setMessageType;
 var setErrorDetail;
+var changeStateTitle;
 
 function logout() {
   Logout();
   return false;
 }
 
-const Layout =({children}) => {
+const Layout = ({children}) => {
 
+  const [title,setTitle] = useState("Loaging... PAS")
   const [messageId,messageIdFunc] = useState("");
   const [messageType,messageTypeFunc] = useState("danger");
   const [detail,detailFunc] = useState("");
+
   setMessage = messageIdFunc;
   setMessageType = messageTypeFunc;
   setErrorDetail = detailFunc;
+  changeStateTitle = setTitle;
 
   return (<>
+<HelmetProvider>
+  <Helmet title={ title } />
+</HelmetProvider>
 <Authentication />
 <Locale>
 
@@ -50,13 +58,13 @@ const Layout =({children}) => {
   <main>
     {messageId !== "" &&
       <Alert key="1" variant={messageType}> 
-        <FormattedMessage id={messageId}/> 
+        <Message id={messageId}/> 
         {detail !== "" &&
 
         <Accordion>
           <Accordion.Item eventKey="0">
             <Accordion.Header className="Layout-SystemDetail">
-              <FormattedMessage id="PRFN00L000"/> 
+              <Label id="PRFN00L000"/> 
             </Accordion.Header>
             <Accordion.Body>{detail}</Accordion.Body>
           </Accordion.Item>
@@ -65,7 +73,9 @@ const Layout =({children}) => {
         }
       </Alert>
     }
+
     {children}
+
   </main>
 
   <Dialog/>
@@ -119,13 +129,17 @@ export function WriteErrorMessage(err) {
 }
 
 export const withRouter = WrappedComponent => props => {
-    const params = useParams();
-    return (
-      <WrappedComponent
-        {...props}
-        params={params}
-      />
-    );
-  };
+  const params = useParams();
+  return (
+    <WrappedComponent
+      {...props}
+      params={params}
+    />
+  );
+};
 
-export default Layout;
+export function ChangeTitle(title) {
+  changeStateTitle(title + "[人員配置システム]");
+}
+
+export default withRouter(Layout);

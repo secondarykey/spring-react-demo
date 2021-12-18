@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 
-	public static Logger logger = LoggerFactory.getLogger(IndexController.class);	
-	  @RequestMapping(
-			  value = {"/","/pages/*","/message/*","/error/*"}, 
-			  method = RequestMethod.GET)
-	  String index() {
-		  logger.info("index()");
-	    return "/index.html";
-	  }
+	public static Logger logger = LoggerFactory.getLogger(IndexController.class);
+
+	@RequestMapping(
+			value = { "/", "/pages/*", "/message/*", "/error/*" }, 
+			method = RequestMethod.GET)
+	String index() {
+		logger.info("index()");
+		return "/index.html";
+	}
 }

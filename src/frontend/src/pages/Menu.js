@@ -5,15 +5,25 @@ import {
 } from "react-bootstrap";
 
 import {Role} from "../Authentication";
-import {Redirect} from "../Layout";
+import {Redirect,ChangeTitle} from "../Layout";
 
 import "../css/Main.css";
 
 class Menu extends React.Component {
 
+<<<<<<< HEAD
   gotoPlan = () => {
     Redirect("/pages/plan/");
     return;
+=======
+  constructor(props) {
+    super(props)
+    ChangeTitle("メニュー")
+  }
+
+  handle = () => {
+      return false;
+>>>>>>> main
   }
 
   gotoDate = () => {
@@ -28,6 +38,16 @@ class Menu extends React.Component {
 
   gotoPaging = () => {
     Redirect("/pages/paging/");
+    return;
+  }
+
+  gotoFloat = () => {
+    Redirect("/pages/floating/");
+    return;
+  }
+
+  gotoDialogs = () => {
+    Redirect("/pages/dialogs/");
     return;
   }
 
@@ -75,10 +95,32 @@ class Menu extends React.Component {
     <Col>
       <Card className="Menu-Card">
         <Card.Body>
+          <Card.Title>Sample Float</Card.Title>
+          <Card.Text> 
+          </Card.Text>
+          <Button variant="primary" onClick={this.gotoFloat}>Go Sample Float </Button>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col>
+      <Card className="Menu-Card">
+        <Card.Body>
           <Card.Title>Sample Paging</Card.Title>
           <Card.Text> 
           </Card.Text>
           <Button variant="primary" onClick={this.gotoPaging}>Go Database Date</Button>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col>
+      <Card className="Menu-Card">
+        <Card.Body>
+          <Card.Title>Sample Dialog</Card.Title>
+          <Card.Text> 
+          </Card.Text>
+          <Button variant="primary" onClick={this.gotoDialogs}>Go Sample Dialog</Button>
         </Card.Body>
       </Card>
     </Col>

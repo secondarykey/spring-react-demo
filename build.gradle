@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.example.demo'
-version = '0.2.0-SNAPSHOT'
+version = '0.5.0-SNAPSHOT'
 
 sourceCompatibility = '17'
 
@@ -14,20 +14,28 @@ repositories {
 	mavenCentral()
 }
 
+sourceSets {
+    batch {
+        java {
+            srcDirs 'src/batch/java'
+        }
+        resources {
+            srcDirs 'src/batch/resources'
+        }
+        compileClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
 dependencies {
 annotationProcessor("javax.annotation:javax.annotation-api")
     //runtimeOnly 'com.h2database:h2:2.0.20'
     runtimeOnly 'org.postgresql:postgresql'
-	runtimeOnly 'org.apache.logging.log4j:log4j-api:2.15.0'
+	runtimeOnly 'org.apache.logging.log4j:log4j-api:2.16.0'
 	
-	compileOnly 'org.projectlombok:lombok:1.18.10'
-	annotationProcessor 'org.projectlombok:lombok:1.18.10'
-
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	
     implementation 'com.google.code.gson:gson:2.8.9'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -35,6 +43,8 @@ annotationProcessor("javax.annotation:javax.annotation-api")
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
+
+    batchImplementation 'org.springframework.boot:spring-boot-starter-batch'
 }
 
 test {
@@ -49,5 +59,23 @@ task copyFE(type: Copy) {
 task buildFE(type: Exec) {
     workingDir './src/frontend'
     commandLine "npm.cmd","run", "build"
+}
+
+task mainJar(type:Jar) {
+  classifier = "";
+  from sourceSets.main.output
+}
+
+
+task batchJar(type: Jar) {
+  classifier = 'batch'
+  manifest {
+    attributes(
+      'Main-Class': 'com.example.demo.BatchApplication'
+    )
+  }
+
+  from sourceSets.batch.output
+  with jar
 }
 

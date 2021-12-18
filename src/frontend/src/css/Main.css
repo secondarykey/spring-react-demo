@@ -20,6 +20,7 @@ main {
     width:70px;
 }
 
+<<<<<<< HEAD
 .Paging-Limit {
     display: inline-flex;
     width:100px;
@@ -30,6 +31,13 @@ main {
     display: inline-flex;
     width:200px;
     height:38px;
+}
+
+.FloatComponent {
+    position:absolute;
+    border: 1px solid #ced4da;
+    background-color: #ffffff;
+    border-radius: 4px;
 }
 
 .Progress {
@@ -56,3 +64,22 @@ main {
   padding: 0;
   margin: 0;
 }
+
+.Dialogs-Card {
+    max-width:350px;
+    padding:20px;
+    margin-bottom: 10px;
+}
+
+.Dialogs-State1 {
+    background-color:lightgreen !important;
+}
+
+.Dialogs-State2 {
+    background-color:lightpink !important;
+}
+
+.Dialogs-Button {
+    width:100px;
+}
+
