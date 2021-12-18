@@ -15,10 +15,14 @@ repositories {
 }
 
 sourceSets {
-    main {
+    batch {
         java {
-            srcDirs 'src/batch/java','src/batch/resources'
+            srcDirs 'src/batch/java'
         }
+        resources {
+            srcDirs 'src/batch/resources'
+        }
+        compileClasspath += sourceSets.main.runtimeClasspath
     }
 }
 
@@ -32,13 +36,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.code.gson:gson:2.8.9'
 
-    implementation 'org.springframework.boot:spring-boot-starter-batch'
-
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
+
+    batchImplementation 'org.springframework.boot:spring-boot-starter-batch'
 }
 
 test {
@@ -53,5 +57,23 @@ task copyFE(type: Copy) {
 task buildFE(type: Exec) {
     workingDir './src/frontend'
     commandLine "npm.cmd","run", "build"
+}
+
+task mainJar(type:Jar) {
+  classifier = "";
+  from sourceSets.main.output
+}
+
+
+task batchJar(type: Jar) {
+  classifier = 'batch'
+  manifest {
+    attributes(
+      'Main-Class': 'com.example.demo.BatchApplication'
+    )
+  }
+
+  from sourceSets.batch.output
+  with jar
 }
 

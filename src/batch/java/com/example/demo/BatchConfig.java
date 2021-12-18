@@ -11,6 +11,7 @@ import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import com.example.demo.batch.JobListener;
 import com.example.demo.batch.task.UserTasklet;
