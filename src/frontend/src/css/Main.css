@@ -20,6 +20,13 @@ main {
     width:70px;
 }
 
+.FloatComponent {
+    position:absolute;
+    border: 1px solid #ced4da;
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+
 .Progress {
     z-index  : 1024;
     position : fixed;
@@ -44,3 +51,22 @@ main {
   padding: 0;
   margin: 0;
 }
+
+.Dialogs-Card {
+    max-width:350px;
+    padding:20px;
+    margin-bottom: 10px;
+}
+
+.Dialogs-State1 {
+    background-color:lightgreen !important;
+}
+
+.Dialogs-State2 {
+    background-color:lightpink !important;
+}
+
+.Dialogs-Button {
+    width:100px;
+}
+

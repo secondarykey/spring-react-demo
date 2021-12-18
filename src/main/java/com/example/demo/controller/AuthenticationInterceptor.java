@@ -20,42 +20,54 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	
 	public static Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
 	
-	private static String[] ignoreURLPrefix = {"/api"};
+	private static String[] targetURLPrefix = {"/api"};
 	private static String[] ignoreURLs = {"/api/v1/login","/api/v1/password"};
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
+		if ( !isAuth(request) ) {
+			logger.debug("対象URLでないのでOK");
+			return true;
+		}
 
-		if ( isAuth(request) ) {
-			String authHeader = request.getHeader("Authorization");
-			if ( Util.isEmpty(authHeader) ) {
-				//認証エラー
+		String authHeader = request.getHeader("Authorization");
+		logger.info(authHeader);
+
+		if ( Util.isEmpty(authHeader) ) {
+			return false;
+		}
+		try {
+			LoginUser user = EncryptUtil.decodeUser(authHeader);
+			Date expiry = DateUtil.parse(user.getExpiry());
+			Date now = new Date();
+			if ( expiry.before(now) ) {
 				return false;
 			}
-			try {
-				LoginUser user = EncryptUtil.decodeUser(authHeader);
-				Date expiry = DateUtil.parse(user.getExpiry());
-				Date now = new Date();
-				if ( expiry.before(now) ) {
-					//有効期限切れエラーへ
-					return false;
-				}
-			} catch ( Exception ex ) {
-				logger.error("APIの認証データ復号化に失敗",ex);
-				return false;
-			}
+		} catch ( Exception ex ) {
+			logger.error("APIの認証データ復号化に失敗",ex);
+			return false;
 		}
 
 		return true;
 	}
 
 	private boolean isAuth(HttpServletRequest request) {
+
 		String uri = request.getRequestURI();
 		String path = request.getContextPath();
 		String pure = uri.replaceAll(path, "");
 		logger.info("request:"+pure);
-		return !ignoreURL(pure);
+
+		for ( String ignore : targetURLPrefix ) {
+			if ( pure.indexOf(ignore) == 0 ) {
+				if ( !ignoreURL(pure) ) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -64,16 +76,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	 * @return 
 	 */
 	private boolean ignoreURL(String url) {
-		for ( String ignore : ignoreURLPrefix ) {
-			if ( url.indexOf(ignore) == 0 ) {
-				return true;
-			}
-		}
+
 		for ( String ignore : ignoreURLs ) {
 			if ( url.equals(ignore) ) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 }

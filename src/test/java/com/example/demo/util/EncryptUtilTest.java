@@ -26,4 +26,11 @@ public class EncryptUtilTest {
 		assertEquals(user.getRole(),"user");
 	}
 
+	@Test
+	void testHashPassword() {
+		String rtn = EncryptUtil.hashPassword("passw0rd");
+		assertEquals(rtn,"");
+	}
+
+
 }

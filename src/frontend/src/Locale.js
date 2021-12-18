@@ -3,8 +3,7 @@ import {FormattedMessage} from "react-intl";
 import {createIntl, createIntlCache, RawIntlProvider} from 'react-intl';
 import { instanceOf } from "prop-types";
 import { withCookies,Cookies } from "react-cookie";
-
-import Dropdown  from 'react-bootstrap/Dropdown';
+import Select from "./pages/components/Select";
 
 import ja from './locale-data/ja.json';
 import en from './locale-data/en.json';
@@ -49,7 +48,7 @@ export class Locale extends React.Component {
       if ( lang == null ) {
         lang = navigator.language;
       }
-
+      this.lang = lang;
       this.state = {intl:create(lang)};
   }
 
@@ -57,6 +56,7 @@ export class Locale extends React.Component {
       this.setState({intl:create(locale)});
       const { cookies } = this.props;
       cookies.set('language', locale, { path: '/' });
+      this.lang = locale;
   }
 
   render() {
@@ -66,28 +66,41 @@ export class Locale extends React.Component {
   }
 }
 
+function get(id) {
+  return inst.state.intl.formatMessage({id:id});
+}
+
+export function GetMessage(id) {
+  return get(id);
+}
+
+export function GetLabel(id) {
+  return get(id);
+}
+
+export function Label(props) {
+  return (
+    <FormattedMessage id={props.id}/>
+  )
+}
+
+export function Message(props) {
+  return (
+    <FormattedMessage id={props.id}/>
+  )
+}
+
 export function SelectLanguage() {
 
-    return (
-<Dropdown onSelect={changeLanguage}>
-  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-    <FormattedMessage id="PRFN00L103"/>
-  </Dropdown.Toggle>
-          
-  <Dropdown.Menu>
-    <Dropdown.Item eventKey="en">
-      <FormattedMessage id="PRFN00L001"/>
-    </Dropdown.Item>
-    <Dropdown.Item eventKey="zh">
-      <FormattedMessage id="PRFN00L002"/>
-    </Dropdown.Item>
-    <Dropdown.Item eventKey="ja">
-      <FormattedMessage id="PRFN00L003"/>
-    </Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown>
+  let languages = {};
+  languages["en"] = GetLabel("PRFN00L001");
+  languages["zh"] = GetLabel("PRFN00L002");
+  languages["ja"] = GetLabel("PRFN00L003");
 
-);
+  return (<>
+    <FormattedMessage id="PRFN00L103"/>
+    <Select values={languages} value={inst.lang} onChange={changeLanguage} />
+  </>);
 }
 
 export default withCookies(Locale);
