@@ -27,9 +27,9 @@ sourceSets {
 }
 
 dependencies {
-annotationProcessor("javax.annotation:javax.annotation-api")
-    //runtimeOnly 'com.h2database:h2:2.0.20'
-    runtimeOnly 'org.postgresql:postgresql'
+
+    runtimeOnly 'com.h2database:h2'
+    //runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'org.apache.logging.log4j:log4j-api:2.16.0'
 	
     implementation 'org.springframework.boot:spring-boot-starter-validation'

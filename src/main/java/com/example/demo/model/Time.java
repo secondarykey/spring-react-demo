@@ -11,8 +11,10 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("times")
 public class Time {
 	@Id
+	@Column("id")
 	private int id;
 	
+	@Column("value")
 	private String value;
 
 	@Column("date")
@@ -22,10 +24,6 @@ public class Time {
 
 	@Column("date_without")
 	private Date dateToWithout;
-	@Column("date_with")
-	private Date dateToWith;
-	@Column("offset_without")
-	private OffsetDateTime offsetToWithout;
 	@Column("offset_with")
 	private OffsetDateTime offsetToWith;
 	public int getId() {
@@ -58,18 +56,7 @@ public class Time {
 	public void setDateToWithout(Date dateToWithout) {
 		this.dateToWithout = dateToWithout;
 	}
-	public Date getDateToWith() {
-		return dateToWith;
-	}
-	public void setDateToWith(Date dateToWith) {
-		this.dateToWith = dateToWith;
-	}
-	public OffsetDateTime getOffsetToWithout() {
-		return offsetToWithout;
-	}
-	public void setOffsetToWithout(OffsetDateTime offsetToWithout) {
-		this.offsetToWithout = offsetToWithout;
-	}
+
 	public OffsetDateTime getOffsetToWith() {
 		return offsetToWith;
 	}

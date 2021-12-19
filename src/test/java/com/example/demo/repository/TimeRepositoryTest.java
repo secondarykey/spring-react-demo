@@ -30,10 +30,8 @@ public class TimeRepositoryTest {
 		time.setValue(zone.toString());
 		time.setDate(date);
 		time.setTime(date);
-		time.setDateToWith(date);
 		time.setDateToWithout(date);
 		time.setOffsetToWith(zone);
-		time.setOffsetToWithout(zone);
 		
 		repository.save(time);
 	

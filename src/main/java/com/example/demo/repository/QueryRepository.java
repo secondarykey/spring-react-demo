@@ -17,11 +17,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-public class AccessRepository {
+public class QueryRepository {
 
 	//NamedParameterJdbcTemplate;
 	protected final JdbcTemplate template;
-	public AccessRepository(JdbcTemplate template) {
+	public QueryRepository(JdbcTemplate template) {
 		this.template = template;
 	}
 	

@@ -30,7 +30,8 @@ public class UserTasklet implements Tasklet {
 
 		logger.info("execute() userFind");
 		logger.info("params {}",userId);
-		User user = repo.findById(userId);
+		User user = repo.findById(userId).orElse(new User());
+
 		logger.info("User Name:{}",user.getName());
 		return RepeatStatus.FINISHED;
 	}

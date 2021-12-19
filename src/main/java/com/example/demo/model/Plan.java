@@ -12,7 +12,9 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("plans")
 public class Plan {
 	@Id
+	@Column("id")
 	private Integer id;
+	@Column("date")
 	private Date date;
 
 	@Column("places_id")

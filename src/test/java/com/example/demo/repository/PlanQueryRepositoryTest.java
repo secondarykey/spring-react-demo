@@ -38,6 +38,7 @@ public class PlanQueryRepositoryTest {
 	void testFindByPlaceDate() {
 		Date target = DateUtil.parseDate("2021-10-10");
 		Plan plan = repo.findByPlaceDate(1,target);
+
 		assertNotNull(plan);
 		Place place = plan.getPlace();
 		assertNull(place);

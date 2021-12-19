@@ -35,7 +35,8 @@ class Login extends React.Component {
 
     let data = {
         id : this.userId.current.value,
-        password : this.password.current.value
+        password : this.password.current.value,
+        msgId : ""
     }
 
     API.post("/api/v1/login",

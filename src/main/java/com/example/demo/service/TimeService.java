@@ -65,8 +65,6 @@ public class TimeService extends BusinessService {
 		time.setDate(date);
 		time.setTime(date);
 		time.setDateToWithout(date);
-		time.setDateToWith(date);
-		time.setOffsetToWithout(offset);
 		time.setOffsetToWith(offset);
 		
 		crud.save(time);

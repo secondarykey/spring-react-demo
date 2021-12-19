@@ -28,7 +28,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 			throws Exception {
 		
 		if ( !isAuth(request) ) {
-			logger.debug("対象URLでないのでOK");
+			logger.debug("対象URLでないのでOK{}",request.getRequestURL());
 			return true;
 		}
 
@@ -62,6 +62,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		String uri = request.getRequestURI();
 		String path = request.getContextPath();
 		String pure = uri.replaceAll(path, "");
+
 		logger.info("request:"+pure);
 
 		for ( String ignore : targetURLPrefix ) {

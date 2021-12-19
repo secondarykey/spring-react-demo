@@ -11,19 +11,14 @@ import "../css/Main.css";
 
 class Menu extends React.Component {
 
-<<<<<<< HEAD
-  gotoPlan = () => {
-    Redirect("/pages/plan/");
-    return;
-=======
   constructor(props) {
     super(props)
     ChangeTitle("メニュー")
   }
 
-  handle = () => {
-      return false;
->>>>>>> main
+  gotoPlan = () => {
+    Redirect("/pages/plan/");
+    return;
   }
 
   gotoDate = () => {

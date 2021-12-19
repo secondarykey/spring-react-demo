@@ -13,11 +13,12 @@ import com.example.demo.model.query.TimeMapper;
 import com.example.demo.transfer.Paging;
 
 @Repository
-public class TimeQueryRepository extends AccessRepository {
+public class TimeQueryRepository extends QueryRepository {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(TimeQueryRepository.class);
-	@Autowired
+
+	@Autowired(required=true)
 	public TimeQueryRepository(JdbcTemplate template) {
 		super(template);
 	}

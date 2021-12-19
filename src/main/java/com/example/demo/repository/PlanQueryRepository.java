@@ -13,9 +13,10 @@ import com.example.demo.model.query.PlanPlaceRowMapper;
 import com.example.demo.model.query.PlanRowMapper;
 
 @Repository
-public class PlanQueryRepository extends AccessRepository {
+public class PlanQueryRepository extends QueryRepository {
 
-	@Autowired
+
+	@Autowired(required=true)
 	public PlanQueryRepository(JdbcTemplate template) {
 		super(template);
 	}

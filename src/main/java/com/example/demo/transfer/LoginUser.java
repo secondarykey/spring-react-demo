@@ -45,7 +45,7 @@ public class LoginUser implements Serializable {
 		lu.id = user.getId();
 		lu.name = user.getName();
 		lu.role = user.getRole();
-		lu.expiry = DateUtil.formatClient(user.getExpiry());
+		lu.expiry = user.getExpiry().toString();
 		
 		return lu;
 	}

@@ -69,7 +69,6 @@ class View extends React.Component {
         }
 
         for ( let idx in children ) {
-
             var child = children[idx];
             if ( child.key === id ) {
                 return child;

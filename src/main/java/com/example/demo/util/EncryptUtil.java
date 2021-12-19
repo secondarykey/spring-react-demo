@@ -23,7 +23,7 @@ public class EncryptUtil {
 	public static String hashPassword(String password) {
         MessageDigest md;
 		try {
-			md = MessageDigest.getInstance("SHA-512");
+			md = MessageDigest.getInstance("SHA-256");
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException("アルゴリズム生成時のエラー",e);
 		}

@@ -1,19 +1,26 @@
 package com.example.demo.model;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("users")
 public class User {
 
 	@Id
+	@Column("id")
 	private String id;
+	@Column("name")
 	private String name;
+	@Column("password")
 	private String password;
+	@Column("role")
 	private String role;
-	private Date expiry;
+	@Column("expiry")
+	private OffsetDateTime expiry;
 
 	public String getId() {
 		return id;
@@ -27,7 +34,7 @@ public class User {
 	public String getRole() {
 		return role;
 	}
-	public Date getExpiry() {
+	public OffsetDateTime getExpiry() {
 		return expiry;
 	}
 
@@ -43,7 +50,7 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public void setExpiry(Date expiry) {
+	public void setExpiry(OffsetDateTime expiry) {
 		this.expiry = expiry;
 	}
 }

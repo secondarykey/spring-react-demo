@@ -11,6 +11,7 @@ public class ToDo {
 	private int id;
 	@Column("value")
 	private String value;
+
 	public int getId() {
 		return id;
 	}

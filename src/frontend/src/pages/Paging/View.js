@@ -143,8 +143,6 @@ class Time extends React.Component {
                 <th>Date</th>
                 <th>Time</th>
                 <th>Date To Without</th>
-                <th>Date To With</th>
-                <th>OffsetDateTime To Without</th>
                 <th>OffsetDateTime To With</th>
             </tr>
           </thead>
@@ -158,8 +156,6 @@ class Time extends React.Component {
                 <td>{obj.date}</td>
                 <td>{obj.time}</td>
                 <td>{obj.dateToWithout}</td>
-                <td>{obj.dateToWith}</td>
-                <td>{obj.offsetToWithout}</td>
                 <td>{obj.offsetToWith}</td>
             </tr>
             )

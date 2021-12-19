@@ -23,9 +23,6 @@ public class TimeMapper implements RowCallbackHandler {
 		time.setTime(rs.getTime("time"));
 
 		time.setDateToWithout(rs.getTimestamp("date_without"));
-		time.setDateToWith(rs.getTimestamp("date_with"));
-
-		time.setOffsetToWithout(DateUtil.zone(rs.getTimestamp("offset_without"),"UTC"));
 		time.setOffsetToWith(DateUtil.zone(rs.getTimestamp("offset_with"),"UTC"));
 
 		list.add(time);
