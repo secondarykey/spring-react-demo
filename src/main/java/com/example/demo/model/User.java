@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import java.time.OffsetDateTime;
-import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;

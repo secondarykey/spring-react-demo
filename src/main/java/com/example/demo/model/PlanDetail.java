@@ -11,11 +11,15 @@ import org.springframework.data.relational.core.mapping.Column;
 @Table("plan_details")
 public class PlanDetail {
 	@Id
+	@Column("id")
 	private Integer id;
 	@Column("plans_id")
 	private Integer plansId;
+	@Column("start")
 	private Date start;
+	@Column("end")
 	private Date end;
+	@Column("name")
 	private String name;
 	
 	@Transient

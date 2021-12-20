@@ -17,7 +17,7 @@ public class ToDoQueryRepository extends QueryRepository {
 	}
 
 	public List<ToDo> findAll() {
-		String sql = "SELECT * from TODOS";
+		String sql = "SELECT * from todos";
 		return super.select(ToDo.class, sql);
 	}
 }
