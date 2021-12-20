@@ -11,14 +11,14 @@ import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 import com.example.demo.batch.JobListener;
+import com.example.demo.batch.task.ResourceTasklet;
 import com.example.demo.batch.task.UserTasklet;
 import com.example.demo.batch.task.WaitTasklet;
 
-//@Configuration
-//@EnableBatchProcessing
+@Configuration
+@EnableBatchProcessing
 public class BatchConfig {
 
 	private static Logger logger = LoggerFactory.getLogger(BatchConfig.class);
@@ -32,12 +32,14 @@ public class BatchConfig {
     private UserTasklet userTask;
     @Autowired
     private WaitTasklet waitTask;
+    @Autowired
+    private ResourceTasklet resourceTask;
 
     @Bean
     public Job userJob() {
     	String name = "user";
     	logger.debug("register Job:" + name);
-        TaskletStep step = stepBuilderFactory.get("step30").tasklet(userTask).build();
+        TaskletStep step = stepBuilderFactory.get(name).tasklet(userTask).build();
         return jobBuilderFactory.get(name).incrementer(new RunIdIncrementer()).
         		start(step).
         		listener(new JobListener()).build();
@@ -47,7 +49,16 @@ public class BatchConfig {
     public Job waitJob() {
     	String name = "wait";
     	logger.debug("register Job:" + name);
-        TaskletStep step = stepBuilderFactory.get("step60").tasklet(waitTask).build();
+        TaskletStep step = stepBuilderFactory.get(name).tasklet(waitTask).build();
+        return jobBuilderFactory.get(name).incrementer(new RunIdIncrementer()).
+        		start(step).
+        		listener(new JobListener()).build();
+    }
+    @Bean
+    public Job resouceJob() {
+    	String name = "createResource";
+    	logger.debug("register Job:" + name);
+        TaskletStep step = stepBuilderFactory.get(name).tasklet(resourceTask).build();
         return jobBuilderFactory.get(name).incrementer(new RunIdIncrementer()).
         		start(step).
         		listener(new JobListener()).build();
