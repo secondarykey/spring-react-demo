@@ -1,13 +1,11 @@
-drop table if exists users;
-drop table if exists role;
+drop table users if exists;
+drop table role if exists;
 
-drop table if exists todos;
-drop table if exists times;
-drop table if exists plan_details;
-drop table if exists plans;
-drop table if exists places;
-
-drop alias if exists PasswordHash;
+drop table todos if exists;
+drop table times if exists;
+drop table plan_details if exists;
+drop table plans if exists;
+drop table places if exists;
 
 create table role(
     id varchar(16) primary key,
@@ -59,20 +57,3 @@ create table plan_details (
   foreign key(plans_id) references plans(id)
 );
 
-
-/*
-create table results {
-  id Serial primary key,
-  plans_id serial,
-  foreign key(plans_id) references plans(id)
-}
-
-create table result_details {
-  id Serial primary key,
-  plan_details_id Serial,
-  resules_id Serial,
-  status integer,
-  foreign key(results_id) references results(id),
-  foreign key(plan_details_id) references plan_details(id)
-}
-*/
