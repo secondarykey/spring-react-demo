@@ -88,7 +88,7 @@ class Login extends React.Component {
 
     API.put("/api/v1/password",
       resp => {
-        console.log(resp.data);
+        Save(resp.data.result.user);
         Redirect('/pages/menu');
     },data).catch( (err) => {
       if ( API.isUnknownError(err) ) {

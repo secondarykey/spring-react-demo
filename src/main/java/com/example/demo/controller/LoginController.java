@@ -30,8 +30,8 @@ public class LoginController extends JSONController {
 	}
 	
 	@RequestMapping("/password")
-	public Result<String> changePassword(@RequestBody PasswordRequest json) {
-		Result<String> result = userService.changePassword(json);
+	public Result<LoginResponse> changePassword(@RequestBody PasswordRequest json) {
+		Result<LoginResponse> result = userService.changePassword(json);
 		if ( !Util.isEmpty(result.getMessageID()) ) {
 			Unauthorized(result.getMessageID(),result.getReason());
 			return result;
