@@ -1,59 +1,60 @@
-drop table users if exists;
-drop table role if exists;
+DROP TABLE IF EXISTS USERS;
+DROP TABLE IF EXISTS ROLE;
 
-drop table todos if exists;
-drop table times if exists;
-drop table plan_details if exists;
-drop table plans if exists;
-drop table places if exists;
+DROP TABLE IF EXISTS TODOS;
+DROP TABLE IF EXISTS TIMES;
+DROP TABLE IF EXISTS PLAN_DETAILS;
+DROP TABLE IF EXISTS PLANS;
+DROP TABLE IF EXISTS PLACES;
 
-create table role(
-    id varchar(16) primary key,
-    name varchar(128)
+CREATE TABLE ROLE(
+    ID VARCHAR(16) PRIMARY KEY,
+    NAME VARCHAR(128)
 );
 
-create table users(
-    id varchar(255) primary key,
-    name varchar(255),
-    password varchar(255),
-    role varchar(16),
-    expiry timestamp with time zone,
-    foreign key(role) references role(id)
+CREATE TABLE USERS (
+    ID VARCHAR(255) PRIMARY KEY,
+    NAME VARCHAR(255),
+    PASSWORD VARCHAR(255),
+    ROLE VARCHAR(16),
+    EXPIRY TIMESTAMP WITH TIME ZONE,
+    FOREIGN KEY(ROLE) REFERENCES ROLE(ID)
 );
 
-create table todos(
-    id SERIAL primary key,
-    "value" varchar(32)
+CREATE TABLE TODOS (
+    ID SERIAL PRIMARY KEY,
+    "VALUE" VARCHAR(32)
 );
 
-create table times(
-    id SERIAL primary key,
-    "value" varchar(32),
-    "date" date,
-    "time" time,
-    date_without timestamp without time zone,
-    offset_with timestamp with time zone
+CREATE TABLE TIMES (
+    ID SERIAL PRIMARY KEY,
+    "VALUE" VARCHAR(32),
+    "DATE" date,
+    "TIME" time,
+    DATE_WITHOUT TIMESTAMP WITHOUT TIME ZONE,
+    OFFSET_WITH TIMESTAMP WITH TIME ZONE
 );
 
-create table places (
-    id SERIAL primary key,
-    name varchar(128),
-    timezone varchar(32)
+CREATE TABLE PLACES (
+    ID SERIAL PRIMARY KEY,
+    NAME VARCHAR(128),
+    TIMEZONE VARCHAR(32)
 );
 
-create table plans (
-  id Serial primary key,
-  places_id integer,
-  date timestamp without time zone,
-  foreign key(places_id) references places(id)
+CREATE TABLE PLANS (
+  ID SERIAL PRIMARY KEY,
+  PLACES_ID INTEGER,
+  DATE TIMESTAMP WITHOUT TIME ZONE,
+  FOREIGN KEY(PLACES_ID) REFERENCES PLACES(ID)
 );
 
-create table plan_details (
-  id Serial primary key,
-  plans_id integer,
-  name varchar(128),
-  start timestamp without time zone,
-  "end" timestamp without time zone,
-  foreign key(plans_id) references plans(id)
+CREATE TABLE PLAN_DETAILS (
+  ID SERIAL PRIMARY KEY,
+  PLANS_ID INTEGER,
+  NAME VARCHAR(128),
+  START TIMESTAMP WITHOUT TIME ZONE,
+  "END" TIMESTAMP WITHOUT TIME ZONE,
+  FOREIGN KEY(PLANS_ID) REFERENCES PLANS(ID)
 );
+
 

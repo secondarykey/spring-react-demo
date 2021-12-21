@@ -1,65 +1,60 @@
-insert into role values('user', '一般ユーザ');
-insert into role values('manager', '管理者');
-insert into role values('admin', 'システム管理者');
+INSERT INTO ROLE VALUES('user', '一般ユーザ');
+INSERT INTO ROLE VALUES('manager', '管理者');
+INSERT INTO ROLE VALUES('admin', 'システム管理者');
 
-insert into users(id,name,role,password,expiry)
-values(
+INSERT INTO USERS(ID,NAME,ROLE,PASSWORD,EXPIRY)
+VALUES(
     'user', '山田太郎','user',
     '6c96c4d30bb54424d38c6b09a19dfe305db7ea800a5d9d28265d63af4d5ed767',
     CURRENT_TIMESTAMP
 );
-insert into users(id,name,role,password,expiry)
-values(
+INSERT INTO USERS(ID,NAME,ROLE,PASSWORD,EXPIRY)
+VALUES(
     'manager', '管理士太郎','manager',
     '6c96c4d30bb54424d38c6b09a19dfe305db7ea800a5d9d28265d63af4d5ed767',
     CURRENT_TIMESTAMP
 );
-insert into users(id,name,role,password,expiry)
-values(
+INSERT INTO USERS(ID,NAME,ROLE,PASSWORD,EXPIRY)
+VALUES(
     'admin', 'アドミン太郎','admin',
     '6c96c4d30bb54424d38c6b09a19dfe305db7ea800a5d9d28265d63af4d5ed767',
     CURRENT_TIMESTAMP
 );
 
-insert into todos("value") values ('TODO1');
-insert into todos("value") values ('TODO2');
+INSERT INTO TODOS("VALUE") VALUES ('TODO1');
+INSERT INTO TODOS("VALUE") VALUES ('TODO2');
 
-insert into places(id,name,timezone)
-values(
+INSERT INTO PLACES(ID,NAME,TIMEZONE)
+VALUES(
     1, '日本','Asia/Tokyo'
 );
 
-insert into places(id,name,timezone)
-values(
+INSERT INTO places(ID,NAME,TIMEZONE)
+VALUES(
     2, '中国','Asia/Shanghai'
 );
 
-insert into plans(id,places_id,date)
-values( 1, 1, '2021-10-10T12:00:00');
+INSERT INTO PLANS(ID,PLACES_ID,DATE) VALUES( 1, 1, '2021-10-10T12:00:00');
+INSERT INTO PLANS(ID,PLACES_ID,DATE) VALUES( 2, 1, '2021-10-11T12:00:00');
+INSERT INTO PLANS(ID,PLACES_ID,DATE) VALUES( 3, 2, '2021-10-10T12:00:00');
 
-insert into plans(id,places_id,date)
-values( 2, 1, '2021-10-11T12:00:00');
+INSERT INTO PLAN_DETAILS (ID,PLANS_ID,NAME,START,"END")
+    VALUES( 1, 1, '1 = 1-1', '2021-10-10T08:00:00','2021-10-10T11:00:00');
+INSERT INTO PLAN_DETAILS (ID,PLANS_ID,NAME,START,"END")
+    VALUES( 2, 1, '2 = 1-2', '2021-10-10T11:00:00','2021-10-10T13:00:00');
+INSERT INTO PLAN_DETAILS (ID,PLANS_ID,NAME,START,"END")
+    VALUES( 3, 1, '3 = 1-3', '2021-10-10T14:00:00','2021-10-10T18:00:00');
 
-insert into plans(id,places_id,date)
-values( 3, 2, '2021-10-10T12:00:00');
+INSERT INTO PLAN_DETAILS (ID,PLANS_ID,NAME,START,"END")
+    VALUES( 4, 2, '4 = 2-1', '2021-10-11T08:00:00','2021-10-11T11:00:00');
+INSERT INTO PLAN_DETAILS (ID,PLANS_ID,NAME,START,"END")
+    VALUES( 5, 2, '5 = 2-2', '2021-10-11T11:00:00','2021-10-11T13:00:00');
 
-insert into plan_details(id,plans_id,name,start,"end")
-values( 1, 1, '1 = 1-1', '2021-10-10T08:00:00','2021-10-10T11:00:00');
-insert into plan_details(id,plans_id,name,start,"end")
-values( 2, 1, '2 = 1-2', '2021-10-10T11:00:00','2021-10-10T13:00:00');
-insert into plan_details(id,plans_id,name,start,"end")
-values( 3, 1, '3 = 1-3', '2021-10-10T14:00:00','2021-10-10T18:00:00');
-
-insert into plan_details(id,plans_id,name,start,"end")
-values( 4, 2, '4 = 2-1', '2021-10-11T08:00:00','2021-10-11T11:00:00');
-insert into plan_details(id,plans_id,name,start,"end")
-values( 5, 2, '5 = 2-2', '2021-10-11T11:00:00','2021-10-11T13:00:00');
-
-insert into plan_details(id,plans_id,name,start,"end")
-values( 6, 3, '6 = 3-1', '2021-10-10T08:00:00','2021-10-10T11:00:00');
-insert into plan_details(id,plans_id,name,start,"end")
-values( 7, 3, '7 = 3-2', '2021-10-10T11:00:00','2021-10-10T13:00:00');
-insert into plan_details(id,plans_id,name,start,"end")
-values( 8, 3, '8 = 3-3', '2021-10-10T14:00:00','2021-10-10T18:00:00');
-insert into plan_details(id,plans_id,name,start,"end")
-values( 9, 3, '9 = 3-4', '2021-10-10T21:00:00','2021-10-11T03:00:00');
+INSERT INTO PLAN_DETAILS (ID,PLANS_ID,NAME,START,"END")
+    VALUES( 6, 3, '6 = 3-1', '2021-10-10T08:00:00','2021-10-10T11:00:00');
+INSERT INTO PLAN_DETAILS (ID,PLANS_ID,NAME,START,"END")
+    VALUES( 7, 3, '7 = 3-2', '2021-10-10T11:00:00','2021-10-10T13:00:00');
+INSERT INTO PLAN_DETAILS (ID,PLANS_ID,name,START,"END")
+    VALUES( 8, 3, '8 = 3-3', '2021-10-10T14:00:00','2021-10-10T18:00:00');
+INSERT INTO PLAN_DETAILS (ID,PLANS_ID,name,START,"END")
+    VALUES( 9, 3, '9 = 3-4', '2021-10-10T21:00:00','2021-10-11T03:00:00');
