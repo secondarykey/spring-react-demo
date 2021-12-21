@@ -21,15 +21,18 @@ public class PlanDetailQueryRepository extends QueryRepository {
 	public List<PlanDetail> findByPlaceDate(Integer placeId, Date date) {
 		String sql = """
 			SELECT
-			    "plans"."id" AS "plans.id", "plans"."date" AS "plans.date","plans"."places_id" AS "plans.places_id",
-				"plan_details"."id" AS "plan_details.id","plan_details"."plans_id" AS "plan_details.plans_id",
-				"plan_details"."start" AS "plan_details.start",
-				"plan_details"."end" AS "plan_details.end",
-				"plan_details"."name" AS "plan_details.name"
-			FROM plan_details
+			    "PLANS"."ID" AS "plans.id", 
+			    "PLANS"."DATE" AS "plans.date",
+			    "PLANS"."PLACES_ID" AS "plans.places_id",
+				"PLAN_DETAILS"."ID" AS "plan_details.id",
+				"PLAN_DETAILS"."PLANS_ID" AS "plan_details.plans_id",
+				"PLAN_DETAILS"."START" AS "plan_details.start",
+				"PLAN_DETAILS"."END" AS "plan_details.end",
+				"PLAN_DETAILS"."NAME" AS "plan_details.name"
+			FROM PLAN_DETAILS
 			  INNER JOIN (
 			    SELECT * FROM PLANS WHERE PLANS.PLACES_ID = ? AND PLANS.DATE = ?
-			  ) plans ON plans.id = plan_details.plans_id
+			  ) PLANS ON PLANS.ID = PLAN_DETAILS.PLANS_ID
 		""";
 		PlanDetailRowMapper mapper = new PlanDetailRowMapper();
 		template.query(sql, mapper, placeId, date);

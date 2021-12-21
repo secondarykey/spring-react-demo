@@ -25,7 +25,7 @@ public class TimeQueryRepository extends QueryRepository {
 
 	public List<Time> findPage(Paging paging) {
 		String sql = """
-			SELECT * FROM TIMES ORDER BY "value" DESC,ID ASC LIMIT ? OFFSET ?
+			SELECT * FROM TIMES ORDER BY "VALUE" DESC,ID ASC LIMIT ? OFFSET ?
 				""";
 		TimeMapper mapper = new TimeMapper();
 		template.query(sql, mapper,paging.getNumberOfDisplay(),paging.getOffset());

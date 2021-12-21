@@ -24,14 +24,14 @@ public class PlanQueryRepository extends QueryRepository {
 	public List<Plan> joinDetail() {
 		String sql = """
 				SELECT
-				    "plans"."id" AS "plans.id", "plans"."date" AS "plans.date","plans"."places_id" AS "plans.places_id",
-				    "place"."id" AS "place.id", "place"."name" AS "place.name","place"."timezone" AS "place.timezone",
-				    "plan_details"."id" AS "plan_details.id","plan_details"."plans_id" AS "plan_details.plans_id",
-				    "plan_details"."start" AS "plan_details.start","plan_details"."end" AS "plan_details.end",
-				    "plan_details"."name" AS "plan_details.name"
-				  FROM "plans"
-				    INNER JOIN (SELECT * FROM PLACES) "place" ON "plans"."places_id" = "place"."id"
-				    LEFT OUTER JOIN (SELECT * FROM PLAN_DETAILS) "plan_details" ON "plans"."id" = "plan_details"."plans_id"
+				    "PLANS"."ID" AS "plans.id", "PLANS"."date" AS "plans.date","PLANS"."PLACES_ID" AS "plans.places_id",
+				    "PLACE"."ID" AS "place.id", "PLACE"."name" AS "place.name","PLACE"."TIMEZONE" AS "place.timezone",
+				    "PLAN_DETAILS"."ID" AS "plan_details.id","PLAN_DETAILS"."PLANS_ID" AS "plan_details.plans_id",
+				    "PLAN_DETAILS"."START" AS "plan_details.start","PLAN_DETAILS"."END" AS "plan_details.end",
+				    "PLAN_DETAILS"."NAME" AS "plan_details.name"
+				  FROM "PLANS"
+				    INNER JOIN (SELECT * FROM PLACES) "PLACE" ON "PLANS"."PLACES_ID" = "PLACE"."ID"
+				    LEFT OUTER JOIN (SELECT * FROM PLAN_DETAILS) "PLAN_DETAILS" ON "PLANS"."ID" = "PLAN_DETAILS"."PLANS_ID"
 				""";
 
 		PlanRowMapper mapper = new PlanRowMapper();
@@ -42,11 +42,11 @@ public class PlanQueryRepository extends QueryRepository {
 	public List<Plan> findByPlace(Integer placeId) {
 		String sql = """
 				SELECT
-				    "plans"."id" AS "plans.id", "plans"."date" AS "plans.date", "plans"."places_id" AS "plans.places_id",
-				    "place"."id" AS "place.id", "place"."name" AS "place.name", "place"."timezone" AS "place.timezone"
-				  FROM "plans"
-				    INNER JOIN ( SELECT * FROM PLACES) "place"
-				    ON "plans"."places_id" = "place"."id" AND "plans"."places_id" = ?
+				    "PLANS"."ID" AS "plans.id", "PLANS"."DATE" AS "plans.date", "PLANS"."PLACES_ID" AS "plans.places_id",
+				    "PLACE"."ID" AS "place.id", "PLACE"."NAME" AS "place.name", "PLACE"."TIMEZONE" AS "place.timezone"
+				  FROM "PLANS"
+				    INNER JOIN (SELECT * FROM PLACES) "PLACE"
+				    ON "PLANS"."PLACES_ID" = "PLACE"."ID" AND "PLANS"."PLACES_ID" = ?
 						""";
 		PlanPlaceRowMapper mapper = new PlanPlaceRowMapper();
 		template.query(sql, mapper, placeId);
@@ -55,7 +55,7 @@ public class PlanQueryRepository extends QueryRepository {
 
 	public Plan findByPlaceDate(Integer placeId, Date date) {
 		String sql = """
-					SELECT plans.* FROM PLANS WHERE PLACES_ID = ? AND DATE = ?
+					SELECT PLANS.* FROM PLANS WHERE PLACES_ID = ? AND DATE = ?
 				""";
 		PlanMapper mapper = new PlanMapper();
 		template.query(sql, mapper, placeId, date);
