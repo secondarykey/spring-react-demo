@@ -50,8 +50,8 @@ public class UserService  extends BusinessService {
 		return result;
 	}
 
-	public Result<String> changePassword(PasswordRequest json) {
-		Result<String> result = new Result<>();
+	public Result<LoginResponse> changePassword(PasswordRequest json) {
+		Result<LoginResponse> result = new Result<>();
 		User user = query.findByPassword(json.getUserId(), json.getOldPassword());
 		if ( user == null ) {
 			result.setMessage("PRFN00M203", "パスワードが一致するユーザが存在しない|" + json.getUserId());
@@ -60,14 +60,17 @@ public class UserService  extends BusinessService {
 
 		//TODO 履歴
 		user.setPassword(json.getNewPassword());
-
 		//TODO 有効期限
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 10);
+
 		OffsetDateTime zone = DateUtil.zone(cal.getTime(),"UTC");
 		user.setExpiry(zone);
-	
 		crud.save(user);
+
+		LoginResponse res = new LoginResponse();
+		res.setUser(LoginUser.convert(user));
+		result.setResult(res);
 
 		return result;
 	}
