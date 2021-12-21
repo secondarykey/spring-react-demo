@@ -4,12 +4,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("todos")
+@Table("TODOS")
 public class ToDo {
 	@Id
-	@Column("id")
+	@Column("ID")
 	private int id;
-	@Column("value")
+	@Column("VALUE")
 	private String value;
 
 	public int getId() {

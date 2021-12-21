@@ -8,24 +8,25 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("times")
+@Table("TIMES")
 public class Time {
 	@Id
-	@Column("id")
+	@Column("ID")
 	private int id;
 	
-	@Column("value")
+	@Column("VALUE")
 	private String value;
 
-	@Column("date")
+	@Column("DATE")
 	private Date date;
-	@Column("time")
+	@Column("TIME")
 	private Date time;
 
-	@Column("date_without")
+	@Column("DATE_WITHOUT")
 	private Date dateToWithout;
-	@Column("offset_with")
+	@Column("OFFSET_WITH")
 	private OffsetDateTime offsetToWith;
+
 	public int getId() {
 		return id;
 	}

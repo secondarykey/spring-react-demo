@@ -6,19 +6,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("users")
+@Table("USERS")
 public class User {
 
 	@Id
-	@Column("id")
+	@Column("ID")
 	private String id;
-	@Column("name")
+	@Column("NAME")
 	private String name;
-	@Column("password")
+	@Column("PASSWORD")
 	private String password;
-	@Column("role")
+	@Column("ROLE")
 	private String role;
-	@Column("expiry")
+	@Column("EXPIRY")
 	private OffsetDateTime expiry;
 
 	public String getId() {

@@ -8,18 +8,18 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.relational.core.mapping.Column;
 
-@Table("plan_details")
+@Table("PLAN_DETAILS")
 public class PlanDetail {
 	@Id
-	@Column("id")
+	@Column("ID")
 	private Integer id;
-	@Column("plans_id")
+	@Column("PLANS_ID")
 	private Integer plansId;
-	@Column("start")
+	@Column("START")
 	private Date start;
-	@Column("end")
+	@Column("END")
 	private Date end;
-	@Column("name")
+	@Column("NAME")
 	private String name;
 	
 	@Transient

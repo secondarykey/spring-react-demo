@@ -9,15 +9,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("plans")
+@Table("PLANS")
 public class Plan {
 	@Id
-	@Column("id")
+	@Column("ID")
 	private Integer id;
-	@Column("date")
+	@Column("DATE")
 	private Date date;
 
-	@Column("places_id")
+	@Column("PLACES_ID")
 	private Integer placesId;
 
 	@Transient
