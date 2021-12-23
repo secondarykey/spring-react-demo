@@ -15,7 +15,8 @@ import {LoginPage,Name,Logout} from "./Authentication";
 
 import "./css/Main.css"
 
-var setMessage;
+var setMessageId;
+var setMessages;
 var setMessageType;
 var setErrorDetail;
 var changeStateTitle;
@@ -31,10 +32,12 @@ const Layout = ({children}) => {
   const [messageId,messageIdFunc] = useState("");
   const [messageType,messageTypeFunc] = useState("danger");
   const [detail,detailFunc] = useState("");
+  const [messages,messagesFunc] = useState([]);
 
-  setMessage = messageIdFunc;
+  setMessageId = messageIdFunc;
   setMessageType = messageTypeFunc;
   setErrorDetail = detailFunc;
+  setMessages = messagesFunc;
   changeStateTitle = setTitle;
 
   return (<>
@@ -58,9 +61,18 @@ const Layout = ({children}) => {
   <main>
     {messageId !== "" &&
       <Alert key="1" variant={messageType}> 
-        <Message id={messageId}/> 
-        {detail !== "" &&
+        {messages.length === 0 &&
+          <Message id={messageId}/> 
+        }
+        {messages.length !== 0 &&
+          <ul>
+            {messages.map( (msg) => {
+              return <li>{msg}</li>
+            })}
+          </ul>
+        }
 
+        {detail !== "" &&
         <Accordion>
           <Accordion.Item eventKey="0">
             <Accordion.Header className="Layout-SystemDetail">
@@ -92,7 +104,8 @@ export function Redirect(path,cause) {
 }
 
 export function ClearMessage() {
-  setMessage("");
+  setMessageId("");
+  setMessages([]);
   setMessageType("danger");
   setErrorDetail("");
 }
@@ -102,14 +115,15 @@ export function UnknownErrorMessage(detail) {
   if ( detail !== null && typeof detail === "object" ) {
     msg = JSON.stringify(detail);
   }
-  setMessage("PRFN00M000");
+  setMessageId("PRFN00M000");
+  setMessages([]);
   setMessageType("danger");
   setErrorDetail(msg);
 }
 
 export function WriteMessage(id,type) {
   setMessageType(type);
-  setMessage(id);
+  setMessageId(id);
 }
 
 export function WriteErrorMessage(err) {
@@ -118,10 +132,13 @@ export function WriteErrorMessage(err) {
   var data = resp.data;
 
   var id = data.messageID
+  var msgs = data.messages;
   var detail = data.result;
 
   setMessageType("danger");
-  setMessage(id);
+  setMessageId(id);
+  setMessages(msgs);
+
   if (detail === undefined ) {
       detail = "";
   }

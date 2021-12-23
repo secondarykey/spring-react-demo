@@ -1,5 +1,6 @@
 package com.example.demo.util;
 
+import java.util.List;
 
 public class Util {
 	
@@ -18,6 +19,34 @@ public class Util {
 			cnt++;
 		}
 		return cnt;
+	}
+
+	public static boolean isEmpty(List<String> messages) {
+		if ( messages == null || messages.size() == 0 ) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isEmpty(String[] args) {
+		if ( args == null || args.length == 0 ) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean equals(String v1, String v2) {
+		if ( v1 == null ) {
+			if ( v2 == null ) {
+				return true;
+			}
+			return false;
+		}
+
+		if ( v1.equals(v2) ) {
+			return true;
+		}
+		return false;
 	}
 
 }

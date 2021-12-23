@@ -13,6 +13,7 @@ import com.example.demo.util.EncryptUtil;
 @Repository
 public class UserQueryRepository extends QueryRepository {
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(UserQueryRepository.class);
 
 	@Autowired(required=true)
@@ -22,8 +23,6 @@ public class UserQueryRepository extends QueryRepository {
 
 	public User findByPassword(String id, String password) {
 		String sql = "SELECT * FROM USERS WHERE ID = ? AND PASSWORD = ?";
-		logger.info(password);
-		logger.info(EncryptUtil.hashPassword(password));
 		return this.get(User.class,sql,id,EncryptUtil.hashPassword(password));
 	}
 

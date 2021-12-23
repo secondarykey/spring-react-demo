@@ -10,12 +10,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.demo.controller.AuthenticationInterceptor;
+import com.example.demo.controller.SessionInterceptor;
 
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
 	private static Logger logger = LoggerFactory.getLogger(InterceptorConfig.class);
-	
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry ) {
 
@@ -27,5 +28,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
 		noneAuthURLs.add("/api/v1/password");
 
 		registry.addInterceptor(new AuthenticationInterceptor()).excludePathPatterns(noneAuthURLs);
+		registry.addInterceptor(new SessionInterceptor());
 	}
 }

@@ -1,11 +1,11 @@
 import React from "react";
 import {
   Container,Row,Col,
-  Alert,Form,Button
+  Form,Button
  } from 'react-bootstrap';
 
 import {SelectLanguage,
-        GetLabel,Label,Message} from '../Locale';
+        GetLabel,Label} from '../Locale';
 
 import {WriteErrorMessage,ClearMessage,Redirect,ChangeTitle}  from "../Layout";
 import {Save} from "../Authentication";
@@ -19,11 +19,10 @@ class Login extends React.Component {
 
       this.userId = React.createRef(); 
       this.password = React.createRef(); 
-      this.oldPassword = React.createRef(); 
       this.newPassword1 = React.createRef(); 
       this.newPassword2 = React.createRef(); 
 
-      this.state = { expiry : false, messageId : "" }
+      this.state = { expiry : false }
       ClearMessage();
       ChangeTitle("ログイン")
   }
@@ -58,12 +57,12 @@ class Login extends React.Component {
           if ( msgId === "PRFN00M102" ) {
              expiry = true
           }
-          this.setState({ expiry : expiry, messageId : msgId });
+          this.setState({ expiry : expiry });
           break;
         default:
-          WriteErrorMessage(err);
           break;
       }
+      WriteErrorMessage(err);
     });
 
     return false;
@@ -73,17 +72,11 @@ class Login extends React.Component {
 
     let new1 = this.newPassword1.current.value;
     let new2 = this.newPassword2.current.value;
-
-    if ( new1 !== new2 ) {
-        this.setState({ messageId : "PRFN00M201" });
-        return;
-    }
-
-    this.setState({ messageId : "" });
     let data = {
         userId      : this.userId.current.value,
-        oldPassword : this.oldPassword.current.value,
-        newPassword : new1
+        oldPassword : this.password.current.value,
+        newPassword1 : new1,
+        newPassword2 : new2
     }
 
     API.put("/api/v1/password",
@@ -101,18 +94,17 @@ class Login extends React.Component {
   }
 
   render() {
-
     const expiry = this.state.expiry;
-    const msgId = this.state.messageId;
 
     return ( <>
 
 <Form>
   <Container>
+
     <SpaceRow>
       <Form.Group>
         <Form.Label> <Label id="PRFN00L101"/> </Form.Label>
-        <Form.Control type="email" placeholder={GetLabel("PRFN00L101")} ref={this.userId} />
+        <Form.Control type="text" placeholder={GetLabel("PRFN00L101")} ref={this.userId} />
       </Form.Group>
     </SpaceRow>
 
@@ -127,13 +119,6 @@ class Login extends React.Component {
       <SelectLanguage />
     </SpaceRow>
 
-    {/*メッセージ表示 */}
-    {msgId !== "" &&
-    <SpaceRow>
-      <Alert key="1" variant="danger"> <Message id={msgId}/> </Alert>
-    </SpaceRow>
-    }
-
     {/* ログインボタン */}
     {!expiry &&
     <SpaceRow>
@@ -146,13 +131,6 @@ class Login extends React.Component {
     {/* 有効期限フォーム */}
     {expiry &&
 <>
-    <SpaceRow>
-      <Form.Group>
-        <Form.Label> <Label id="PRFN00L201"/> </Form.Label>
-        <Form.Control type="password" placeholder="Password" ref={this.oldPassword} />
-      </Form.Group>
-    </SpaceRow>
-
     <SpaceRow>
       <Form.Group>
         <Form.Label> <Label id="PRFN00L202"/> </Form.Label>

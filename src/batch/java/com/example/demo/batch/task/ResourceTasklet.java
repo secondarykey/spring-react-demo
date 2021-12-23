@@ -24,6 +24,10 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.util.Util;
 
+/**
+ * リソースのCSVファイルから 
+ *
+ */
 @StepScope
 @Component
 public class ResourceTasklet implements Tasklet {

@@ -3,7 +3,6 @@ package com.example.demo.transfer;
 import java.io.Serializable;
 
 import com.example.demo.model.User;
-import com.example.demo.util.DateUtil;
 
 public class LoginUser implements Serializable {
 	/**

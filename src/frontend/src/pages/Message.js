@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { withRouter,WriteMessage,ChangeTitle } from "../Layout";
+import { Remove } from "../Authentication";
 
 class Message extends React.Component {
 
@@ -15,7 +16,9 @@ class Message extends React.Component {
       //TODO エラーだった時にエラーにする
       ChangeTitle("メッセージ");
   }
-
+  componentDidMount() {
+      Remove();
+  }
   render() {
     return ( <>
     <Link to="/">ログインする</Link>

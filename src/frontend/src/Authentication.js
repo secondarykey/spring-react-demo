@@ -81,7 +81,7 @@ class Authentication extends React.Component {
 
   remove() {
       const {cookies} = this.props;
-      cookies.remove("session");
+      cookies.remove("session",{path:"/"});
   }
 
   render() {
@@ -128,8 +128,12 @@ export function LoginPage(props) {
     return (<>{props.children}</>);
 }
 
+export function Remove(props) {
+  inst.remove();
+  return;
+}
+
 export function Logout(props) {
-    inst.remove();
     Redirect("/message/Logout","Logout");
     return;
 }

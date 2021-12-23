@@ -12,7 +12,6 @@ import com.example.demo.transfer.request.PlanViewRequest;
 import com.example.demo.transfer.response.PlanDetailViewResponse;
 import com.example.demo.transfer.response.PlanViewResponse;
 import com.example.demo.transfer.response.Result;
-import com.example.demo.util.Util;
 
 @RestController
 @RequestMapping("/api/demo/plan")
@@ -24,7 +23,7 @@ public class PlanController extends JSONController {
 	@RequestMapping("/view")
 	public Result<PlanViewResponse> view(@RequestBody PlanViewRequest json) {
 		Result<PlanViewResponse> result = planService.view(json);
-		if ( !Util.isEmpty(result.getMessageID()) ) {
+		if ( result.existMessage() ) {
 			FatalError(result.getMessageID(),result.getReason());
 			return result;
 		}
@@ -34,7 +33,7 @@ public class PlanController extends JSONController {
 	@RequestMapping("/detail/view")
 	public Result<PlanDetailViewResponse> view(@RequestBody PlanDetailViewRequest json) {
 		Result<PlanDetailViewResponse> result = planService.viewDetail(json);
-		if ( !Util.isEmpty(result.getMessageID()) ) {
+		if ( result.existMessage() ) {
 			FatalError(result.getMessageID(),result.getReason());
 			return result;
 		}
@@ -43,7 +42,7 @@ public class PlanController extends JSONController {
 	@RequestMapping("/edit")
 	public Result<String> edit(@RequestBody PlanEditRequest json) {
 		Result<String> result = planService.insertDetail(json);
-		if ( !Util.isEmpty(result.getMessageID()) ) {
+		if ( result.existMessage() ) {
 			FatalError(result.getMessageID(),result.getReason());
 			return result;
 		}
