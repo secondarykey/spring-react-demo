@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,27 +7,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.example.demo.config.Session;
 import com.example.demo.transfer.LoginUser;
 import com.example.demo.util.DateUtil;
 import com.example.demo.util.EncryptUtil;
 import com.example.demo.util.Util;
 
-
+@Component
 public class AuthenticationInterceptor implements HandlerInterceptor {
 	
 	public static Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
 	
 	private static String[] targetURLPrefix = {"/api"};
 	private static String[] ignoreURLs = {"/api/v1/login","/api/v1/password"};
-
+	
+	@Autowired
+	Session session;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+
 		if ( !isAuth(request) ) {
-			logger.debug("対象URLでないのでOK{}",request.getRequestURL());
+			logger.debug("対象URLでないのでOK:{}",request.getRequestURL());
 			return true;
 		}
 

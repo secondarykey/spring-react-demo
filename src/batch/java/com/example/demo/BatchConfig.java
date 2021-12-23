@@ -17,8 +17,8 @@ import com.example.demo.batch.task.ResourceTasklet;
 import com.example.demo.batch.task.UserTasklet;
 import com.example.demo.batch.task.WaitTasklet;
 
-@Configuration
-@EnableBatchProcessing
+//@Configuration
+//@EnableBatchProcessing
 public class BatchConfig {
 
 	private static Logger logger = LoggerFactory.getLogger(BatchConfig.class);

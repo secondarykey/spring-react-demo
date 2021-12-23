@@ -5,22 +5,16 @@ import org.springframework.http.HttpStatus;
 public class KnownException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	private String messageId;
+	private String messageID;
 	private HttpStatus status;
 	private String reason;
-	public KnownException(HttpStatus status,String msgId,String reason) {
+	public KnownException(HttpStatus status,String msg,String reason) {
 		super();
 		this.status = status;
-		this.messageId = msgId;
+		this.messageID = msg;
 		this.reason = reason;
 	}
 
-	public String getMessageId() {
-		return messageId;
-	}
-	public void setMessageId(String messageId) {
-		this.messageId = messageId;
-	}
 	public HttpStatus getStatus() {
 		return status;
 	}
@@ -32,5 +26,13 @@ public class KnownException extends RuntimeException {
 	}
 	public void setReason(String reason) {
 		this.reason = reason;
+	}
+
+	public String getMessageID() {
+		return messageID;
+	}
+
+	public void setMessageID(String messageID) {
+		this.messageID = messageID;
 	}
 }

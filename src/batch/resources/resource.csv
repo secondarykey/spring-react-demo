@@ -14,9 +14,12 @@
 "PRFN00M000","サーバで問題が発生しています。ログにて詳細を確認してください。","There is a problem with the server. Please check the details in the log.","服務器有問題。 請檢查日誌中的詳細信息。"
 "PRFN00M101","ユーザIDかパスワードが間違っています。","The UserID or Password is incorrect.","用戶 ID 或密碼不正確。"
 "PRFN00M102","パスワードの有効期限が過ぎています。新しいパスワードを設定してください。","The password has expired. Please set a new password.","密碼已過期。 請設置新密碼。"
+"PRFN00M103","{0}は必須入力です。","There is No Target ID","没有目标 ID。"
+
 "PRFN00M201","新しいパスワードの再入力が間違っています。","The new password has been re-entered incorrectly.","重新輸入的新密碼不正確。"
 "PRFN00M202","パスワードの要件を満たしていません。","Does not meet the password requirements.","不符合密碼要求。"
 "PRFN00M203","ユーザIDか古いパスワードが間違っています。","The user ID or old password is incorrect.","用戶 ID 或舊密碼不正確。"
 "PRFN99M000","存在しないページです",Page Not Found", "這是一個不存在的頁面"
 "PRFN99M999","ja","en","zh"
+"PRFN??M???","対象のIDがありません。","There is No Target ID","没有目标 ID。"
 

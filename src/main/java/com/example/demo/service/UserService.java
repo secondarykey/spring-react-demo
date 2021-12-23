@@ -16,6 +16,7 @@ import com.example.demo.transfer.request.PasswordRequest;
 import com.example.demo.transfer.response.LoginResponse;
 import com.example.demo.transfer.response.Result;
 import com.example.demo.util.DateUtil;
+import com.example.demo.util.EncryptUtil;
 
 @Service
 public class UserService  extends BusinessService {
@@ -30,15 +31,15 @@ public class UserService  extends BusinessService {
 		Result<LoginResponse> result = new Result<>();
 		User user = query.findByPassword(json.getId(), json.getPassword());
 		if ( user == null ) {
-			result.setMessage("PRFN00M101", "パスワードが一致するユーザが存在しない|" + json.getId());
+			result.setMessageId("PRFN00M101", "パスワードが一致するユーザが存在しない|" + json.getId());
 			return result;
 		}
 	
 		//TODO しっかりチェック
 		OffsetDateTime exp = user.getExpiry();
-		Date now = new Date();
-		if ( now.getTime() > exp.toEpochSecond() ) {
-			result.setMessage("PRFN00M102", "有効期限切れ|" + json.getId() + "|" + exp.toString());
+		OffsetDateTime now = DateUtil.zone(new Date(), "UTC");
+		if ( now.toEpochSecond() > exp.toEpochSecond() ) {
+			result.setMessageId("PRFN00M102", "有効期限切れ|" + json.getId() + "|" + exp.toString());
 			return result;
 		}
 
@@ -51,17 +52,18 @@ public class UserService  extends BusinessService {
 	}
 
 	public Result<LoginResponse> changePassword(PasswordRequest json) {
+
 		Result<LoginResponse> result = new Result<>();
 		User user = query.findByPassword(json.getUserId(), json.getOldPassword());
 		if ( user == null ) {
-			result.setMessage("PRFN00M203", "パスワードが一致するユーザが存在しない|" + json.getUserId());
+			result.setMessageId("PRFN00M203", "パスワードが一致するユーザが存在しない|" + json.getUserId());
 			return result;
 		}
 
 		//TODO 履歴
-		user.setPassword(json.getNewPassword());
-		//TODO 有効期限
+		user.setPassword(EncryptUtil.hashPassword(json.getNewPassword1()));
 		Calendar cal = Calendar.getInstance();
+		//TODO 外だし
 		cal.add(Calendar.DATE, 10);
 
 		OffsetDateTime zone = DateUtil.zone(cal.getTime(),"UTC");
@@ -74,5 +76,4 @@ public class UserService  extends BusinessService {
 
 		return result;
 	}
-
 }
