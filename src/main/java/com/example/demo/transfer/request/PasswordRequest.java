@@ -49,7 +49,7 @@ public class PasswordRequest extends Arguments {
 
 	@AssertTrue(message="PRFN00M201")
 	public boolean isPasswordCheck() {
-		if ( Util.equals(this.getNewPassword1() ,this.getNewPassword2()) ) {
+		if ( !Util.equals(this.getNewPassword1() ,this.getNewPassword2()) ) {
 			return false;
 		}
 		return true;
