@@ -11,9 +11,11 @@ import org.springframework.stereotype.Component;
 public class Session implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	//TODO バッチ時に除外したい
     @Autowired
     HttpSession session;
+
 	public Session() {
 	}
 
