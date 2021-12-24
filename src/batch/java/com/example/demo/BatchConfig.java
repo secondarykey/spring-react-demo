@@ -10,15 +10,20 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 
 import com.example.demo.batch.JobListener;
 import com.example.demo.batch.task.ResourceTasklet;
 import com.example.demo.batch.task.UserTasklet;
 import com.example.demo.batch.task.WaitTasklet;
 
-//@Configuration
-//@EnableBatchProcessing
+import com.example.demo.config.Session;
+import com.example.demo.controller.AuthenticationInterceptor;
+
+@Configuration
+@EnableBatchProcessing
 public class BatchConfig {
 
 	private static Logger logger = LoggerFactory.getLogger(BatchConfig.class);
