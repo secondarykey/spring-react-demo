@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.6.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'me.champeau.jmh' version '0.6.5' apply false
 	id 'java'
 	id 'war'
 }
@@ -41,8 +42,12 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
+    testImplementation "org.mockito:mockito-core:3.+"
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
+    testImplementation 'org.junit.platform:junit-platform-suite-engine:1.8.2'
+    testImplementation 'org.openjdk.jmh:jmh-core:1.34'
+    testImplementation 'org.openjdk.jmh:jmh-generator-annprocess:1.34'
 
     batchImplementation 'org.springframework.boot:spring-boot-starter-batch'
 }
@@ -74,6 +79,17 @@ task batchJar(type: Jar) {
       'Main-Class': 'com.example.demo.BatchApplication'
     )
   }
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   from sourceSets.batch.output
+}
+
+task copyBatchDependencies(type:Copy) {
+    def dir = "build/libs/jars"
+
+    new File(dir).mkdirs()
+    copy {
+        from sourceSets.batch.runtimeClasspath
+        exclude "application-batch.properties"
+        exclude "com"
+        into dir
+    }
 }
