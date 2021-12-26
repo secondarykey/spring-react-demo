@@ -5,9 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
+import com.example.demo.model.query.SQLBuilder;
+import com.example.demo.model.query.QuerySet;
+import com.example.demo.model.query.UserRoleMapper;
 import com.example.demo.util.EncryptUtil;
 
 @Repository
@@ -22,19 +25,35 @@ public class UserQueryRepository extends QueryRepository {
 	}
 
 	public User findByPassword(String id, String password) {
-		String sql = "SELECT * FROM USERS WHERE ID = ? AND PASSWORD = ?";
-		return this.get(User.class,sql,id,EncryptUtil.hashPassword(password));
+		String sql = """
+		SELECT %s FROM USERS WHERE "ID" = ? AND "PASSWORD" = ?
+				""";
+		SQLBuilder builder = SQLBuilder.create(
+				QuerySet.create(User.class,"", "")
+		);
+		builder.setSQL(sql, id,EncryptUtil.hashPassword(password));
+
+		UserRoleMapper mapper = new UserRoleMapper(builder);
+		this.query(mapper);
+		return mapper.get();
 	}
 
 	public User joinRole(String id) {
-		String sql = "SELECT U.*,R.NAME AS ROLENAME FROM USERS U JOIN Role R ON U.ROLE = R.ID AND U.ID = ?";
-		return this.get(User.class,sql,id);
-	}
 
-	@Transactional
-	public int updatePassword(User user) {
-		String sql = "UPDATE USERS SET PASSWORD = ?, EXPIRY = ? WHERE ID = ?";
-		return this.update(sql,EncryptUtil.hashPassword(user.getPassword()),user.getExpiry(),user.getId());
-	}
+		String sql = """
+		SELECT 
+		    %s
+		FROM USERS U JOIN ROLE R ON U.ROLE = R.ID AND U.ID = ?
+				""";
 
+		SQLBuilder builder = SQLBuilder.create(
+			QuerySet.create(User.class,"U","users"),
+			QuerySet.create(Role.class,"R","roles")
+		);
+		builder.setSQL(sql,id);
+
+		UserRoleMapper mapper = new UserRoleMapper(builder);
+		this.query(mapper);
+		return mapper.get();
+	}
 }

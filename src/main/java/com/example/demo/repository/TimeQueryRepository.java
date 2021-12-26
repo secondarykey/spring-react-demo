@@ -9,8 +9,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Time;
+import com.example.demo.model.query.QuerySet;
+import com.example.demo.model.query.SQLBuilder;
 import com.example.demo.model.query.TimeMapper;
 import com.example.demo.transfer.Paging;
+
 
 @Repository
 public class TimeQueryRepository extends QueryRepository {
@@ -25,10 +28,20 @@ public class TimeQueryRepository extends QueryRepository {
 
 	public List<Time> findPage(Paging paging) {
 		String sql = """
-			SELECT * FROM TIMES ORDER BY "VALUE" DESC,ID ASC LIMIT ? OFFSET ?
+			SELECT
+			  %s 
+			FROM TIMES 
+			  ORDER BY "VALUE" DESC,ID ASC 
+			  LIMIT ? OFFSET ?
 				""";
-		TimeMapper mapper = new TimeMapper();
-		template.query(sql, mapper,paging.getNumberOfDisplay(),paging.getOffset());
-		return mapper.getResult();
+		SQLBuilder builder = SQLBuilder.create(
+			QuerySet.create(Time.class, "", "")
+		);
+
+		builder.setSQL(sql,paging.getNumberOfDisplay(),paging.getOffset());
+		TimeMapper mapper = new TimeMapper(builder);
+		this.query(mapper);
+
+		return mapper.get();
 	}
 }

@@ -7,6 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.ToDo;
+import com.example.demo.model.query.QuerySet;
+import com.example.demo.model.query.SQLBuilder;
+import com.example.demo.model.query.ToDoMapper;
 
 @Repository
 public class ToDoQueryRepository extends QueryRepository {
@@ -17,7 +20,14 @@ public class ToDoQueryRepository extends QueryRepository {
 	}
 
 	public List<ToDo> findAll() {
-		String sql = "SELECT * FROM TODOS";
-		return super.select(ToDo.class, sql);
+		String sql = "SELECT %s FROM TODOS";
+		SQLBuilder builder = SQLBuilder.create(
+			QuerySet.create(ToDo.class,"", "")
+		);
+		builder.setSQL(sql);
+		
+		ToDoMapper mapper = new ToDoMapper(builder);
+		this.query(mapper);
+		return mapper.get(); 
 	}
 }
