@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,6 +14,7 @@ import com.example.demo.controller.AuthenticationInterceptor;
 import com.example.demo.controller.SessionInterceptor;
 
 @Configuration
+@ConditionalOnWebApplication
 public class InterceptorConfig implements WebMvcConfigurer {
 
 	private static Logger logger = LoggerFactory.getLogger(InterceptorConfig.class);

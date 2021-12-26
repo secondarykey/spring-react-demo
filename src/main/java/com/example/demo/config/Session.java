@@ -5,14 +5,15 @@ import java.io.Serializable;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnWebApplication
 public class Session implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	//TODO バッチ時に除外したい
     @Autowired
     HttpSession session;
 

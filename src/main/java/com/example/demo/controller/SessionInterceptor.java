@@ -7,10 +7,12 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
+@ConditionalOnWebApplication
 public class SessionInterceptor implements HandlerInterceptor {
 	
 	public static Logger logger = LoggerFactory.getLogger(SessionInterceptor.class);
