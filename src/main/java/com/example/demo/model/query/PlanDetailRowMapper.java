@@ -1,29 +1,36 @@
 package com.example.demo.model.query;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import org.springframework.jdbc.core.RowCallbackHandler;
+import java.util.Map;
 
 import com.example.demo.model.Plan;
 import com.example.demo.model.PlanDetail;
-import com.example.demo.util.MappingUtil;
 
-public class PlanDetailRowMapper implements RowCallbackHandler {
+public class PlanDetailRowMapper extends ModelMapper<List<PlanDetail>> {
 	
+	public PlanDetailRowMapper(SQLBuilder builder) {
+		super(builder);
+	}
+
 	private List<PlanDetail> details = new ArrayList<>();
+	private Map<Integer,Plan> cache = new HashMap<>();
 
 	@Override
-	public void processRow(ResultSet rs) throws SQLException {
-		PlanDetail detail = MappingUtil.createPlanDetail("plan_details.",rs);
-		Plan plan = MappingUtil.createPlan("plans.",rs);
-		detail.setPlan(plan);
+	protected void mapping(MappingObject map) {
+		Plan plan = map.get(Plan.class);
+		if ( !cache.containsKey(plan.getId()) ) {
+			cache.put(plan.getId(), plan);
+		} else {
+			plan = cache.get(plan.getId());
+		}
+		PlanDetail detail = map.get(PlanDetail.class);
 		details.add(detail);
 	}
 
-	public List<PlanDetail> getResult() {
+	@Override
+	public List<PlanDetail> get() {
 		return details;
 	}
 }

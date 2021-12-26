@@ -2,26 +2,33 @@ package com.example.demo.model;
 
 import java.util.Date;
 
-import javax.persistence.Transient;
-
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
+
+import com.example.demo.anotation.model.MappingRS;
+
 import org.springframework.data.relational.core.mapping.Column;
 
 @Table("PLAN_DETAILS")
-public class PlanDetail {
+public class PlanDetail implements Model {
 	@Id
 	@Column("ID")
+	@MappingRS("id")
 	private Integer id;
 	@Column("PLANS_ID")
+	@MappingRS("plansId")
 	private Integer plansId;
 	@Column("START")
+	@MappingRS("start")
 	private Date start;
 	@Column("END")
+	@MappingRS("end")
 	private Date end;
 	@Column("NAME")
+	@MappingRS("name")
 	private String name;
-	
+
 	@Transient
 	private Plan plan;
 	

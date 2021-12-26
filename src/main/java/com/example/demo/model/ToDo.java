@@ -4,12 +4,18 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import com.example.demo.anotation.model.MappingRS;
+
 @Table("TODOS")
-public class ToDo {
+public class ToDo implements Model {
+
 	@Id
 	@Column("ID")
+	@MappingRS("id")
 	private int id;
+
 	@Column("VALUE")
+	@MappingRS("value")
 	private String value;
 
 	public int getId() {

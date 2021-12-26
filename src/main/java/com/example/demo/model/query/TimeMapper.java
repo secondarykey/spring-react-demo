@@ -1,35 +1,26 @@
 package com.example.demo.model.query;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.jdbc.core.RowCallbackHandler;
-
 import com.example.demo.model.Time;
-import com.example.demo.util.DateUtil;
 
-public class TimeMapper implements RowCallbackHandler {
+public class TimeMapper extends ModelMapper<List<Time>> {
 	
+	public TimeMapper(SQLBuilder builder) {
+		super(builder);
+	}
+
 	private List<Time> list = new ArrayList<>();
 
 	@Override
-	public void processRow(ResultSet rs) throws SQLException {
-		Time time = new Time();
-		time.setId(rs.getInt("id"));
-		time.setValue(rs.getString("value"));
-		time.setDate(rs.getDate("date"));
-		time.setTime(rs.getTime("time"));
-
-		time.setDateToWithout(rs.getTimestamp("date_without"));
-		time.setOffsetToWith(DateUtil.zone(rs.getTimestamp("offset_with"),"UTC"));
-
+	protected void mapping(MappingObject map) {
+		Time time = map.get(Time.class);
 		list.add(time);
 	}
-	
 
-	public List<Time> getResult() {
+	@Override
+	public List<Time> get() {
 		return list;
 	}
 }

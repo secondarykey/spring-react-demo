@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-
 import java.time.OffsetDateTime;
 import java.util.Date;
 
@@ -8,23 +7,32 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import com.example.demo.anotation.model.MappingRS;
+
 @Table("TIMES")
-public class Time {
+public class Time implements Model {
 	@Id
 	@Column("ID")
+	@MappingRS("id")
 	private int id;
 	
 	@Column("VALUE")
+	@MappingRS("value")
 	private String value;
 
 	@Column("DATE")
+	@MappingRS("date")
 	private Date date;
 	@Column("TIME")
+	@MappingRS("time")
 	private Date time;
 
 	@Column("DATE_WITHOUT")
+	@MappingRS("dateToWithout")
 	private Date dateToWithout;
+
 	@Column("OFFSET_WITH")
+	@MappingRS("offsetWith")
 	private OffsetDateTime offsetToWith;
 
 	public int getId() {

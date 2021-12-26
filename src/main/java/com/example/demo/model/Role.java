@@ -1,12 +1,19 @@
 package com.example.demo.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("role")
-public class Role {
+import com.example.demo.anotation.model.MappingRS;
+
+@Table("ROLE")
+public class Role implements Model {
 	@Id
+	@Column("ID")
+	@MappingRS("id")
 	private String id;
+	@Column("NAME")
+	@MappingRS("name")
 	private String name;
 
 	public String getId() {
