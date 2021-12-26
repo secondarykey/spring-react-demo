@@ -184,7 +184,7 @@ public class SQLBuilder {
 		Class<?> tClazz = field.getType();
 
 		String val = map.value();
-		String method = map.value();
+		String method = map.method();
 		String name = val;
 		if ( !Util.isEmpty(prefix) ) {
 			name = String.format("%s.%s", prefix,name);
@@ -200,14 +200,17 @@ public class SQLBuilder {
 		
 		logger.info("Class:{} SetterName :{}",tClazz.getName(),setter.getName());
 		try {
-			if ( Util.isEmpty(method) ) {
+			if ( !Util.isEmpty(method) ) {
 				Method getMethod;
 				try {
-					getMethod = rs.getClass().getMethod(setterName, String.class);
+					getMethod = rs.getClass().getMethod(method, String.class);
 				} catch (NoSuchMethodException | SecurityException e) {
 					throw new RuntimeException("ResultSet.getterの取得失敗",e);
 				}
-				setter.invoke(getMethod.invoke(rs, name));
+				Object obj = getMethod.invoke(rs, name);
+				logger.info("getObject = {}",obj.getClass());
+				
+				setter.invoke(model,obj);
 			} else {
 				
 				Object obj = rs.getObject(name);

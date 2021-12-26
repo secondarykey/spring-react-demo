@@ -32,7 +32,7 @@ public class PlanDetailQueryRepository extends QueryRepository {
 		""";
 		SQLBuilder builder = SQLBuilder.create(
 				QuerySet.create(Plan.class, "PLANS", "plans"),
-				QuerySet.create(Plan.class, "PLAN_DETAILS", "plan_details")
+				QuerySet.create(PlanDetail.class, "PLAN_DETAILS", "plan_details")
 			);
 		builder.setSQL(sql,placeId,date);
 

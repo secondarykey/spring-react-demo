@@ -21,10 +21,10 @@ public class Time implements Model {
 	private String value;
 
 	@Column("DATE")
-	@MappingRS("date")
+	@MappingRS(value="date",method="getDate")
 	private Date date;
 	@Column("TIME")
-	@MappingRS("time")
+	@MappingRS(value="time",method="getTime")
 	private Date time;
 
 	@Column("DATE_WITHOUT")
@@ -32,7 +32,7 @@ public class Time implements Model {
 	private Date dateToWithout;
 
 	@Column("OFFSET_WITH")
-	@MappingRS("offsetWith")
+	@MappingRS("offsetToWith")
 	private OffsetDateTime offsetToWith;
 
 	public int getId() {

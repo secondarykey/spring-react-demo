@@ -54,7 +54,8 @@ public class ExceptionHandler {
     	Result<String> result = new Result<>();
     	result.setResult(getTrace(ex));
     	result.setError();
-    	result.addMessage(resource.get("PRFN00M000"));
+    	result.setMessageId("PRFN00M000",ex.getMessage());
+    	//result.addMessage(resource.get("PRFN00M000"));
     	result.setReason(ex.getMessage());
     	
         return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
