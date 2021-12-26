@@ -3,7 +3,16 @@ package com.example.demo.util;
 import java.util.List;
 
 public class Util {
-	
+
+	public static String capitalize(String value) {
+		if ( Util.isEmpty(value) ) {
+			return "";
+		}
+		String p = value.substring(0,1);
+		String tail = value.substring(1);
+		return p.toUpperCase() + tail;
+	}	
+
 	public static boolean isEmpty(String val) {
 		if ( val == null ) return true;
 		return val.isEmpty();
