@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -9,13 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.demo.DemoApplication;
 import com.example.demo.model.Place;
 import com.example.demo.model.Plan;
 import com.example.demo.model.PlanDetail;
 import com.example.demo.util.DateUtil;
 
-@SpringBootTest
-public class PlanQueryRepositoryTest {
+@SpringBootTest(classes = DemoApplication.class)
+public class PlanRepositoryTest {
 	@Autowired
 	PlanQueryRepository repo;
 
@@ -28,10 +30,6 @@ public class PlanQueryRepositoryTest {
 		List<Plan> chinaList = repo.findByPlace(2);
 		assertNotNull(chinaList);
 		assertEquals(chinaList.size(),1);
-		
-		//Plan plan = chinaList.get(0);
-		//Set<PlanDetail> derails = plan.getDetails();
-		//assertEquals(derails.size(),4);
 	}
 
 	@Test
@@ -40,13 +38,14 @@ public class PlanQueryRepositoryTest {
 		Plan plan = repo.findByPlaceDate(1,target);
 
 		assertNotNull(plan);
+		//結合できてない
 		Place place = plan.getPlace();
 		assertNull(place);
 	}
 
 	@Test
 	void testJoin() {
-		List<Plan> plans = repo.joinDetail();
+		Collection<Plan> plans = repo.joinDetail();
 
 		assertEquals(plans.size(),3);
 

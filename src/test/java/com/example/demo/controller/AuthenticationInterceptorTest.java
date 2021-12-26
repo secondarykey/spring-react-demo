@@ -13,9 +13,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.DemoApplication;
 import com.example.demo.transfer.response.Result;
 
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
+
 public class AuthenticationInterceptorTest {
 
     private MockMvc mockMvc;
