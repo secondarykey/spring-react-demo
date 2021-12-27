@@ -1,1 +1,26 @@
-{"PRFN00L001":"English","PRFN00M101":"The UserID or Password is incorrect.","PRFN00L000":"Error Detail","PRFN00M000":"There is a problem with the server. Please check the details in the log.","PRFN00L204":"Update","PRFN00L104":"Login","PRFN00L203":"New Password(re-enter)","PRFN99M999":"en","PRFN00L103":"Language Switching","PRFN00L202":"New Password","PRFN00L003":"日本語","PRFN00L102":"Password","PRFN00L201":"Current Password","PRFN00L002":"中國人","PRFN00L101":"UserID","PRFN00M102":"The password has expired. Please set a new password.","PRFN00M201":"The new password has been re-entered incorrectly.","PRFN00M202":"Does not meet the password requirements.","PRFN00M203":"The user ID or old password is incorrect.","RESOUCE_LANG":"en"}
+{
+  "PRFN00L000":"Error Detail",
+  "PRFN00L001":"English",
+  "PRFN00L002":"中國人",
+  "PRFN00L003":"日本語",
+  "PRFN00L004":"Default Language",
+  "PRFN00L101":"UserID",
+  "PRFN00L102":"Password",
+  "PRFN00L103":"Language Switching",
+  "PRFN00L104":"Login",
+  "PRFN00L201":"Current Password",
+  "PRFN00L202":"New Password",
+  "PRFN00L203":"New Password(re-enter)",
+  "PRFN00L204":"Update",
+  "PRFN00M000":"There is a problem with the server. Please check the details in the log.",
+  "PRFN00M001":"{0} is required",
+  "PRFN00M101":"The UserID or Password is incorrect.",
+  "PRFN00M102":"The password has expired. Please set a new password.",
+  "PRFN00M103":"There is No Target ID",
+  "PRFN00M201":"The new password has been re-entered incorrectly.",
+  "PRFN00M202":"Does not meet the password requirements.",
+  "PRFN00M203":"The user ID or old password is incorrect.",
+  "PRFN99M999":"en",
+  "PRFN??M???":"There is No Target ID",
+  "RESOUCE_LANG":"en"
+}

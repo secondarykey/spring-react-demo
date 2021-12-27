@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -25,7 +26,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.util.Util;
 
 /**
- * リソースのCSVファイルから 
+ * リソースのCSVファイルから言語ファイルを作成 
  *
  */
 @StepScope
@@ -35,6 +36,9 @@ public class ResourceTasklet implements Tasklet {
 	private static Logger logger = LoggerFactory.getLogger(ResourceTasklet.class);
 	@Value("#{jobParameters['resourceCSV']}")
 	String filePath;
+	@Value("#{jobParameters['output']}")
+	String outputPath;
+
 	
 	private static final String CheckSumID = "RESOUCE_LANG";
 
@@ -83,15 +87,21 @@ public class ResourceTasklet implements Tasklet {
 				String lang = headers.get(idx);
 				Map<String,String> resourceMap = languageMap.get(lang);
 				if ( resourceMap == null ) {
-					resourceMap = new HashMap<String,String>();
+					resourceMap = new LinkedHashMap<String,String>();
 					languageMap.put(lang,resourceMap);
 				}
 				resourceMap.put(resourceKey,lineData.get(idx));
 			}
 		}
+
+		String outJSON = outputPath;
+		String outProperty = outputPath;
 		
-		String outJSON = ".";
-		String outProperty = ".";
+		if ( Util.isEmpty(outputPath) ) {
+			//開発環境向け
+			outJSON = "./src/frontend/src/locale-data";
+			outProperty = "./src/main/resources/locale";
+		}
 
 		createJson(outJSON,languageMap);
 		createProperty(outProperty,languageMap);
@@ -143,10 +153,10 @@ public class ResourceTasklet implements Tasklet {
 			String file = outJSON + "/" + key + ".json";
 
 			StringBuffer buf = new StringBuffer();
-			buf.append("{");
+			buf.append("{\n");
 			addJSONData(buf,values);
-			buf.append("\"" + CheckSumID + "\":\"" + key + "\"");
-			buf.append("}");
+			buf.append("  \"" + CheckSumID + "\":\"" + key + "\"");
+			buf.append("\n}");
 
 			writeFile(file,buf);
 		}
@@ -154,7 +164,7 @@ public class ResourceTasklet implements Tasklet {
 
 	private void addJSONData(StringBuffer buf,Map<String, String> values) {
 		for ( Entry<String, String> entry : values.entrySet() ) {
-			buf.append("\"" + entry.getKey() + "\":\"" + entry.getValue() + "\",");
+			buf.append("  \"" + entry.getKey() + "\":\"" + entry.getValue() + "\",\n");
 		}
 		return;
 	}
