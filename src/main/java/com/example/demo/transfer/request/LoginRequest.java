@@ -10,6 +10,8 @@ public class LoginRequest extends Arguments {
 	@NotEmpty(message="PRFN00L102")
 	private String password;
 
+	private String language;
+
 	public String getId() {
 		return id;
 	}
@@ -24,5 +26,13 @@ public class LoginRequest extends Arguments {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 }

@@ -2,6 +2,7 @@ import axios from 'axios';
 import {CreateJWT} from "./Authentication";
 import {Show,Hide} from "./Progress";
 import {UnknownErrorMessage}  from "./Layout";
+import { GetLanguage } from './Locale';
 
 class API {
 
@@ -10,7 +11,8 @@ class API {
     const instance = axios.create({
       headers: {
         'Content-Type': 'application/json',
-        'Authorization' : jwt
+        'Authorization' : jwt,
+        'Language' : GetLanguage()
       }, timeout: 10000,
     });
 

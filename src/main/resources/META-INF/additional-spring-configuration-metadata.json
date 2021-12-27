@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "application.default.language",
+      "type": "java.lang.String",
+      "description": "Application Default Language"
+    }
+  ]
+}

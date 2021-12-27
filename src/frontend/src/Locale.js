@@ -4,13 +4,18 @@ import {createIntl, createIntlCache, RawIntlProvider} from 'react-intl';
 import { instanceOf } from "prop-types";
 import { withCookies,Cookies } from "react-cookie";
 import Select from "./pages/components/Select";
+import Package from "../package.json";
 
 import ja from './locale-data/ja.json';
 import en from './locale-data/en.json';
 import zh from './locale-data/zh.json';
 
 function selectMessages(locale) {
-  switch(locale) {
+  let lang = locale;
+  if ( lang === "default" ) {
+     lang = Package.language;
+  }
+  switch(lang) {
     case 'en': return en;
     case 'ja': return ja;
     case 'zh': return zh;
@@ -46,10 +51,15 @@ export class Locale extends React.Component {
       const { cookies } = this.props;
       let lang = cookies.get("language");
       if ( lang == null ) {
-        lang = navigator.language;
+        lang = Package.language;
       }
+
       this.lang = lang;
       this.state = {intl:create(lang)};
+  }
+
+  getLanguage = () => {
+    return this.lang;
   }
 
   set = (locale) => {
@@ -90,9 +100,14 @@ export function Message(props) {
   )
 }
 
+export function GetLanguage() {
+  return inst.getLanguage();
+}
+
 export function SelectLanguage() {
 
   let languages = {};
+  languages["default"] = GetLabel("PRFN00L004");
   languages["en"] = GetLabel("PRFN00L001");
   languages["zh"] = GetLabel("PRFN00L002");
   languages["ja"] = GetLabel("PRFN00L003");

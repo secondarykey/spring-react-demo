@@ -29,6 +29,10 @@ public class User implements Persistable<String>,Model {
 	@MappingRS("password")
 	private String password;
 
+	@Column("LANGUAGE")
+	@MappingRS("language")
+	private String language;
+
 	@Column("ROLE")
 	@MappingRS("role")
 	private String role;
@@ -87,5 +91,11 @@ public class User implements Persistable<String>,Model {
 	@Override
 	public boolean isNew() {
 		return insert;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 }
