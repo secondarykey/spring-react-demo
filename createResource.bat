@@ -20,7 +20,6 @@ set JARS=%OWN%;%APP_LIB%HikariCP-4.0.3.jar;%APP_LIB%antlr-2.7.7.jar;%APP_LIB%asp
 
 REM set JARS=%APP_LIB%HdrHistogram-2.1.12.jar;%APP_LIB%HikariCP-4.0.3.jar;%APP_LIB%LatencyUtils-2.0.3.jar;%APP_LIB%jackson-annotations-2.13.0.jar;%APP_LIB%jackson-core-2.13.0.jar;%APP_LIB%jackson-databind-2.13.0.jar;%APP_LIB%jakarta.annotation-api-1.3.5.jar;%APP_LIB%javax.batch-api-1.0.jar;%APP_LIB%jettison-1.2.jar;%APP_LIB%jul-to-slf4j-1.7.32.jar;%APP_LIB%log4j-api-2.14.1.jar;%APP_LIB%log4j-to-slf4j-2.14.1.jar;%APP_LIB%logback-classic-1.2.7.jar;%APP_LIB%logback-core-1.2.7.jar;%APP_LIB%micrometer-core-1.8.0.jar;%APP_LIB%slf4j-api-1.7.32.jar;%APP_LIB%snakeyaml-1.29.jar;%APP_LIB%spring-aop-5.3.13.jar;%APP_LIB%spring-batch-core-4.3.4.jar;%APP_LIB%spring-batch-infrastructure-4.3.4.jar;%APP_LIB%spring-beans-5.3.13.jar;%APP_LIB%spring-boot-2.6.0.jar;%APP_LIB%spring-boot-autoconfigure-2.6.0.jar;%APP_LIB%spring-boot-starter-2.6.0.jar;%APP_LIB%spring-boot-starter-batch-2.6.0.jar;%APP_LIB%spring-boot-starter-jdbc-2.6.0.jar;%APP_LIB%spring-boot-starter-logging-2.6.0.jar;%APP_LIB%spring-context-5.3.13.jar;%APP_LIB%spring-core-5.3.13.jar;%APP_LIB%spring-expression-5.3.13.jar;%APP_LIB%spring-jcl-5.3.13.jar;%APP_LIB%spring-jdbc-5.3.13.jar;%APP_LIB%spring-retry-1.3.1.jar;%APP_LIB%spring-tx-5.3.13.jar
 
-set OWN=build\libs\demo-0.5.0-SNAPSHOT-batch.jar
 set CLASSES=bin\main
 set CLASSPATH=%CLASSES%;%JARS% 
 
