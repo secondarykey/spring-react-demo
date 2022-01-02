@@ -12,7 +12,7 @@ spring:
       mode: never
       encoding: utf-8
   jpa:
-    show-sql: true
+    show-sql: false
   datasource:
     url: jdbc:h2:~/demo050
     username: sa
