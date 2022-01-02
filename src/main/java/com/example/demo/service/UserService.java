@@ -24,6 +24,7 @@ import com.example.demo.util.Util;
 @Service
 public class UserService  extends BusinessService {
 	
+	@SuppressWarnings("unused")
 	private final static Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired(required=true)
@@ -40,18 +41,18 @@ public class UserService  extends BusinessService {
 			return result;
 		}
 		
-		//TODO 選択している言語がdefaultでない場合はユーザのデフォルト言語を更新
+		// 選択している言語がdefaultでない、言語が違う場合、
 		// defaultの場合でも、ユーザのデフォルト言語をresultにはセットする
 		String selectLanguage = json.getLanguage();
 		String lang = user.getLanguage();
-		if ( !Util.equals(selectLanguage, "default") ) {
-			logger.info("select language {}",lang);
-			user.setLanguage(lang);
+		if ( !Util.isDefault(selectLanguage) && !Util.equals(selectLanguage, lang)) {
+			user.setLanguage(selectLanguage);
 			crud.save(user);
 		}
 		selectLanguage = lang;
+
 		LoginResponse res = new LoginResponse();
-		res.setLanguage(lang);
+		res.setLanguage(selectLanguage);
 
 		//TODO しっかりチェック
 		OffsetDateTime exp = user.getExpiry();

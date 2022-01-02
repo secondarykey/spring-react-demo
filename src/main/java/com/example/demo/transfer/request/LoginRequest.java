@@ -9,7 +9,7 @@ public class LoginRequest extends Arguments {
 
 	@NotEmpty(message="PRFN00L102")
 	private String password;
-
+	
 	private String language;
 
 	public String getId() {
