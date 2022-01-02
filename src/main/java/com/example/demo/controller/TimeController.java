@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import com.example.demo.transfer.response.TimeViewResponse;
 
 @RestController
 @RequestMapping("/api/demo/times")
+@ConditionalOnWebApplication
 public class TimeController {
 	@Autowired
 	TimeService service;
