@@ -22,5 +22,17 @@
   "PRFN00M203":"ユーザIDか古いパスワードが間違っています。",
   "PRFN99M999":"ja",
   "PRFN??M???":"対象のIDがありません。",
+  "SYSTEM":"システム名",
+  "LOGIN":"ログイン",
+  "MESSAGE":"メッセージ画面",
+  "ERROR":"エラー画面",
+  "MENU":"メニュー",
+  "TODO":"APIテスト",
+  "DATE":"日付テスト",
+  "FLOATING":"ポップアップ入力例",
+  "PLAN":"１対多データアクセス",
+  "PLANINPUT":"１対多データ入力",
+  "PAGING":"ページングデータ",
+  "DIALOGS":"ダイアログ",
   "RESOUCE_LANG":"ja"
 }

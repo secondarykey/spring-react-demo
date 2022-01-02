@@ -22,5 +22,17 @@
   "PRFN00M203":"The user ID or old password is incorrect.",
   "PRFN99M999":"en",
   "PRFN??M???":"There is No Target ID",
+  "SYSTEM":"System Name",
+  "LOGIN":"System Name",
+  "MESSAGE":"System Name",
+  "ERROR":"System Name",
+  "MENU":"System Name",
+  "TODO":"System Name",
+  "DATE":"System Name",
+  "FLOATING":"System Name",
+  "PLAN":"System Name",
+  "PLANINPUT":"System Name",
+  "PAGING":"System Name",
+  "DIALOGS":"System Name",
   "RESOUCE_LANG":"en"
 }
