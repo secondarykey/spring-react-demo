@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.config.Session;
 import com.example.demo.util.Util;
 
 @Component
@@ -20,14 +19,15 @@ public class Resource {
 	
 	private final static Logger logger = LoggerFactory.getLogger(Resource.class);
 	@Autowired
-	MessageSource messages;	
+	private MessageSource messages;	
 	@Autowired
-	Session session;	
+	private Session session;	
 
 	public String get(String id,String ...args) {
-	
-		logger.info("Language {}" ,session.getLanguage());
+
+		logger.debug("Language {}" ,session.getLanguage());
 		Locale loc = new Locale(session.getLanguage());
+
 		List<Object> list = new ArrayList<Object>();
 		if ( !Util.isEmpty(args) ) {
 			for ( String argId : args ) {
