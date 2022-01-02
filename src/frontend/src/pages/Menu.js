@@ -5,16 +5,11 @@ import {
 } from "react-bootstrap";
 
 import {Role} from "../Authentication";
-import {Redirect,ChangeTitle} from "../Layout";
+import {Redirect} from "../Layout";
 
 import "../css/Main.css";
 
 class Menu extends React.Component {
-
-  constructor(props) {
-    super(props)
-    ChangeTitle("メニュー")
-  }
 
   gotoPlan = () => {
     Redirect("/pages/plan/");

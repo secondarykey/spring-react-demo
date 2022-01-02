@@ -16,6 +16,8 @@ class API {
       }, timeout: 10000,
     });
 
+    console.log(GetLanguage());
+
     return instance;
   }
 

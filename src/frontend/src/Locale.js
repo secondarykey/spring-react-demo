@@ -34,7 +34,7 @@ function create(locale) {
 
 var inst;
 function changeLanguage(e) {
-  inst.set(e);
+  inst.setLanguage(e);
 }
 
 export class Locale extends React.Component {
@@ -49,24 +49,36 @@ export class Locale extends React.Component {
 
       inst = this;
       const { cookies } = this.props;
+
       let lang = cookies.get("language");
+      this.selectLang = lang;
       if ( lang == null ) {
         lang = Package.language;
+        this.selectLang = "default";
       }
-
-      this.lang = lang;
       this.state = {intl:create(lang)};
   }
 
   getLanguage = () => {
-    return this.lang;
+    return this.selectLang;
   }
 
-  set = (locale) => {
-      this.setState({intl:create(locale)});
-      const { cookies } = this.props;
-      cookies.set('language', locale, { path: '/' });
-      this.lang = locale;
+  remove = () => {
+    const { cookies } = this.props;
+    cookies.remove('language', { path: '/' });
+  }
+
+  setLanguage = (locale) => {
+    var lang = locale;
+    if ( locale === "default" ) {
+      lang = Package.language;
+    }
+
+    this.setState({intl:create(lang)});
+    const { cookies } = this.props;
+    cookies.set('language', locale, { path: '/' });
+
+    this.selectLang = locale;
   }
 
   render() {
@@ -104,6 +116,14 @@ export function GetLanguage() {
   return inst.getLanguage();
 }
 
+export function SetLanguage(lang) {
+  return inst.setLanguage(lang);
+}
+
+export function RemoveLanguage() {
+  return inst.remove();
+}
+
 export function SelectLanguage() {
 
   let languages = {};
@@ -114,7 +134,7 @@ export function SelectLanguage() {
 
   return (<>
     <FormattedMessage id="PRFN00L103"/>
-    <Select values={languages} value={inst.lang} onChange={changeLanguage} />
+    <Select values={languages} value={inst.selectLang} onChange={changeLanguage} />
   </>);
 }
 
