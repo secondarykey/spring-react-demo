@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.example.demo.mapping.SQLBuilder;
 import com.example.demo.model.ToDo;
 
 @ExtendWith(MockitoExtension.class)
