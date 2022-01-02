@@ -83,3 +83,17 @@ main {
     width:100px;
 }
 
+.Layout-Breadcrumbs {
+    padding:10px;
+    padding-left:20px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before{
+    content:var(--bs-breadcrumb-divider,">") !important ;
+}
+
+@media screen and (max-width: 768px) {
+  .Layout-Breadcrumbs {
+      display: none;
+  }
+}
