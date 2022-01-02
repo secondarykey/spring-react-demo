@@ -1,4 +1,4 @@
-package com.example.demo.model.query;
+package com.example.demo.mapping;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -197,8 +197,10 @@ public class SQLBuilder {
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new RuntimeException("メソッド生成エラー:" + setterName,e);
 		}
-		
-		logger.info("Class:{} SetterName :{}",tClazz.getName(),setter.getName());
+	
+		if ( logger.isDebugEnabled() ) {
+			logger.debug("Class:{} SetterName :{}",tClazz.getName(),setter.getName());
+		}
 		try {
 			if ( !Util.isEmpty(method) ) {
 				Method getMethod;
@@ -214,8 +216,10 @@ public class SQLBuilder {
 			} else {
 				
 				Object obj = rs.getObject(name);
-				logger.info("Object Class[{}], [{}]",obj.getClass() , tClazz.getName());
-	
+				if ( obj != null && logger.isDebugEnabled() ) {
+					logger.debug("Object Class[{}], [{}]",obj.getClass() , tClazz.getName());
+				}
+
 				//プリミティブ型は呼び出しエラーになる
 				if ( tClazz == int.class ) {
 					setter.invoke(model, rs.getInt(name));

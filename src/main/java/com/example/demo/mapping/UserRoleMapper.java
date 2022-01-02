@@ -1,4 +1,4 @@
-package com.example.demo.model.query;
+package com.example.demo.mapping;
 
 import com.example.demo.model.Role;
 import com.example.demo.model.User;

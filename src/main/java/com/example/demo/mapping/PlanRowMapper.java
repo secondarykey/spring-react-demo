@@ -1,4 +1,4 @@
-package com.example.demo.model.query;
+package com.example.demo.mapping;
 
 import java.util.ArrayList;
 import java.util.Collection;
