@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.example.demo.model.query.ModelMapper;
+import com.example.demo.mapping.ModelMapper;
 
 public class QueryRepository {
 	

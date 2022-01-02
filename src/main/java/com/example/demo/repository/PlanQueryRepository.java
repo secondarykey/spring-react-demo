@@ -10,19 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.mapping.PlanMapper;
+import com.example.demo.mapping.PlanPlaceRowMapper;
+import com.example.demo.mapping.PlanRowMapper;
+import com.example.demo.mapping.QuerySet;
+import com.example.demo.mapping.SQLBuilder;
 import com.example.demo.model.Place;
 import com.example.demo.model.Plan;
 import com.example.demo.model.PlanDetail;
-import com.example.demo.model.query.PlanMapper;
-import com.example.demo.model.query.PlanPlaceRowMapper;
-import com.example.demo.model.query.PlanRowMapper;
-import com.example.demo.model.query.QuerySet;
-import com.example.demo.model.query.SQLBuilder;
 import com.example.demo.util.DateUtil;
 
 @Repository
 public class PlanQueryRepository extends QueryRepository {
 	
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(PlanQueryRepository.class);
 
 	@Autowired(required=true)

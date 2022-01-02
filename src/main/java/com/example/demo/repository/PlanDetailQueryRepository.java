@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.mapping.PlanDetailRowMapper;
+import com.example.demo.mapping.QuerySet;
+import com.example.demo.mapping.SQLBuilder;
 import com.example.demo.model.Plan;
 import com.example.demo.model.PlanDetail;
-import com.example.demo.model.query.PlanDetailRowMapper;
-import com.example.demo.model.query.QuerySet;
-import com.example.demo.model.query.SQLBuilder;
 
 @Repository
 public class PlanDetailQueryRepository extends QueryRepository {
