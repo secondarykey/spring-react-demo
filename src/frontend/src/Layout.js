@@ -47,7 +47,9 @@ const Layout = ({children}) => {
   return (<>
 
 <HelmetProvider>
-  <Helmet title={ title } />
+  <Helmet title={ title }>
+  <script src="/config.js"></script>
+  </Helmet>
 </HelmetProvider>
 
 <Authentication />
