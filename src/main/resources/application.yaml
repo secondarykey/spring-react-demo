@@ -9,7 +9,7 @@ spring:
       enabled: true
   sql:
     init:
-      mode: never
+      mode: always
       encoding: utf-8
   jpa:
     show-sql: false
@@ -48,4 +48,7 @@ logging:
 application:
   default:
     language: en
+  client: # second
+    refresh: 180
+    languages: ja,en,zh
 

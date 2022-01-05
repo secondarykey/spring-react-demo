@@ -10,6 +10,17 @@ class DateView extends React.Component {
         this.datetime = createRef();
         this.time = createRef();
     }
+    
+    componentDidMount() {
+
+      let obj = [
+        {day:"2022-01-10",value:1},
+        {day:"2022-01-11",value:1},
+        {day:"2022-01-12",value:1}
+      ]
+
+      this.date.current.setStyles(obj);
+    }
 
     show = () => {
         var d = this.date.current;

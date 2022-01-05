@@ -12,6 +12,10 @@ main {
     display:inline-flex;
 }
 
+.Day-1 {
+    background-color: red;
+}
+
 .DateTime-Hour {
     width:70px;
 }
@@ -20,7 +24,6 @@ main {
     width:70px;
 }
 
-<<<<<<< HEAD
 .Paging-Limit {
     display: inline-flex;
     width:100px;
