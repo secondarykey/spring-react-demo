@@ -1,0 +1,46 @@
+spring:
+  profiles:
+    active: ${SPRING_PROFILE_ACTIVE:local}
+  batch:
+    job:
+      enabled: false
+  h2:
+    console:
+      enabled: false
+  sql:
+    init:
+      mode: always
+      encoding: utf-8
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+    #url: jdbc:postgresql://localhost:5432/demo
+    #username: postgres
+    #password: passw0rd
+    #driver-class-name: org.postgresql.Driver
+
+logging:
+#  file: logs/demo.log
+#    max-size: 10M
+  level:
+    root: WARN
+    org:
+      springframework:
+        jdbc:
+          core: WARN
+        web: INFO
+        batch: WARN
+    com:
+      example:
+        demo: INFO
+
+application:
+  default:
+    language: en
+  client: # second
+    refresh: 180
+    languages: ja,en,zh

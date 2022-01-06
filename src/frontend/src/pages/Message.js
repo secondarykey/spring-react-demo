@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { withRouter,WriteMessage,ChangeTitle } from "../Layout";
+import { withRouter,WriteMessage } from "../Layout";
 import { Remove } from "../Authentication";
+import { RemoveLanguage } from "../Locale";
 
 class Message extends React.Component {
 
@@ -13,12 +14,13 @@ class Message extends React.Component {
           var id = props.params.id
           WriteMessage(id,props.type);
       }
-      //TODO エラーだった時にエラーにする
-      ChangeTitle("メッセージ");
   }
+
   componentDidMount() {
       Remove();
+      RemoveLanguage();
   }
+
   render() {
     return ( <>
     <Link to="/">ログインする</Link>

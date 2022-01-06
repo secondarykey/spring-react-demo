@@ -12,6 +12,7 @@ public class LoginUser implements Serializable {
 	private String id;
 	private String name;
 	private String role;
+	private int belong;
 	public String getId() {
 		return id;
 	}
@@ -45,7 +46,14 @@ public class LoginUser implements Serializable {
 		lu.name = user.getName();
 		lu.role = user.getRole();
 		lu.expiry = user.getExpiry().toString();
+		lu.belong = user.getBelong();
 		
 		return lu;
+	}
+	public int getBelong() {
+		return belong;
+	}
+	public void setBelong(int belong) {
+		this.belong = belong;
 	}
 }

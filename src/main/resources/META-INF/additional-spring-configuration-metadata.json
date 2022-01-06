@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "application.default.language",
+      "type": "java.lang.String",
+      "description": "Application Default Language"
+    },
+    {
+      "name": "application.client.refresh",
+      "type": "java.lang.Integer",
+      "description": "Client refresh Time(Second)"
+    },
+    {
+      "name": "application.client.languages",
+      "type": "java.lang.String",
+      "description": "Application Language List(CSV)"
+    }
+  ]
+}

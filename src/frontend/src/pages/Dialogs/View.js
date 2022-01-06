@@ -7,7 +7,7 @@ import {
 } from "react-bootstrap";
 
 import { ShowInformation,ShowConfirm } from "../../Dialog";
-import { ChangeTitle, ClearMessage, WriteMessage } from "../../Layout";
+import { ClearMessage, WriteMessage } from "../../Layout";
 
 import DoubleDialog from "./Dialog"
 
@@ -16,7 +16,6 @@ class View extends React.Component {
 
     constructor(props)  {
         super(props)
-        ChangeTitle("ダイアログ確認")
         this.state = {
             cards : []
         }

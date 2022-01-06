@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import com.example.demo.transfer.response.Result;
 
 @RestController
 @RequestMapping("/api/demo/plan")
+@ConditionalOnWebApplication
 public class PlanController extends JSONController {
 
     @Autowired

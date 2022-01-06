@@ -35,7 +35,6 @@ class Authentication extends React.Component {
         var now = new Date()
         var ex = new Date(this.session.exiry)
         if ( now <= ex ) {
-          //TODO アプリに依存する為、書き方を変更
           //有効期限切れ
           Redirect("/message/expiry","Authentication 有効期限切れ");
           return;
@@ -51,14 +50,38 @@ class Authentication extends React.Component {
   }
 
   componentDidMount() {
-      this.refreshReload = undefined;
-      this.refreshTimer();
+
+    this.refreshReload = undefined;
+    var mouseMove = false;
+    var self = this;
+
+    if ( !this.isAuthPage() ) {
+      return;
+    }
+    var refreshFunc = function() {
+      if ( mouseMove ) {
+        self.refreshTimer();
+        mouseMove = false;
+        console.log("refresh:" + new Date());
+      }
+    }
+
+    var once = true;
+    document.addEventListener("mousemove",function() {
+      mouseMove = true;
+      if ( once ) {
+        setInterval(refreshFunc,5000);
+        once = false;
+      }
+    });
+    this.refreshTimer();
   }
 
   refreshTimer() {
     if ( !this.isAuthPage() ) {
       return;
     }
+
     if ( this.refreshReload !== undefined ) {
       clearTimeout(this.refreshReload);
     }
@@ -87,10 +110,6 @@ class Authentication extends React.Component {
   render() {
     return (<></>);
   }
-}
-
-export function ExtendRefresh() {
-  inst.refreshTimer();
 }
 
 export function Save(obj) {

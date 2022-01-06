@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.DemoApplication;
+import com.example.demo.config.AuthenticationInterceptor;
 import com.example.demo.transfer.response.Result;
 
 @SpringBootTest(classes = DemoApplication.class)
@@ -21,7 +22,6 @@ import com.example.demo.transfer.response.Result;
 public class AuthenticationInterceptorTest {
 
     private MockMvc mockMvc;
-    
 
 	@BeforeEach
     public void setup() {

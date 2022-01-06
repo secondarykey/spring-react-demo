@@ -30,7 +30,7 @@ public class Util {
 		return cnt;
 	}
 
-	public static boolean isEmpty(List<String> messages) {
+	public static boolean isEmpty(List<?> messages) {
 		if ( messages == null || messages.size() == 0 ) {
 			return true;
 		}
@@ -58,4 +58,23 @@ public class Util {
 		return false;
 	}
 
+	/**
+	 * デフォルト値判定
+	 * <pre>
+	 * 引数の値がデフォルトかを判定
+	 * 現状言語設定のみ
+	 * 空文字もデフォルトにする。
+	 * </pre>
+	 * @param v 設定値
+	 * @return true時デフォルト
+	 */
+	public static boolean isDefault(String v) {
+		if ( Util.isEmpty(v) ) {
+			return true;
+		}
+		if ( Util.equals(v, "default") ) {
+			return true;
+		}
+		return false;
+	}
 }

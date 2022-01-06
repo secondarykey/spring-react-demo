@@ -3,7 +3,6 @@ import React from "react";
 import {Form} from "react-bootstrap";
 
 import "../../css/Main.css";
-import { ChangeTitle } from "../../Layout";
 
 class FloatInput extends React.Component {
 
@@ -16,8 +15,6 @@ class FloatInput extends React.Component {
         this.float = React.createRef();
         this.inputId = props.value;
         this.firstShow = false;
-
-        ChangeTitle("フローティングインプット")
     }
 
     setValue = (id,name)  => {

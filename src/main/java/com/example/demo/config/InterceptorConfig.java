@@ -5,19 +5,22 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import com.example.demo.controller.AuthenticationInterceptor;
-import com.example.demo.controller.SessionInterceptor;
 
 @Configuration
 @ConditionalOnWebApplication
 public class InterceptorConfig implements WebMvcConfigurer {
 
 	private static Logger logger = LoggerFactory.getLogger(InterceptorConfig.class);
+	
+	@Autowired
+	private SessionInterceptor session;
+	@Autowired
+	private AuthenticationInterceptor authentication;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry ) {
@@ -29,7 +32,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 		noneAuthURLs.add("/api/v1/login");
 		noneAuthURLs.add("/api/v1/password");
 
-		registry.addInterceptor(new AuthenticationInterceptor()).excludePathPatterns(noneAuthURLs);
-		registry.addInterceptor(new SessionInterceptor());
+		registry.addInterceptor(session);
+		registry.addInterceptor(authentication).excludePathPatterns(noneAuthURLs);
 	}
 }

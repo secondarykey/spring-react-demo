@@ -1,12 +1,8 @@
 import React, { createRef } from "react";
-
+import Tree from 'rc-tree';
 import {Container} from "react-bootstrap";
 
 import FloatInput from "../components/FloatInput";
-
-import Tree from 'rc-tree';
-
-import "../../css/Main.css";
 import 'rc-tree/assets/index.css';
 
 const treeData = [
@@ -43,6 +39,7 @@ class View extends React.Component {
         this.treeRef = createRef();
         this.treeInput =createRef();
     }
+
 
     handleSelect = (e) => {
 

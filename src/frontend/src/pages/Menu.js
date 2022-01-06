@@ -5,16 +5,11 @@ import {
 } from "react-bootstrap";
 
 import {Role} from "../Authentication";
-import {Redirect,ChangeTitle} from "../Layout";
+import {Redirect} from "../Layout";
 
 import "../css/Main.css";
 
 class Menu extends React.Component {
-
-  constructor(props) {
-    super(props)
-    ChangeTitle("メニュー")
-  }
 
   gotoPlan = () => {
     Redirect("/pages/plan/");
@@ -45,6 +40,12 @@ class Menu extends React.Component {
     Redirect("/pages/dialogs/");
     return;
   }
+
+  gotoOperation = () => {
+    Redirect("/pages/operation/");
+    return;
+  }
+
 
   render() {
     return (<>
@@ -116,6 +117,17 @@ class Menu extends React.Component {
           <Card.Text> 
           </Card.Text>
           <Button variant="primary" onClick={this.gotoDialogs}>Go Sample Dialog</Button>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col>
+      <Card className="Menu-Card">
+        <Card.Body>
+          <Card.Title>Operation</Card.Title>
+          <Card.Text> 
+          </Card.Text>
+          <Button variant="primary" onClick={this.gotoOperation}>Go Operation</Button>
         </Card.Body>
       </Card>
     </Col>

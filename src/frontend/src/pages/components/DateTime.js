@@ -11,6 +11,7 @@ import "../../css/Main.css";
 class DateTime extends React.Component {
 
     constructor(props) {
+
         super(props);
 
         let showDay = true;
@@ -50,9 +51,36 @@ class DateTime extends React.Component {
             hour : hour,
             minute : minute,
             day : day,
+            styles : [],
             showDay: showDay,
             showTime: showTime
         }
+    }
+
+    setStyles(days) {
+        var obj = {};
+
+        days.forEach( (day) => {
+            let buf = day.day;
+            let val = day.value;
+            let arr = obj[val];
+            if ( arr === undefined ) {
+                arr = [];
+            }
+            arr.push(new Date(buf));
+            obj[val] = arr;
+        })
+
+        var styles = [];
+        let keys = Object.keys(obj);
+        keys.forEach( (val) => {
+            let days = obj[val];
+            let name = "Day-" + val;
+            let style = {};
+            style[name] = days;
+            styles.push(style);
+        });
+        this.setState({styles:styles});
     }
 
     handleDay(day) {
@@ -137,6 +165,7 @@ class DateTime extends React.Component {
                   customInput={
                     <Form.Control type="text" />
                   }
+                  highlightDates={this.state.styles}
                   selected={this.state.day}
                   onChange={(date) => this.handleDay(date)}
                 /> 

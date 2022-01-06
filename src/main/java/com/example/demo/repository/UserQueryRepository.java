@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.mapping.QuerySet;
+import com.example.demo.mapping.SQLBuilder;
+import com.example.demo.mapping.UserRoleMapper;
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
-import com.example.demo.model.query.SQLBuilder;
-import com.example.demo.model.query.QuerySet;
-import com.example.demo.model.query.UserRoleMapper;
 import com.example.demo.util.EncryptUtil;
 
 @Repository

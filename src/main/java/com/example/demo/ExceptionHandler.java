@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.config.Resource;
 import com.example.demo.transfer.response.Result;
 import com.example.demo.util.Util;
 

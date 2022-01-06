@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.mapping.QuerySet;
+import com.example.demo.mapping.SQLBuilder;
+import com.example.demo.mapping.TimeMapper;
 import com.example.demo.model.Time;
-import com.example.demo.model.query.QuerySet;
-import com.example.demo.model.query.SQLBuilder;
-import com.example.demo.model.query.TimeMapper;
 import com.example.demo.transfer.Paging;
 
 

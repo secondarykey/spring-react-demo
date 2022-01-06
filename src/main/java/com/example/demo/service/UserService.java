@@ -4,6 +4,8 @@ import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,13 @@ import com.example.demo.transfer.response.LoginResponse;
 import com.example.demo.transfer.response.Result;
 import com.example.demo.util.DateUtil;
 import com.example.demo.util.EncryptUtil;
+import com.example.demo.util.Util;
 
 @Service
 public class UserService  extends BusinessService {
+	
+	@SuppressWarnings("unused")
+	private final static Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired(required=true)
 	UserRepository crud;
@@ -34,7 +40,20 @@ public class UserService  extends BusinessService {
 			result.setMessageId("PRFN00M101", "パスワードが一致するユーザが存在しない|" + json.getId());
 			return result;
 		}
-	
+		
+		// 選択している言語がdefaultでない、言語が違う場合、
+		// defaultの場合でも、ユーザのデフォルト言語をresultにはセットする
+		String selectLanguage = json.getLanguage();
+		String lang = user.getLanguage();
+		if ( !Util.isDefault(selectLanguage) && !Util.equals(selectLanguage, lang)) {
+			user.setLanguage(selectLanguage);
+			crud.save(user);
+		}
+		selectLanguage = lang;
+
+		LoginResponse res = new LoginResponse();
+		res.setLanguage(selectLanguage);
+
 		//TODO しっかりチェック
 		OffsetDateTime exp = user.getExpiry();
 		OffsetDateTime now = DateUtil.zone(new Date(), "UTC");
@@ -43,9 +62,7 @@ public class UserService  extends BusinessService {
 			return result;
 		}
 
-		LoginResponse res = new LoginResponse();
 		LoginUser loginUser = LoginUser.convert(user);
-
 		res.setUser(loginUser);
 		result.setResult(res);
 		return result;

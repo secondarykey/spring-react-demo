@@ -4,10 +4,10 @@ import {
   Form,Button
  } from 'react-bootstrap';
 
-import {SelectLanguage,
+import {SelectLanguage, GetLanguage,SetLanguage,
         GetLabel,Label} from '../Locale';
 
-import {WriteErrorMessage,ClearMessage,Redirect,ChangeTitle}  from "../Layout";
+import {WriteErrorMessage,ClearMessage,Redirect}  from "../Layout";
 import {Save} from "../Authentication";
 import API from "../API";
 
@@ -23,10 +23,7 @@ class Login extends React.Component {
       this.newPassword2 = React.createRef(); 
 
       this.state = { expiry : false }
-      ClearMessage();
-      ChangeTitle("ログイン")
   }
-
 
   handleLoginClick = (e) => {
 
@@ -35,12 +32,13 @@ class Login extends React.Component {
     let data = {
         id : this.userId.current.value,
         password : this.password.current.value,
-        msgId : ""
+        language : GetLanguage()
     }
 
     API.post("/api/v1/login",
       resp => {
         Save(resp.data.result.user);
+        SetLanguage(resp.data.result.language);
         Redirect('/pages/menu');
     },data).catch( (err) => {
 
@@ -94,7 +92,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const expiry = this.state.expiry;
+    let expiry = this.state.expiry;
 
     return ( <>
 
