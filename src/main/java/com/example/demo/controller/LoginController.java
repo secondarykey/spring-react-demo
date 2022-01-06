@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.config.Session;
 import com.example.demo.service.UserService;
+import com.example.demo.transfer.LoginUser;
 import com.example.demo.transfer.request.LoginRequest;
 import com.example.demo.transfer.request.PasswordRequest;
 import com.example.demo.transfer.response.LoginResponse;
@@ -33,7 +34,12 @@ public class LoginController extends JSONController {
 			Unauthorized(result.getMessageID(),result.getReason());
 			return result;
 		}
-		String lang = result.getResult().getLanguage();
+
+		LoginResponse obj = result.getResult();
+		LoginUser user = obj.getUser();
+		session.setUser(user);
+
+		String lang = obj.getLanguage();
 		if ( !Util.isEmpty(lang) ) {
 			session.setLanguage(lang);
 		}
