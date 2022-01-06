@@ -79,9 +79,9 @@ class Time extends React.Component {
             });
         },args).catch( (err) => {
             if ( API.isUnknownError(err) ) {
-                return;
-              }
-              WriteErrorMessage(err);
+              return;
+            }
+            WriteErrorMessage(err);
         });
     }
 

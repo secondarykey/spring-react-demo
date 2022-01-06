@@ -41,6 +41,12 @@ class Menu extends React.Component {
     return;
   }
 
+  gotoOperation = () => {
+    Redirect("/pages/operation/");
+    return;
+  }
+
+
   render() {
     return (<>
 
@@ -111,6 +117,17 @@ class Menu extends React.Component {
           <Card.Text> 
           </Card.Text>
           <Button variant="primary" onClick={this.gotoDialogs}>Go Sample Dialog</Button>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col>
+      <Card className="Menu-Card">
+        <Card.Body>
+          <Card.Title>Operation</Card.Title>
+          <Card.Text> 
+          </Card.Text>
+          <Button variant="primary" onClick={this.gotoOperation}>Go Operation</Button>
         </Card.Body>
       </Card>
     </Col>

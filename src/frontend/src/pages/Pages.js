@@ -10,6 +10,8 @@ import PlanInput from './Plan/Input';
 import FloatingView from './Floating/View';
 import PagingView from './Paging/View';
 import Dialogs from './Dialogs/View';
+import Operation from './Operation/View';
+
 import {ChangeTitle,ClearMessage,SetBreadcrumbs} from "../Layout";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -70,6 +72,13 @@ const AuthenticationPages = (props) => {
         <Dialogs/>
       </Page>
     }/>
+
+    <Route path="operation/" element={
+      <Page id="OPERATION" crumbs={[]}>
+        <Operation/>
+      </Page>
+    }/>
+
   </Routes>
   </>);
 }
