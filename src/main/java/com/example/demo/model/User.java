@@ -37,6 +37,10 @@ public class User implements Persistable<String>,Model {
 	@MappingRS("role")
 	private String role;
 
+	@Column("BELONG")
+	@MappingRS("belong")
+	private int belong;
+
 	@Column("EXPIRY")
 	@MappingRS("expiry")
 	private OffsetDateTime expiry;
@@ -97,5 +101,12 @@ public class User implements Persistable<String>,Model {
 	}
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public int getBelong() {
+		return belong;
+	}
+	public void setBelong(int belong) {
+		this.belong = belong;
 	}
 }
