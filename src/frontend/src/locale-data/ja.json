@@ -34,5 +34,10 @@
   "PLANINPUT":"１対多データ入力",
   "PAGING":"ページングデータ",
   "DIALOGS":"ダイアログ",
+  "OPERATION":"組織の休日",
+  "refresh":"画面が放置されたため、ログアウトしました。",
+  "Logout":"ログアウトしました。",
+  "noneAuth":"認証なしのアクセス",
+  "expiry":"有効期限が切れました。",
   "RESOUCE_LANG":"ja"
 }
