@@ -37,3 +37,10 @@ logging:
     com:
       example:
         demo: INFO
+
+application:
+  default:
+    language: en
+  client: # second
+    refresh: 180
+    languages: ja,en,zh
