@@ -24,8 +24,8 @@ public class Day implements Model {
 	private Date day;
 	
 	@Column("VALUE")
-	@MappingRS("val")
-	private int val;
+	@MappingRS("value")
+	private int value;
 
 	public int getId() {
 		return id;
@@ -51,12 +51,12 @@ public class Day implements Model {
 		this.day = day;
 	}
 
-	public int getVal() {
-		return val;
+	public int getValue() {
+		return value;
 	}
 
-	public void setVal(int val) {
-		this.val = val;
+	public void setValue(int val) {
+		this.value = val;
 	}
 	
 }

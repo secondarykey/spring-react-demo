@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.Organization;
 import com.example.demo.repository.OrganizationQueryRepository;
 import com.example.demo.transfer.response.OrganizationTree;
+import com.example.demo.util.DateUtil;
 import com.example.demo.util.Util;
 
 @Service
@@ -31,7 +32,9 @@ public class OrganizationService  extends BusinessService {
 	 * @param start 開始日
 	 * @return
 	 */
-	public OrganizationTree createTree(int belong,Date start) {
+	public OrganizationTree createTree(int belong,String startBuf) {
+		
+		Date start = DateUtil.parseDate(startBuf);
 		
 		List<Organization> list = query.find(start);
 		if ( Util.isEmpty(list) ) {

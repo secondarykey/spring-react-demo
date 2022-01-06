@@ -2,8 +2,6 @@ package com.example.demo.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -12,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo.DemoApplication;
 import com.example.demo.transfer.response.OrganizationTree;
-import com.example.demo.util.DateUtil;
 
 @SpringBootTest(classes = DemoApplication.class)
 public class OrganizationServiceTest {
@@ -23,15 +20,11 @@ public class OrganizationServiceTest {
 	@Test
 	void testCreateTree() {
 
-		Date date = DateUtil.parseClient("2022-01-01 00:00");
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		OrganizationTree tree = service.createTree(1, cal.getTime());
+		OrganizationTree tree = service.createTree(1, "2022-01-01");
 		assertNotNull(tree,"検索できること");
 		assertNull(tree.getChildren(),"適用開始前なので子がない");
 		
-		cal.add(Calendar.DAY_OF_MONTH, 5);
-		tree = service.createTree(1, cal.getTime());
+		tree = service.createTree(1, "2022-01-06");
 		assertNotNull(tree,"適用開始日を変更して検索できること");
 
 		List<OrganizationTree> children = tree.getChildren();
@@ -46,14 +39,14 @@ public class OrganizationServiceTest {
 		assertEquals(children.size(),3,"件数が３件であること");
 	
 		//子で検索
-		tree = service.createTree(2, cal.getTime());
+		tree = service.createTree(2, "2022-01-06");
 		assertNotNull(tree,"子で検索してもツリーが設定されること");
 		assertEquals(tree.getKey(),2,"組織IDが2であること");
 		children = tree.getChildren();
 		assertEquals(children.size(),3,"孫組織が取れていること");
 
 		//別ツリーの作成
-		tree = service.createTree(7, cal.getTime());
+		tree = service.createTree(7, "2022-01-06");
 		assertNotNull(tree,"違う組織のツリーが作成されること");
 		children = tree.getChildren();
 		assertNotNull(children,"子が設定されていること");
@@ -64,7 +57,7 @@ public class OrganizationServiceTest {
 		children = tree.getChildren();
 		assertNull(children,"孫がいないこと");
 		
-		tree = service.createTree(10, cal.getTime());
+		tree = service.createTree(10,"2022-01-06");
 		assertNull(tree,"存在しない場合Nullであること");
 	}
 }
