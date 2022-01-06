@@ -210,7 +210,7 @@ public class SQLBuilder {
 					throw new RuntimeException("ResultSet.getterの取得失敗",e);
 				}
 				Object obj = getMethod.invoke(rs, name);
-				logger.info("getObject = {}",obj.getClass());
+				logger.debug("getObject = {}",obj.getClass());
 				
 				setter.invoke(model,obj);
 			} else {
