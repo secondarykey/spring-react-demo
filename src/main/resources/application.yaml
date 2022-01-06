@@ -9,7 +9,7 @@ spring:
       enabled: true
   sql:
     init:
-      mode: never
+      mode: always
       encoding: utf-8
   jpa:
     show-sql: false
