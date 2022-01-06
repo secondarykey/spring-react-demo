@@ -30,7 +30,7 @@ public class Util {
 		return cnt;
 	}
 
-	public static boolean isEmpty(List<String> messages) {
+	public static boolean isEmpty(List<?> messages) {
 		if ( messages == null || messages.size() == 0 ) {
 			return true;
 		}
