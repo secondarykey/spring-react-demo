@@ -22,6 +22,10 @@ class Organization extends React.Component {
     });
   }
 
+  get = () => {
+    return this.treeInput.current.ID();
+  }
+
   setKey = (key) => {
     this.setState({
       selectKey : key

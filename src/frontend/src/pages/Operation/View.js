@@ -1,5 +1,6 @@
 import React from "react";
-import {Container,Row,Col} from "react-bootstrap";
+import {Container,Row,Col, Button,
+        Table} from "react-bootstrap";
 
 import DateTime from "../components/DateTime";
 import Organization from "../components/Organization";
@@ -14,6 +15,39 @@ class View extends React.Component {
         super(props);
         this.targetDate = React.createRef();
         this.org = React.createRef();
+
+        this.state = {
+            operationList : [],
+            workersList : []
+        }
+    }
+
+    handleSearch = () => {
+      let date = this.targetDate.current.get();
+      let org = this.org.current.get();
+      let args = {
+        organization: org,
+        day: date
+      }
+
+      API.post("/api/demo/worker/day",resp => {
+        var result = resp.data.result;
+        var operationList = result.operationList;
+        var workers = result.workersList;
+
+        console.log(result)
+
+        this.setState({
+            operationList : operationList,
+            workersList : workers
+        })
+
+      },args).catch( (err) => {
+        if ( API.isUnknownError(err) ) {
+          return;
+        }
+        WriteErrorMessage(err);
+      });
     }
 
     componentDidMount() {
@@ -45,13 +79,58 @@ class View extends React.Component {
         <Container>
           <Row>
             <Col>
-              <DateTime type="date" ref={this.targetDate}/>
+              <DateTime type="date" ref={this.targetDate} onChange={this.handleDate}/>
             </Col>
             <Col>
-              <Organization ref={this.org}/>
+              <Organization ref={this.org} onChange={this.handleOrganization}/>
+            </Col>
+            <Col>
+              <Button onClick={this.handleSearch}>Search</Button>
             </Col>
           </Row>
         </Container>
+
+        <Container>
+          <Table>
+            <thead>
+              <tr>
+                <td>-</td>
+              {this.state.operationList.map( (obj,idx) => {
+                  return (
+                      <td key={idx}>{obj.operation.name}</td>
+                  );
+              })}
+              </tr>
+            </thead>
+
+            <tbody>
+            {this.state.workersList.map( (elm,idx) => {
+
+                let cols = [];
+                elm.workers.forEach( (elm) => {
+                  var elements = <td></td>
+                  if ( elm !== null ) {
+                      elements = <td>{
+                          elm.map( (worker) => {
+                              return (<div>{worker.userID}:{worker.name}</div>)
+                          })
+                          }
+                      </td>
+                  }
+                  cols.push(elements);
+                });
+
+                return (
+                <tr>
+                    <td>{idx + 1}</td>
+                    {cols}
+                </tr>
+                )
+            })}
+            </tbody>
+          </Table>
+        </Container>
+
         </>
     }
 }

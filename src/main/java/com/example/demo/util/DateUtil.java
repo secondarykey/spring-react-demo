@@ -12,8 +12,10 @@ import java.util.Date;
 
 public class DateUtil {
 	
+	private static final String sqlDate = "yyyy-MM-dd";
 	private static final String ClientFmt = "yyyy-MM-dd HH:mm:ss";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(ClientFmt);	
+	private static final SimpleDateFormat sqlFmt = new SimpleDateFormat(sqlDate);	
 	private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern(ClientFmt);
 
 	/**
@@ -82,5 +84,9 @@ public class DateUtil {
 			return "";
 		}
 		return sdf.format(date);
+	}
+
+	public static String sqlDay(Date day) {
+		return sqlFmt.format(day);
 	}
 }
