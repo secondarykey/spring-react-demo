@@ -32,7 +32,7 @@ logging:
       springframework:
         jdbc:
           core: WARN
-        web: INFO
+        web: WARN
         batch: WARN
     com:
       example:
