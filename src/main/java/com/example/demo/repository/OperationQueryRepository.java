@@ -14,6 +14,7 @@ import com.example.demo.mapping.QuerySet;
 import com.example.demo.mapping.SQLBuilder;
 import com.example.demo.model.Operation;
 import com.example.demo.model.OperationLanguage;
+import com.example.demo.util.DateUtil;
 
 @Repository
 public class OperationQueryRepository extends QueryRepository {
@@ -38,8 +39,9 @@ public class OperationQueryRepository extends QueryRepository {
 			QuerySet.create(Operation.class,"OPE", "ope"),
 			QuerySet.create(OperationLanguage.class,"LANG", "lang")
 		);
-
-		builder.setSQL(sql, orgID,day,day,lang);
+		
+		String dateBuf = DateUtil.sqlDay(day);
+		builder.setSQL(sql, orgID,dateBuf,dateBuf,lang);
 
 		OperationMapper mapper = new OperationMapper(builder);
 		this.query(mapper);
