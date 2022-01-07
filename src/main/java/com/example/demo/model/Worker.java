@@ -9,26 +9,65 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import com.example.demo.anotation.model.MappingRS;
 
-@Table("OPERATION")
+@Table("WORKER")
 public class Worker implements Model {
 	@Id
 	@Column("ID")
 	@MappingRS("id")
 	private int id;
 	
-	@Column("SEQ")
-	@MappingRS("seq")
-	private String seq;
+	@Column("OPERATION_ID")
+	@MappingRS("opeID")
+	private int opeID;
 
-	@Column("START")
-	@MappingRS(value="start",method="getDate")
-	private Date start;
+	@Column("USER_ID")
+	@MappingRS("userID")
+	private String userID;
+
+	@Column("DATE")
+	@MappingRS(value="date",method="getDate")
+	private Date date;
 	
-	@Column("END")
-	@MappingRS(value="end",method="getDate")
-	private Date end;
-
 	@Transient
-	private String name;	
+	private String name;
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getOpeID() {
+		return opeID;
+	}
+
+	public void setOpeID(int opeID) {
+		this.opeID = opeID;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUserID() {
+		return userID;
+	}
+
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}	
 }
