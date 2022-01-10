@@ -15,9 +15,21 @@ import org.springframework.data.relational.core.mapping.Column;
 
 import com.example.demo.anotation.model.MappingRS;
 import com.example.demo.model.Model;
+import com.example.demo.transfer.Paging;
 import com.example.demo.util.Util;
 
-
+/**
+ * SQL作成
+ * <pre>
+ * SQL生成を行います。
+ * 
+ * SELECT %s FROM ....
+ * 
+ * 
+ * 
+ * 
+ * </pre>
+ */
 public class SQLBuilder {
 
 	@SuppressWarnings("unused")
@@ -31,21 +43,84 @@ public class SQLBuilder {
 		return builder;
 	}
 
+	/**
+	 * クエリセット
+	 */
 	private List<QuerySet> sets = new ArrayList<>();
+	
+	/**
+	 * 発行SQL
+	 */
 	private String sql;
-	public String getSql() {
+	
+	/**
+	 * 元SQL
+	 */
+	private String argSQL;
+	/**
+	 * 引数配列
+	 */
+	private Object[] args;
+
+	/**
+	 * ページング
+	 */
+	private Paging paging;
+
+	/**
+	 * ORDER 
+	 */
+	private String order;
+	
+	/**
+	 * SQL文の取得
+	 * @return 発行するSQL
+	 */
+	public String getSQL() {
+		if ( !Util.isEmpty(order) ) {
+			sql += " " + order;
+		}
+		if ( paging != null ) {
+			sql += " LIMIT ? OFFSET ?";
+		}
 		return sql;
 	}
 
-	private Object[] args;
+	/**
+	 * 引数の取得
+	 * @return 渡した引数
+	 */
 	public Object[] getArgs() {
+		if ( paging != null ) {
+			Object[] rtn = new Object[args.length + 2];
+			System.arraycopy(args, 0, rtn, 0, args.length);
+			rtn[args.length] = paging.getNumberOfDisplay();
+			
+			rtn[args.length + 1] = paging.getOffset();
+
+			return rtn;
+		}
 		return args;
 	}
 
+	public Object[] getCountArgs() {
+		return args;
+	}
+
+	/**
+	 * クエリセットの追加
+	 * @param set クエリセット
+	 */
 	private void addQuerySet(QuerySet set) {
 		sets.add(set);
 	}
 
+	/**
+	 * SQLの作成
+	 * @param sql 元SQL
+	 * @param arguments
+	 * @return 発行SQL
+	 */
 	public String setSQL(String sql,Object... arguments) {
 
 		StringBuffer buf = new StringBuffer();
@@ -55,16 +130,23 @@ public class SQLBuilder {
 			}
 			String line = SQLBuilder.generateColumns(set.getModelClass(), 
 					set.getTablePrefix(), set.getAliasPrefix());
-
 			buf.append(line);
 		}
 
-		String clmSql = String.format(sql, buf.toString());
+		String clm = buf.toString();
+		String clmSql = String.format(sql, clm);
+
+		this.argSQL = sql;
 		this.sql = clmSql;
 		this.args = arguments;
+
 		return clmSql;
 	}
 
+	/**
+	 * QuerySetの取得
+	 * @return
+	 */
 	public List<QuerySet> getQuerySets() {
 		return sets;
 	}
@@ -255,5 +337,49 @@ public class SQLBuilder {
 			}
 		}
 		return list;
+	}
+
+	/**
+	 * 元のSQL
+	 * <pre>
+	 * 構築時のSQL
+	 * </pre>
+	 * @return
+	 */
+	public String getArgSQL() {
+		return argSQL;
+	}
+
+	/**
+	 * カウント文の取得
+	 * @return
+	 */
+	public String getCountSQL() {
+		return this.argSQL.formatted("COUNT(*)");
+	}
+
+	/**
+	 * ページデータの設定
+	 * @param paging
+	 */
+	public void setPaging(Paging paging) {
+		this.paging = paging;
+	}
+
+	public void setCount(int cnt) {
+		if (this.paging == null) {
+			logger.warn("ページングがない状態でカウントを発行 {}",cnt);
+			return;
+		}
+		logger.info("行数:{}",cnt);
+		this.paging.setDbCount(cnt);
+	}
+
+	public boolean isPaging() {
+		return this.paging != null;
+	}
+
+	public void setOrder(String string) {
+		this.order = string;
 	}
 }

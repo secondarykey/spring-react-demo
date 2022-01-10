@@ -31,14 +31,17 @@ public class TimeQueryRepository extends QueryRepository {
 			SELECT
 			  %s 
 			FROM TIMES 
-			  ORDER BY "VALUE" DESC,ID ASC 
-			  LIMIT ? OFFSET ?
-				""";
+		""";
 		SQLBuilder builder = SQLBuilder.create(
 			QuerySet.create(Time.class, "", "")
 		);
 
-		builder.setSQL(sql,paging.getNumberOfDisplay(),paging.getOffset());
+		builder.setSQL(sql);
+		builder.setOrder("""
+				ORDER BY "VALUE" DESC,ID ASC 
+				""");
+		builder.setPaging(paging);
+		
 		TimeMapper mapper = new TimeMapper(builder);
 		this.query(mapper);
 

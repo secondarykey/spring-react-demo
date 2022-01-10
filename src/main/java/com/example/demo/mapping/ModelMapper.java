@@ -34,12 +34,20 @@ public abstract class ModelMapper<T> implements RowCallbackHandler {
 	public abstract T get();
 
 	public String getSQL() {
-		return builder.getSql();
+		return builder.getSQL();
 	}
+
 	public Object[] getArguments() {
 		return builder.getArgs();
 	}	
-	
+
+	/**
+	 * クラス保持用オブジェクトマップクラス
+	 * <pre>
+	 * Modelクラスをクラスから取得でできる。
+	 * </pre>
+	 */
+	//TODO 現状同一クラスのオブジェクトを表現できない
 	protected class MappingObject {
 		private Map<Class<? extends Model>,Model> map = new HashMap<>();
 		public void add(Class<? extends Model> clazz,Model model) {
@@ -49,5 +57,25 @@ public abstract class ModelMapper<T> implements RowCallbackHandler {
 		public<T extends Model> T get(Class<T> clazz) {
 			return (T)map.get(clazz);
 		}
+	}
+
+	/**
+	 * カウントSQLの取得 
+	 * @return
+	 */
+	public String getCountSQL() {
+		return this.builder.getCountSQL();
+	}
+
+	public Object[] getCountArguments() {
+		return this.builder.getCountArgs();
+	}
+
+	public void setCount(int cnt) {
+		this.builder.setCount(cnt);
+	}
+
+	public boolean isPaging() {
+		return this.builder.isPaging();
 	}
 }

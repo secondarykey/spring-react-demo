@@ -32,11 +32,6 @@ public class TimeService extends BusinessService {
 
 	public Result<TimeViewResponse> find(Paging paging) {
 
-		long cnt = crud.count();
-		if ( cnt == 0 )  {
-			//TODO エラー
-		}
-		paging.setDbCount((int) cnt);
 		List<Time> times = query.findPage(paging);
 		if ( times.size() <= 0 ) {
 			//TODO エラー
