@@ -91,12 +91,84 @@ main {
     padding-left:20px;
 }
 
+.InputGroup-Frame {
+  text-align: left;
+  width:340px;
+  min-height: 40px;
+  max-height: 40px;
+  overflow: auto;
+  padding:4px;
+  border: 1px solid #ced4da;
+  background-color: #ffffff;
+  border-radius: 4px;
+}
+
+.InputGroup-Data {
+  margin-right:5px;
+  margin-bottom:3px;
+  position: relative;
+  white-space:nowrap;
+  background-color:#cccccc;
+  padding:5px;
+  min-width:150px !important;
+  max-width:150px !important;
+  border-radius:3px;
+}
+
+.InputGroup-Inner {
+    width:100%;
+}
+
+.InputGroup-Value {
+  font-size:12px;
+  text-align:left;
+  float:left;
+}
+
+.InputGroup-Close {
+  font-size:12px;
+  position: absolute;
+  right:5px;
+  float:right;
+}
+
 .breadcrumb-item+.breadcrumb-item::before{
     content:var(--bs-breadcrumb-divider,">") !important ;
+}
+
+.faceImage {
+  width: 100px;
+  height:100px;
+  border-radius:50%;
 }
 
 @media screen and (max-width: 768px) {
   .Layout-Breadcrumbs {
       display: none;
   }
+}
+
+
+.breadcrumb-item+.breadcrumb-item::before{
+    content:var(--bs-breadcrumb-divider,">") !important ;
+}
+
+.faceImage {
+  width: 100px;
+  height:100px;
+  border-radius:50%;
+}
+
+@media screen and (max-width: 768px) {
+  .Layout-Breadcrumbs {
+      display: none;
+  }
+}
+
+.UserSearch {
+    max-width:600px !important;
+}
+.small-line {
+    padding:3px !important;
+    margin:0px;
 }

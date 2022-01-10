@@ -46,6 +46,10 @@ class Menu extends React.Component {
     return;
   }
 
+  gotoUsers = () => {
+    Redirect("/pages/users/");
+    return;
+  }
 
   render() {
     return (<>
@@ -128,6 +132,17 @@ class Menu extends React.Component {
           <Card.Text> 
           </Card.Text>
           <Button variant="primary" onClick={this.gotoOperation}>Go Operation</Button>
+        </Card.Body>
+      </Card>
+    </Col>
+
+    <Col>
+      <Card className="Menu-Card">
+        <Card.Body>
+          <Card.Title>Users</Card.Title>
+          <Card.Text> 
+          </Card.Text>
+          <Button variant="primary" onClick={this.gotoUsers}>Go UsersSearch</Button>
         </Card.Body>
       </Card>
     </Col>
