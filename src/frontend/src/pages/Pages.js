@@ -11,6 +11,7 @@ import FloatingView from './Floating/View';
 import PagingView from './Paging/View';
 import Dialogs from './Dialogs/View';
 import Operation from './Operation/View';
+import Users from './UserSearch/View';
 
 import {ChangeTitle,ClearMessage,SetBreadcrumbs} from "../Layout";
 
@@ -79,6 +80,11 @@ const AuthenticationPages = (props) => {
       </Page>
     }/>
 
+    <Route path="users/" element={
+      <Page id="USERS" crumbs={[]}>
+        <Users/>
+      </Page>
+    }/>
   </Routes>
   </>);
 }

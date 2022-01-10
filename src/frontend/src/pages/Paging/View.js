@@ -52,7 +52,7 @@ class Time extends React.Component {
         this.state = {
             times : [],
             paging : { 
-                current : 1,
+                currentPage : 1,
                 numberOfDisplay : 5 
             }
         }

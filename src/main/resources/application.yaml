@@ -12,7 +12,7 @@ spring:
       mode: always
       encoding: utf-8
   jpa:
-    show-sql: false
+    show-sql: true
   datasource:
     url: jdbc:h2:~/demo050
     username: sa
@@ -36,7 +36,7 @@ logging:
     org:
       springframework:
         jdbc:
-          core: WARN
+          core: DEBUG
         web: INFO
         batch: WARN
     com:
@@ -46,9 +46,11 @@ logging:
     console: "%clr(%d{yyyy-MM-dd HH:mm:ss z}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(%-20.20logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
 
 application:
+  images:
+    path: db\images
+    extension: png
   default:
     language: en
   client: # second
     refresh: 180
     languages: ja,en,zh
-

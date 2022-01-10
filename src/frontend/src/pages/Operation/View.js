@@ -4,6 +4,7 @@ import {Container,Row,Col, Button,
 
 import DateTime from "../components/DateTime";
 import Organization from "../components/Organization";
+import Images from "../components/Images";
 
 import API from "../../API";
 import {WriteErrorMessage} from "../../Layout";
@@ -112,7 +113,7 @@ class View extends React.Component {
                   if ( elm !== null ) {
                       elements = <td>{
                           elm.map( (worker) => {
-                              return (<div>{worker.userID}:{worker.name}</div>)
+                              return (<div><Images className="faceImage" src={"faces/" + worker.userID} /><br/>{worker.name}</div>)
                           })
                           }
                       </td>

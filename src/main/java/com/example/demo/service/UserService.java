@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +14,12 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserQueryRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.transfer.LoginUser;
+import com.example.demo.transfer.Paging;
 import com.example.demo.transfer.request.LoginRequest;
 import com.example.demo.transfer.request.PasswordRequest;
 import com.example.demo.transfer.response.LoginResponse;
 import com.example.demo.transfer.response.Result;
+import com.example.demo.transfer.response.UserViewResponse;
 import com.example.demo.util.DateUtil;
 import com.example.demo.util.EncryptUtil;
 import com.example.demo.util.Util;
@@ -91,6 +94,19 @@ public class UserService  extends BusinessService {
 		res.setUser(LoginUser.convert(user));
 		result.setResult(res);
 
+		return result;
+	}
+
+	public Result<UserViewResponse> search(String id, String name, Paging paging) {
+		
+		List<User> users = query.search(id,name,paging);
+	
+		UserViewResponse res = new UserViewResponse();
+		res.setUsers(users);
+		res.setPaging(paging);
+		
+		Result<UserViewResponse> result = new Result<>();
+		result.setResult(res);
 		return result;
 	}
 }

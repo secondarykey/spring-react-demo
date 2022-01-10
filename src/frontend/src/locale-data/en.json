@@ -35,6 +35,7 @@
   "PAGING":"Paging",
   "DIALOGS":"Daialog",
   "OPERATION":"Operation",
+  "USERS":"User Search",
   "refresh":"refresh",
   "Logout":"Logout",
   "noneAuth":"authentication error",

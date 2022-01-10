@@ -6,6 +6,15 @@ import { GetLanguage } from './Locale';
 
 class API {
 
+  static mockMode = false;
+
+  static async testMode() {
+    //mockMode = true;
+  }
+  static async setMock(mock,reject = false) {
+    //mockMode = true;
+  }
+
   static createInstance() {
     var jwt = CreateJWT();
     const instance = axios.create({
@@ -32,7 +41,7 @@ class API {
   static async delete(url, callback, data) {
     return await this.caller("DELETE",url,callback,data);
   }
-   
+
   static async caller(method,url, callback, data) {
 
     let inst = this.createInstance();
