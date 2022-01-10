@@ -38,6 +38,7 @@
 "PAGING","ページングデータ","Paging","Paging"
 "DIALOGS","ダイアログ","Daialog","Dialog"
 "OPERATION","組織の休日","Operation","Operation"
+"USERS","ユーザ検索","User Search","User Search"
 "refresh","画面が放置されたため、ログアウトしました。","refresh","refresh"
 "Logout","ログアウトしました。","Logout","Logout"
 "noneAuth","認証なしのアクセス","authentication error","authentication error"
