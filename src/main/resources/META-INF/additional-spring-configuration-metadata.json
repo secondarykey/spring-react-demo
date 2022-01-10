@@ -6,6 +6,16 @@
       "description": "Application Default Language"
     },
     {
+      "name": "application.images.path",
+      "type": "java.lang.String",
+      "description": "external images path"
+    },
+    {
+      "name": "application.images.extension",
+      "type": "java.lang.String",
+      "description": "external images path,default extension"
+    },
+    {
       "name": "application.client.refresh",
       "type": "java.lang.Integer",
       "description": "Client refresh Time(Second)"
