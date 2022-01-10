@@ -17,6 +17,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.example.demo.config.Resource;
 import com.example.demo.transfer.response.Result;
@@ -25,14 +26,14 @@ import com.example.demo.util.Util;
 @ControllerAdvice
 @Scope(value = "session")
 @ConditionalOnWebApplication
-public class ExceptionHandler {
+public class AppExceptionHandler {
 
 	@Autowired
 	Resource resource;
 
-	private static Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
+	private static Logger logger = LoggerFactory.getLogger(AppExceptionHandler.class);
 
-    @org.springframework.web.bind.annotation.ExceptionHandler({ KnownException.class })
+    @ExceptionHandler({ KnownException.class })
     @ResponseBody
     public ResponseEntity<?> handleKnownError(KnownException ex) {
 
@@ -47,7 +48,7 @@ public class ExceptionHandler {
         return new ResponseEntity<>(result,ex.getStatus());
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler({ Exception.class })
+    @ExceptionHandler({ Exception.class })
     @ResponseBody
     public ResponseEntity<?> handleUnknownError(Exception ex) {
 
@@ -68,7 +69,7 @@ public class ExceptionHandler {
      * @param ex 例外
      * @return 
      */
-    @org.springframework.web.bind.annotation.ExceptionHandler({ MethodArgumentNotValidException.class })
+    @ExceptionHandler({ MethodArgumentNotValidException.class })
     @ResponseBody
     public ResponseEntity<?> handleValidateError(Exception ex) {
 
