@@ -13,7 +13,7 @@ public class FileUtil {
 		if ( Util.isEmpty(paths) ) {
 			return "";
 		}
-		
+
 		printCheckRoot(paths);
 
 		StringBuilder builder = new StringBuilder();
@@ -50,15 +50,23 @@ public class FileUtil {
 		if ( Util.isEmpty(path) ) {
 			return path;
 		}
-		return path.replaceAll(sepOther(), sep());
+		return path.replaceAll(replaceSepOther(), replaceSep());
 	}
 
-	private static String sepOther() {
+	private static String replaceSep() {
 		String sep = sep();
 		if ( Util.equals(sep, "/") ) {
-			return "\\";
+			return "\\/";
 		}
-		return "/";
+		return "\\\\";
+	}
+
+	private static String replaceSepOther() {
+		String sep = sep();
+		if ( Util.equals(sep, "/") ) {
+			return "\\\\";
+		}
+		return "\\/";
 	}
 
 	private static String sep() {

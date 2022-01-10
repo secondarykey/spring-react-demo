@@ -13,6 +13,9 @@ public class FileUtilTest {
 
 		got = FileUtil.join();
 		assertEquals(got,"");
+		
+		got = FileUtil.join("test","join/test");
+		assertEquals(got,"test\\join\\test");
 	}
 
 }
