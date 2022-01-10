@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.config;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
