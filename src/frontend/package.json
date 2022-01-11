@@ -29,6 +29,7 @@
     "build": "react-scripts build",
     "//build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
+    "docs": "jsdoc -c jsdoc.conf.json",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -50,6 +51,8 @@
     ]
   },
   "devDependencies": {
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^4.0.3",
+    "better-docs": "^2.3.2",
+    "jsdoc": "^3.6.7"
   }
 }

@@ -1,12 +1,12 @@
 import React from "react";
 import {Container,Table,Button,Row,Col} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 //import Select from "../components/Select";
-import {Redirect} from "../../Layout";
-import {Link} from "react-router-dom";
-import Util from "../../Util";
-import API from "../../API";
-import {WriteErrorMessage} from '../../Layout';
+import {Redirect} from "../../../Layout";
+import Util from "../../../Util";
+import API from "../../../API";
+import {WriteErrorMessage} from '../../../Layout';
 
 class PlanView extends React.Component {
 

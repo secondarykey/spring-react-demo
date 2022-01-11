@@ -3,7 +3,7 @@ import React from "react";
 import {
     Modal,Button
 } from "react-bootstrap";
-import { ShowConfirm } from "../../Dialog";
+import { ShowConfirm } from "../../../Dialog";
 
 class Dialog extends React.Component {
 

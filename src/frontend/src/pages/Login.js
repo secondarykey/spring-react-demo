@@ -6,13 +6,23 @@ import {
 
 import {SelectLanguage, GetLanguage,SetLanguage,
         GetLabel,Label} from '../Locale';
-
 import {WriteErrorMessage,ClearMessage,Redirect}  from "../Layout";
 import {Save} from "../Authentication";
 import API from "../API";
 
+/**
+ * ログインページ
+ */
 class Login extends React.Component {
 
+  /**
+   * コンストラクタ
+   * <pre>
+   * 利用する入力値のrefを生成
+   * state.expiryをfalseに設定
+   * </pre>
+   * @param {object} props - なし
+   */
   constructor(props) {
 
       super(props);
@@ -25,6 +35,21 @@ class Login extends React.Component {
       this.state = { expiry : false }
   }
 
+  /**
+   * ログインボタン押下処理
+   * <pre>
+   * 入力値(ID、パスワード、言語)を元にLoginAPIを呼び出す
+   * LoginAPI: /api/v1/login
+   * 正常時：
+   *   ログイン情報、言語をクッキーを保存しメニューに遷移
+   * 異常時
+   *   401時：有効期限切れを確認し、有効期限の場合
+   *          state.expiryをtrueにする
+   *　 その他はエラーメッセージを表示
+   * </pre>
+   * @param {Event} e - クリックイベント
+   * @returns false
+   */
   handleLoginClick = (e) => {
 
     ClearMessage();
@@ -66,6 +91,17 @@ class Login extends React.Component {
     return false;
   }
 
+  /**
+   * パスワード変更クリックイベント
+   * <pre>
+   * 変更パスワードをAPIに送信し、パスワードを変更する
+   * API[/api/v1/password]
+   * 正常時:ログイン画面に遷移する
+   * 異常時:メッセージを表示する
+   * </pre>
+   * @param {Event} e - クリックイベント
+   * @returns false
+   */
   handleUpdateClick = (e) => {
 
     let new1 = this.newPassword1.current.value;
@@ -91,6 +127,12 @@ class Login extends React.Component {
     return false;
   }
 
+  /**
+   * ログイン画面表示
+   * state.expiry: true時にパスワード変更のコンポーネントを表示
+   * ログインボタンを非表示、更新キャンセルボタンを表示
+   * @returns ログイン画面
+   */
   render() {
     let expiry = this.state.expiry;
 
@@ -159,6 +201,14 @@ class Login extends React.Component {
   }
 }
 
+/**
+ * 描画調整用関数
+ * <pre>
+ * props.childrenをRow,Col内に入れて調整する
+ * </pre>
+ * @param {object} props - タグ属性(childrenを使用)
+ * @returns <Row>タグ
+ */
 function SpaceRow(props) {
   return (
 <Row className="mb-3">

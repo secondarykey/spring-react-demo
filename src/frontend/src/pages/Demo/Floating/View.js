@@ -1,9 +1,9 @@
 import React, { createRef } from "react";
 import Tree from 'rc-tree';
 import {Container} from "react-bootstrap";
-
-import FloatInput from "../components/FloatInput";
 import 'rc-tree/assets/index.css';
+
+import FloatInput from "../../components/FloatInput";
 
 const treeData = [
   {

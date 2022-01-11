@@ -1,7 +1,7 @@
 import { render,screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 
-import Test from "../TestPages"
+import Test from "../../TestPages"
 import View from "./View"
 
 describe("Todo/View",() => {
