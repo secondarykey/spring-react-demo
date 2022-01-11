@@ -1,7 +1,7 @@
 import React, { createRef } from "react";
 
 import {Button,Container} from "react-bootstrap";
-import DateTime from "../components/DateTime";
+import DateTime from "../../components/DateTime";
 
 class DateView extends React.Component {
     constructor(props) {

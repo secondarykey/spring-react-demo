@@ -3,15 +3,17 @@ import {  Routes,Route,Navigate } from "react-router-dom";
 import Login    from './Login';
 import Message  from './Message';
 import Menu     from './Menu';
-import ToDo     from './Todo/View';
-import DateView from './DateTime/View';
-import PlanView from './Plan/View';
-import PlanInput from './Plan/Input';
-import FloatingView from './Floating/View';
-import PagingView from './Paging/View';
-import Dialogs from './Dialogs/View';
-import Operation from './Operation/View';
-import Users from './UserSearch/View';
+
+/** デモ用のページ */
+import ToDo     from './Demo/Todo/View';
+import DateView from './Demo/DateTime/View';
+import PlanView from './Demo/Plan/View';
+import PlanInput from './Demo/Plan/Input';
+import FloatingView from './Demo/Floating/View';
+import PagingView from './Demo/Paging/View';
+import Dialogs from './Demo/Dialogs/View';
+import Operation from './Demo/Operation/View';
+import Users from './Demo/UserSearch/View';
 
 import {ChangeTitle,ClearMessage,SetBreadcrumbs} from "../Layout";
 
@@ -23,14 +25,20 @@ const Pages =() => {
     return (<>
   <Routes>
     <Route path="/"            element={<Page id="LOGIN"><Login /></Page>} />
-    <Route path="/pages/*"     element={<AuthenticationPages/>}/>
+    <Route path="/pages/demo/*"     element={<DemoPages/>}/>
     <Route path="/message/:id" element={<Page id="MESSAGE"><Message type="success" /></Page>} />
     <Route path="/error/:id"   element={<Page id="ERROR"><Message type="danger" /></Page>} />
     <Route path="*" element={<Navigate to="/error/PRFN98M000"/>} />
   </Routes>
     </>);
 }
-const AuthenticationPages = (props) => {
+
+
+
+
+
+
+const DemoPages = (props) => {
     return (<>
   <Routes>
     <Route path="menu" element={

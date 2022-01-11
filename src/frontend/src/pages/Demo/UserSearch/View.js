@@ -2,8 +2,8 @@ import React from "react";
 
 import {Button} from "react-bootstrap"
 
-import InputGroup from "../components/InputGroup";
-import UserSearch from "../UserSearch";
+import InputGroup from "../../components/InputGroup";
+import UserSearch from "../../UserSearch";
 
 class UserSearchView extends React.Component {
 

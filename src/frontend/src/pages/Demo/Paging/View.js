@@ -1,11 +1,11 @@
 import React from "react";
 
 import {Table,Button,Container} from "react-bootstrap";
-import Paging from "../components/Paging";
-import DateTime from "../components/DateTime";
-import Select from "../components/Select";
-import API from "../../API";
-import {WriteErrorMessage} from "../../Layout";
+import Paging from "../../components/Paging";
+import DateTime from "../../components/DateTime";
+import Select from "../../components/Select";
+import API from "../../../API";
+import {WriteErrorMessage} from "../../../Layout";
 
 class Time extends React.Component {
     constructor (props) {

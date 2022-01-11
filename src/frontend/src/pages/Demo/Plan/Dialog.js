@@ -4,9 +4,9 @@ import {
     Button, Modal, Form
 } from "react-bootstrap";
 
-import DateTime from "../components/DateTime";
-import API from "../../API";
-import {ClearMessage, WriteErrorMessage} from "../../Layout";
+import DateTime from "../../components/DateTime";
+import API from "../../../API";
+import {ClearMessage, WriteErrorMessage} from "../../../Layout";
 
 export function ShowInput(date) {
     inst.handleShow(date);

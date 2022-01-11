@@ -2,13 +2,13 @@ import React from "react";
 import {Container,Row,Col, Button,
         Table} from "react-bootstrap";
 
-import DateTime from "../components/DateTime";
-import Organization from "../components/Organization";
-import Images from "../components/Images";
+import DateTime from "../../components/DateTime";
+import Organization from "../../components/Organization";
+import Images from "../../components/Images";
 
-import API from "../../API";
-import {WriteErrorMessage} from "../../Layout";
-import Util from "../../Util";
+import API from "../../../API";
+import {WriteErrorMessage} from "../../../Layout";
+import Util from "../../../Util";
 
 class View extends React.Component {
 

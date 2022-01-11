@@ -6,8 +6,8 @@ import {
     Button,
 } from "react-bootstrap";
 
-import { ShowInformation,ShowConfirm } from "../../Dialog";
-import { ClearMessage, WriteMessage } from "../../Layout";
+import { ShowInformation,ShowConfirm } from "../../../Dialog";
+import { ClearMessage, WriteMessage } from "../../../Layout";
 
 import DoubleDialog from "./Dialog"
 
