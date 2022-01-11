@@ -37,5 +37,6 @@ out/
 .vscode/
 
 src/frontend/node_modules
+src/frontend/docs
 __snapshots__
 *.swp
