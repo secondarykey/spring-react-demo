@@ -1,11 +1,30 @@
+/**
+ * @fileoverview 
+ * 組織選択用のファイルです。
+ */
 import React from "react";
 import Tree from 'rc-tree';
 import {Container} from "react-bootstrap";
 
 import FloatInput from "./FloatInput";
 
+/**
+ * 組織選択コンポーネント
+ * <pre>
+ * FloatInputを作成し、指定したツリーデータを描画
+ * ツリー選択した値を取得できる
+ * </pre>
+ * @example
+ * 
+ * <Organization/>
+ * 
+ */
 class Organization extends React.Component {
 
+  /**
+   * コンストラクタ
+   * @param {object} props - 指定なし
+   */
   constructor(props) {
     super(props);
     this.treeRef = React.createRef();
@@ -15,6 +34,13 @@ class Organization extends React.Component {
     }
   }
 
+  /**
+   * ツリー設定
+   * <pre>
+   * ツリーデータを作成します。
+   * </pre>
+   * @param {object} tree 
+   */
   set = (tree) => {
     this.setState({
       tree : [tree],
@@ -22,16 +48,34 @@ class Organization extends React.Component {
     });
   }
 
+  /**
+   * 選択ID取得
+   * @returns 選択ID
+   */
   get = () => {
     return this.treeInput.current.ID();
   }
 
+  /**
+   * キー設定
+   * @param {string} key - ツリーの選択ID
+   */
   setKey = (key) => {
     this.setState({
       selectKey : key
     });
   }
 
+  /**
+   * ツリー選択時イベント
+   * <pre>
+   * ツリーデータから選択したデータから取得し
+   * 選択したデータの名称をテキストコンポーネントに表示
+   * 
+   * ツリーを非表示にする
+   * </pre>
+   * @param {Event} e - イベント
+   */
   handleSelect = (e) => {
 
     var treeData = this.state.tree;
@@ -53,6 +97,12 @@ class Organization extends React.Component {
     }
   }
 
+  /**
+   * ツリー検索(再帰)
+   * @param {Array} children - データ配列
+   * @param {string} id - 検索IDに
+   * @returns 検索したIDのオブジェクト
+   */
   searchTree = (children,id) => {
     if ( children === undefined ) {
       return null;
@@ -71,6 +121,13 @@ class Organization extends React.Component {
     return null;
   }
 
+  /**
+   * レンダリング
+   * <pre>
+   * FloatInputを表示し、指定したツリーデータを表示
+   * </pre>
+   * @returns ツリーデータを表示するFloatInputコンポーネント
+   */
   render() {
     return <>
     <FloatInput ref={this.treeInput}>

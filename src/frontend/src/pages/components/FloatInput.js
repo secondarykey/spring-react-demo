@@ -1,11 +1,34 @@
+/**
+ * @fileoverview 
+ * テキストコンポーネントからポップアップして表示するコンポーネント用のファイル
+ */
 import React from "react";
 
 import {Form} from "react-bootstrap";
 
 import "../../css/Main.css";
 
+/**
+ * 浮動入力コンポーネント
+ * <pre>
+ * テキストを描画し、テキストを入力する時に指定したコンポーネントを描画する
+ * </pre>
+ * @example
+ * <FloatInput>
+ * aaa
+ * </FloatInput>
+ * とした場合、描画されたテキストを選択すると「aaa」が表示される
+ */
 class FloatInput extends React.Component {
 
+    /**
+     * コンストラクタ
+     * <pre>
+     * 使用するコンポーネントを初期化
+     * </pre>
+     * @constructor
+     * @param {object} props - value,values
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -17,15 +40,31 @@ class FloatInput extends React.Component {
         this.firstShow = false;
     }
 
+    /**
+     * 設定
+     * @param {string} id - ID
+     * @param {string} name - 表示名称
+     */
     setValue = (id,name)  => {
         this.input.current.value = name;
         this.inputId = id;
     }
 
+    /**
+     * ID取得
+     * @returns 指定されているID
+     */
     ID = ()  => {
         return this.inputId;
     }
 
+    /**
+     * 浮動コンポーネント表示
+     * <pre>
+     * テキスト下のコンポーネントを表示状態にする
+     * document.clickを監視
+     * </pre>
+     */
     show() {
         this.setState({
             float:true
@@ -34,6 +73,13 @@ class FloatInput extends React.Component {
         document.addEventListener("click",this.handleDocumentClick);
     }
 
+    /**
+     * 浮動コンポーネント非表示
+     * <pre>
+     * 浮動コンポーネントを非表示にし、
+     * 表示を取り消すように準備したイベントを取り消す
+     * </pre>
+     */
     hide() {
         this.setState({
             float:false
@@ -41,10 +87,25 @@ class FloatInput extends React.Component {
         document.removeEventListener("click",this.handleDocumentClick);
     }
 
+    /**
+     * 入力用のテキストイベント
+     * <pre>
+     * 浮動コンポーネントを表示する
+     * </pre>
+     * @param {Event} e - クリックイベント
+     */
     handleInputFocus = (e) => {
         this.show();
     }
 
+    /**
+     * <pre>
+     * その他コンポーネントをクリックした場合、
+     * 浮動コンポーネントじゃない場合、非表示にする
+     * ※最初の描画の場合はOKにする
+     * </pre>
+     * @param {Event} e - クリックイベント 
+     */
     handleDocumentClick = (e) => {
         if ( this.float.current.contains(e.target) ) {
             return;
@@ -56,6 +117,17 @@ class FloatInput extends React.Component {
         this.hide();
     }
 
+    /**
+     * レンダリング
+     * <pre>
+     * 入力用のテキストと
+     * 非表示状態の浮動コンポーネント（内部のコンポーネント）を作成
+     * show()などで表示する。
+     * 
+     * 浮動コンポーネント側からhide()などを呼び出してコントロールする
+     * </pre>
+     * @returns 入力用Form.Control
+     */
     render() {
 
         let floatStyle = {}

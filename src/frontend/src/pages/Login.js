@@ -1,3 +1,7 @@
+/**
+ * @fileoverview 
+ * Loginページ用のファイル
+ */
 import React from "react";
 import {
   Container,Row,Col,
@@ -12,6 +16,11 @@ import API from "../API";
 
 /**
  * ログインページ
+ * 
+ * ここに仕様を書いていきます。
+ * @namespace Login
+ * @example
+ * <Login />
  */
 class Login extends React.Component {
 
@@ -206,8 +215,19 @@ class Login extends React.Component {
  * <pre>
  * props.childrenをRow,Col内に入れて調整する
  * </pre>
+ * @memberof Login
  * @param {object} props - タグ属性(childrenを使用)
  * @returns <Row>タグ
+ * @example
+ * <SpaceRow>aaa</SpaceRow>と行うとスペースを開けて真ん中に表示する
+ * 
+ * <Row>
+ * <Col></Col>
+ * <Col>aaa</Col>
+ * <Col></Col>
+ * </Row>
+ * 
+ * という出力
  */
 function SpaceRow(props) {
   return (
