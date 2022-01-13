@@ -1,31 +1,61 @@
+/**
+ * @fileoverview 
+ * メッセージ画面用のファイル
+ */
 import React from "react";
 import { Link } from "react-router-dom";
-import { withRouter,WriteMessage } from "../Layout";
+
+import { withRouter, WriteMessage } from "../Layout";
 import { Remove } from "../Authentication";
 import { RemoveLanguage } from "../Locale";
 
+/**
+ * メッセージ画面
+ * <pre>
+ * メッセージ画面をメッセージのみを表示するページです。
+ * 
+ * 基本的にはログアウトやリフレッシュ、NotFoundなどで利用します。
+ * </pre>
+ */
 class Message extends React.Component {
 
-  constructor(props) {
-      super(props);
-      if ( props.id !== undefined ) {
-          WriteMessage(props.id,props.type);
-      } else if ( props.params !== undefined ) {
-          var id = props.params.id
-          WriteMessage(id,props.type);
-      }
-  }
+    /**
+     * コンストラクタ
+     * @param {object} props - id,type
+     */
+    constructor(props) {
+        super(props);
+        if (props.id !== undefined) {
+            WriteMessage(props.id, props.type);
+        } else if (props.params !== undefined) {
+            var id = props.params.id
+            WriteMessage(id, props.type);
+        }
+    }
 
-  componentDidMount() {
-      Remove();
-      RemoveLanguage();
-  }
+    /**
+     * コンポーネントマウント
+     * <pre>
+     * クッキーデータをすべて削除
+     * </pre>
+     */
+    componentDidMount() {
+        Remove();
+        RemoveLanguage();
+    }
 
-  render() {
-    return ( <>
-    <Link to="/">ログインする</Link>
-</>
-  )}
+    /**
+     * レンダリング
+     * <pre>
+     * 現状メッセージとログインのリンクを表示予定
+     * </pre>
+     * @returns Linkタグ
+     */
+    render() {
+        return (<>
+            <Link to="/">ログインする</Link>
+        </>)
+    }
 }
 
 export default withRouter(Message);

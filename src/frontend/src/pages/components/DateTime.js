@@ -1,15 +1,48 @@
+/**
+ * @fileoverview 
+ * 日付指定用のコンポーネント用のファイル
+ */
 import React from "react";
 import DatePicker from "react-datepicker";
-
 import { Form } from "react-bootstrap";
+
 import Select from "./Select";
 import Util from "../../Util";
 
 import "react-datepicker/dist/react-datepicker.css"
 import "../../css/Main.css";
 
+/**
+ * 日付時刻コンポーネント
+ * <pre>
+ * カレンダー指定による
+ * </pre>
+ * @example
+ * 日付時刻指定
+ * <DateTime/>
+ * 日付指定
+ * <DateTime type="date"/>
+ * 時刻指定
+ * <DateTime type="time"/>
+ * 値を指定
+ * <DateTime value="2009-11-10 00:10"/>
+ * 時刻時の指定(日付がないことを0で表現)
+ * <DateTime value="0 00:10"/>
+ * 分数の指定15分刻み
+ * <DateTime step="15"/>
+ * 空指定を可能にする場合
+ * <DateTime empty="true"/>
+ */
 class DateTime extends React.Component {
 
+    /**
+     * コンストラクタ
+     * <pre>
+     * 指定されたtype,step,emptyにより、stateを設定
+     * </pre>
+     * @constructor
+     * @param {object} props - type,step,empty
+     */
     constructor(props) {
 
         super(props);
@@ -57,6 +90,13 @@ class DateTime extends React.Component {
         }
     }
 
+    /**
+     * スタイル設定
+     * <pre>
+     * 日付によるスタイルの設定を行います。
+     * </pre>
+     * @param {Array} days - day,value形式のオブジェクト配列
+     */
     setStyles(days) {
         var obj = {};
 
@@ -83,24 +123,43 @@ class DateTime extends React.Component {
         this.setState({styles:styles});
     }
 
+    /**
+     * 日付指定イベント
+     * @param {Date} day - カレンダーで指定した日付
+     */
     handleDay(day) {
         this.setState({
             day : day
         })
     }
 
+    /**
+     * 時刻選択イベント
+     * @param {number} hour - 指定した時刻
+     */
     handleHour(hour) {
         this.setState({
             hour : hour
         })
     }
 
+    /**
+     * 分選択イベント
+     * @param {number} minute - 指定した分
+     */
     handleMinute(minute) {
         this.setState({
             minute : minute
         })
     }
 
+    /**
+     * 時刻値の設定
+     * <pre>
+     * 時刻をオブジェクトで設定します。
+     * </pre>
+     * @param {Date} date - 時刻データ
+     */
     set(date) {
         let hour = date.getHours();
         let minute = date.getMinutes();
@@ -111,6 +170,13 @@ class DateTime extends React.Component {
         })
     }
 
+    /**
+     * データ取得
+     * <pre>
+     * コンポーネントに指定してあるデータを設定
+     * </pre>
+     * @returns 指定してある時刻データ
+     */
     get() {
         let rtn = "";
         let day = this.state.day;
@@ -145,6 +211,13 @@ class DateTime extends React.Component {
         return rtn;
     }
 
+    /**
+     * レンダリング関数
+     * <pre>
+     * 指定されたタイプによりレンダリング
+     * </pre>
+     * @returns "DateTime"クラスを指定したdivタグ
+     */
     render() {
         let hours = []
         for ( let i = 0; i < 24; ++i ) {

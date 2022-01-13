@@ -1,16 +1,24 @@
+/**
+ * @fileoverview 
+ * テスト用のコンポーネントファイル
+ */
 import React from "react";
-import {CookiesProvider} from "react-cookie";
-import Layout   from '../Layout';
+import { CookiesProvider } from "react-cookie";
+import Layout from '../Layout';
 import API from "../API";
 
-const PagesTest = ({children}) => {
+/**
+ * テスト用のコンポーネント
+ * @param {element} children - テスト用のページ
+ * @returns クッキーとレイアウトをできるタグを返す
+ */
+const PagesTest = ({ children }) => {
 
   API.testMode();
-
   return (<>
-  <CookiesProvider> 
-    <Layout>{children}</Layout>
-  </CookiesProvider> 
+    <CookiesProvider>
+      <Layout>{children}</Layout>
+    </CookiesProvider>
   </>);
 }
 

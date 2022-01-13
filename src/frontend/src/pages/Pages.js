@@ -1,10 +1,15 @@
+/**
+ * @fileoverview 
+ * 各画面での遷移を記述するファイルです。
+ */
+import { useEffect } from "react";
 import {  Routes,Route,Navigate } from "react-router-dom";
 
 import Login    from './Login';
 import Message  from './Message';
 import Menu     from './Menu';
 
-/** デモ用のページ */
+/** 以下はデモ用のページ */
 import ToDo     from './Demo/Todo/View';
 import DateView from './Demo/DateTime/View';
 import PlanView from './Demo/Plan/View';
@@ -19,8 +24,26 @@ import {ChangeTitle,ClearMessage,SetBreadcrumbs} from "../Layout";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../css/Main.css";
-import { useEffect } from "react";
 
+/**
+ * 全ページRoutes
+ * <pre>
+ * index.jsから呼び出されるベースのコンポーネント群
+ * URLでまとめる場合は別コンポーネントにしてください。
+ * </pre>
+ * @namespace Pages
+ * @returns Routesタグ
+ * @example 
+ *  Login コンポーネントに飛ばす場合
+ *  id に画面IDを指定する
+ *  <Route path="/"            element={<Page id="LOGIN"><Login /></Page>} />
+ * 
+ *  デモ用のURLを追加して他のコンポーネント群を読み込む
+ *  <Route path="/pages/demo/*"     element={<DemoPages/>}/>
+ * 
+ *  該当しないもの（他すべて）はerrorページに飛ばす
+ *  <Route path="*" element={<Navigate to="/error/PRFN98M000"/>} />
+ */
 const Pages =() => {
     return (<>
   <Routes>
@@ -33,11 +56,12 @@ const Pages =() => {
     </>);
 }
 
-
-
-
-
-
+/**
+ * デモ用ページ群
+ * @namespace Pages
+ * @param {object} props 
+ * @returns Routesタグ
+ */
 const DemoPages = (props) => {
     return (<>
   <Routes>
@@ -104,6 +128,20 @@ const createCrumbs = (id,link) => {
   return rtn;
 }
 
+/**
+ * Page表示
+ * <pre>
+ * このコンポーネントを利用すると
+ * パンくずとタイトルをIDから自動設定します。
+ * </pre>
+ * @memberOf Pages
+ * @param {object} props - 指定プロパティ
+ * @returns props.children
+ * @example
+ *  パンくずは メニュー→真ん中→自分 になりますので
+ *  createCrumbs()でidとURLを指定した配列を設定
+ *  <Page id="PLANINPUT" crumbs={[createCrumbs("PLAN","/pages/plan/")]}>
+ */
 const Page = (props) => {
 
   let crumbs = [createCrumbs("MENU","/pages/menu")];

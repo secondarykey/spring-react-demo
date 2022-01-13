@@ -1,7 +1,11 @@
+/**
+ * @fileoverview 
+ * このファイルは共通的なレイアウトを提供します。
+ * データファイルは"locale-data"に"言語コード".jsonで存在します。
+ */
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet,HelmetProvider } from "react-helmet-async";
-
 import {
   Container,Navbar,Breadcrumb,
   Alert,Accordion,Button
@@ -22,11 +26,29 @@ var setErrorDetail;
 var changeTitle;
 var setBreadcrumbs;
 
+/**
+ * ログアウト
+ * <pre>
+ * 認証コンポーネントのログアウト機能を呼び出す
+ * </pre>
+ */
 function logout() {
   Logout();
-  return false;
 }
 
+/**
+ * レイアウトコンポーネント
+ * <pre>
+ * ページ共通のレイアウトと機能を提供する
+ * タイトル変更 -> Helmetを利用
+ * 認証機能 -> Authenticationを利用
+ * 国際化機能 -> Localeを利用
+ * ダイアログ（問い合わせ、情報）-> Dialogを利用
+ * プログレス -> Progressを利用
+ * </pre>
+ * @param {element} children - 子ページ
+ * @returns 共通レイアウトを持つページ
+ */
 const Layout = ({children}) => {
 
   const [messageId,messageIdFunc] = useState("");
@@ -120,12 +142,22 @@ const Layout = ({children}) => {
 
 </>)}
 
-export function Redirect(path,cause) {
+/**
+ * リダイレクト
+ * <pre>
+ * PUBLIC_URLを付与したpathにリダイレクトする
+ * </pre>
+ * @param {string} path - URL
+ */
+export function Redirect(path) {
   if ( path === undefined ) return;
   const l = global.location;
   l.href = process.env.PUBLIC_URL + path;
 }
 
+/**
+ * メッセージ表示位置をクリア
+ */
 export function ClearMessage() {
   setMessageId("");
   setMessages([]);
@@ -133,22 +165,42 @@ export function ClearMessage() {
   setErrorDetail("");
 }
 
+/**
+ * 不明エラーメッセージ表示
+ * <pre>
+ * 不明のエラーオブジェクトを元に不明エラーを作成し、表示する
+ * </pre>
+ * @param {object} detail - エラーオブジェクト
+ */
 export function UnknownErrorMessage(detail) {
   let msg = detail;
   if ( detail !== null && typeof detail === "object" ) {
     msg = JSON.stringify(detail);
   }
+  //TODO IDを
   setMessageId("PRFN00M000");
   setMessages([]);
   setMessageType("danger");
   setErrorDetail(msg);
 }
 
+/**
+ * メッセージ表示
+ * @param {string} id - メッセージID
+ * @param {string} type - タイプ（bootstrapのAlertの属性）
+ */
 export function WriteMessage(id,type) {
   setMessageType(type);
   setMessageId(id);
 }
 
+/**
+ * エラーメッセージ表示
+ * <pre>
+ * 定形のエラーオブジェクト(例外データ)からエラーを表示する
+ * </pre>
+ * @param {object} err - エラーオブジェクト
+ */
 export function WriteErrorMessage(err) {
 
   var resp = err.response;
@@ -178,12 +230,24 @@ export const withRouter = WrappedComponent => props => {
   );
 };
 
+/**
+ * タイトル変更
+ * <pre>
+ * HTMLタイトルを変更
+ * </pre>
+ * @param {string} titleId タイトルID
+ */
 export function ChangeTitle(titleId) {
+  //TODO 実際のIDに変更
   let name = GetLabel("SYSTEM");
   let page = GetLabel(titleId);
   changeTitle(page + "[" + name + "]");
 }
 
+/**
+ * パンくずデータ設定
+ * @param {Array} crumbs パンくずデータ(id,link)
+ */
 export function SetBreadcrumbs(crumbs) {
   setBreadcrumbs(crumbs);
 }
