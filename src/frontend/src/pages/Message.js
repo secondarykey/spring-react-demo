@@ -6,9 +6,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { withRouter, WriteMessage } from "../Layout";
-import { Remove } from "../Authentication";
 import { RemoveSession } from "../Authentication";
-import { RemoveLanguage } from "../Locale";
 
 /**
  * メッセージ画面

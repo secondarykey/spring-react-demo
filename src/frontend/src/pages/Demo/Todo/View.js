@@ -110,7 +110,7 @@ class ToDo extends React.Component {
   <ListGroup as="ol" style={ {marginTop:"20px"} }>
       { this.state.todos.map( ( obj,idx ) => {
         return (
-<ListGroup.Item key={idx} as="li" className="d-flex justify-content-between align-items-start" key={obj.id}>
+<ListGroup.Item key={idx} as="li" className="d-flex justify-content-between align-items-start" >
  <div className="ms-2 me-auto">
    <div>{obj.value}</div>
  </div>

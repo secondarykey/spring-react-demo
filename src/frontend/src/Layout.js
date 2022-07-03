@@ -4,7 +4,7 @@
  * データファイルは"locale-data"に"言語コード".jsonで存在します。
  * @module Layout
  */
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import {

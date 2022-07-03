@@ -3,7 +3,7 @@
  * 各画面での遷移を記述するファイルです。
  */
 import { useEffect } from "react";
-import {  Routes,Route,Navigate } from "react-router-dom";
+import {  Routes,Route } from "react-router-dom";
 
 import Login    from './Login';
 import Message  from './Message';

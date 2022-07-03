@@ -4,7 +4,6 @@
  */
 import React from "react";
 import DatePicker from "react-datepicker";
-import { Form } from "react-bootstrap";
 
 import Select from "./Select";
 import Util from "../../Util";
