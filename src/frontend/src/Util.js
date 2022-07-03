@@ -6,6 +6,7 @@
 
 /**
  * ユーティリティクラス
+ * @package Utility
  * 
  */
 class Util {

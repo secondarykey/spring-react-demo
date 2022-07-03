@@ -2,39 +2,25 @@
  * @fileoverview 
  * このファイルは共通的なレイアウトを提供します。
  * データファイルは"locale-data"に"言語コード".jsonで存在します。
+ * @module Layout
  */
-import { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { Helmet,HelmetProvider } from "react-helmet-async";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import {
-  Container,Navbar,Breadcrumb,
-  Alert,Accordion,Button
+  Container, Navbar, Breadcrumb,
+  Alert, Accordion, Button
 } from 'react-bootstrap';
 
-import Locale,{Label,Message,GetLabel} from "./Locale";
+import Locale, { Label, Message, GetLabel } from "./Locale";
 import Authentication from "./Authentication";
 import Dialog from "./Dialog";
 import Progress from "./Progress";
-import {LoginPage,Name,Logout} from "./Authentication";
+import { LoginPage, Name, Logout } from "./Authentication";
 
 import "./css/Main.css"
 
-var setMessageId;
-var setMessages;
-var setMessageType;
-var setErrorDetail;
-var changeTitle;
-var setBreadcrumbs;
-
-/**
- * ログアウト
- * <pre>
- * 認証コンポーネントのログアウト機能を呼び出す
- * </pre>
- */
-function logout() {
-  Logout();
-}
+var inst;
 
 /**
  * レイアウトコンポーネント
@@ -49,98 +35,136 @@ function logout() {
  * @param {element} children - 子ページ
  * @returns 共通レイアウトを持つページ
  */
-const Layout = ({children}) => {
+class Layout extends React.Component {
 
-  const [messageId,messageIdFunc] = useState("");
-  const [messageType,messageTypeFunc] = useState("danger");
-  const [messages,messagesFunc] = useState([]);
+  constructor(props) {
+    super(props);
 
-  const [title,setTitle] = useState("Loading... PAS")
-  const [detail,detailFunc] = useState("");
-  const [crumbs,crumbsFunc] = useState([]);
+    inst = this;
 
-  setMessageId = messageIdFunc;
-  setMessageType = messageTypeFunc;
-  setErrorDetail = detailFunc;
-  setMessages = messagesFunc;
-  changeTitle = setTitle;
-  setBreadcrumbs = crumbsFunc;
+    this.children = props.children;
 
-  return (<>
-
-<HelmetProvider>
-  <Helmet title={ title }>
-  <script src="/config.js"></script>
-  </Helmet>
-</HelmetProvider>
-
-<Authentication />
-
-<Locale>
-
-  <Navbar bg="light">
-    <Container>
-      <Navbar.Brand href={process.env.PUBLIC_URL + "/pages/menu"}>Demo</Navbar.Brand>
-      <LoginPage> 
-        <div><Name/><br/>
-          <Button className="linkText" onClick={logout}>ログアウト</Button>
-        </div>
-      </LoginPage>
-    </Container>
-  </Navbar>
-
-  <LoginPage> 
-    <Breadcrumb className="Layout-Breadcrumbs">
-      {crumbs.map( (val,idx) => {
-        var active = (idx+1 === crumbs.length);
-        var name = GetLabel(val.id);
-        var link = val.link;
-        return (
-          <Breadcrumb.Item active={active} key={"breadcrumbs-" + idx} href="#"
-            onClick={() => Redirect(link)}>{name}</Breadcrumb.Item>
-        )
-      })}
-    </Breadcrumb>
-  </LoginPage>
-
-  <main>
-    {messageId !== "" &&
-      <Alert key="1" variant={messageType}> 
-        {messages.length === 0 &&
-          <Message id={messageId}/> 
-        }
-        {messages.length !== 0 &&
-          <ul>
-            {messages.map( (msg,idx) => {
-              return <li key={idx}>{msg}</li>
-            })}
-          </ul>
-        }
-
-        {detail !== "" &&
-        <Accordion>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header className="Layout-SystemDetail">
-              <Label id="PRFN00L000"/> 
-            </Accordion.Header>
-            <Accordion.Body>{detail}</Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-
-        }
-      </Alert>
+    this.state = {
+      messageId:"",
+      messageType:"danger",
+      messages:[],
+      messageDetail:"",
+      title:"Loading...",
+      crumbs:[]
     }
+  }
 
-    {children}
+  setMessageId(msg) {
+    this.setState({messageId:msg});
+  }
 
-  </main>
+  setMessages(msgs) {
+    this.setState({messages:msgs});
+  }
 
-  <Dialog/>
-  <Progress/>
+  setMessageType(t) {
+    this.setState({messageType:t});
+  }
 
-</Locale>
+  setErrorDetail(detail) {
+    this.setState({messageDetail:detail});
+  }
 
-</>)}
+  changeTitle(title) {
+    this.setState({title:title});
+  }
+
+  setBreadcrumbs(crumbs) {
+    this.setState({crumbs:crumbs});
+  }
+
+  render() {
+
+    return (<>
+
+      <HelmetProvider>
+        <Helmet title={this.state.title}> </Helmet>
+      </HelmetProvider>
+
+      <Authentication />
+
+      <Locale>
+
+        <Navbar bg="light">
+          <Container>
+            <Navbar.Brand href={process.env.PUBLIC_URL + "/pages/menu"}>Demo</Navbar.Brand>
+            <LoginPage>
+              <div><Name /><br />
+                <Button className="linkText" onClick={logout}>ログアウト</Button>
+              </div>
+            </LoginPage>
+          </Container>
+        </Navbar>
+
+        <LoginPage>
+          <Breadcrumb className="Layout-Breadcrumbs">
+            {this.state.crumbs.map((val, idx) => {
+              var active = (idx + 1 === this.state.crumbs.length);
+              var name = GetLabel(val.id);
+              var link = val.link;
+              return (
+                <Breadcrumb.Item active={active} key={"breadcrumbs-" + idx} href="#"
+                  onClick={() => Redirect(link)}>{name}</Breadcrumb.Item>
+              )
+            })}
+          </Breadcrumb>
+        </LoginPage>
+
+        <main>
+          {this.state.messageId !== "" &&
+            <Alert key="1" variant={this.state.messageType}>
+              {this.state.messages.length === 0 &&
+                <Message id={this.state.messageId} />
+              }
+              {this.state.messages.length !== 0 &&
+                <ul>
+                  {this.state.messages.map((msg, idx) => {
+                    return <li key={idx}>{msg}</li>
+                  })}
+                </ul>
+              }
+
+              {this.state.messageDetail !== "" &&
+                <Accordion>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header className="Layout-SystemDetail">
+                      <Label id="PRFN00L000" />
+                    </Accordion.Header>
+                    <Accordion.Body>{this.state.messageDetail}</Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+
+              }
+            </Alert>
+          }
+
+          {this.children}
+
+        </main>
+
+        <Dialog />
+        <Progress />
+
+      </Locale>
+
+    </>);
+  }
+}
+
+/**
+ * ログアウト
+ * <pre>
+ * 認証コンポーネントのログアウト機能を呼び出す
+ * </pre>
+ */
+ function logout() {
+  Logout();
+}
 
 /**
  * リダイレクト
@@ -150,7 +174,7 @@ const Layout = ({children}) => {
  * @param {string} path - URL
  */
 export function Redirect(path) {
-  if ( path === undefined ) return;
+  if (path === undefined) return;
   const l = global.location;
   l.href = process.env.PUBLIC_URL + path;
 }
@@ -159,10 +183,10 @@ export function Redirect(path) {
  * メッセージ表示位置をクリア
  */
 export function ClearMessage() {
-  setMessageId("");
-  setMessages([]);
-  setMessageType("danger");
-  setErrorDetail("");
+  inst.setMessageId("");
+  inst.setMessages([]);
+  inst.setMessageType("danger");
+  inst.setErrorDetail("");
 }
 
 /**
@@ -174,14 +198,13 @@ export function ClearMessage() {
  */
 export function UnknownErrorMessage(detail) {
   let msg = detail;
-  if ( detail !== null && typeof detail === "object" ) {
+  if (detail !== null && typeof detail === "object") {
     msg = JSON.stringify(detail);
   }
-  //TODO IDを
-  setMessageId("PRFN00M000");
-  setMessages([]);
-  setMessageType("danger");
-  setErrorDetail(msg);
+  inst.setMessageId("PRFN00M000");
+  inst.setMessages([]);
+  inst.setMessageType("danger");
+  inst.setErrorDetail(msg);
 }
 
 /**
@@ -189,9 +212,9 @@ export function UnknownErrorMessage(detail) {
  * @param {string} id - メッセージID
  * @param {string} type - タイプ（bootstrapのAlertの属性）
  */
-export function WriteMessage(id,type) {
-  setMessageType(type);
-  setMessageId(id);
+export function WriteMessage(id, type) {
+  inst.setMessageType(type);
+  inst.setMessageId(id);
 }
 
 /**
@@ -210,14 +233,14 @@ export function WriteErrorMessage(err) {
   var msgs = data.messages;
   var detail = data.result;
 
-  setMessageType("danger");
-  setMessageId(id);
-  setMessages(msgs);
+  inst.setMessageType("danger");
+  inst.setMessageId(id);
+  inst.setMessages(msgs);
 
-  if (detail === undefined ) {
-      detail = "";
+  if (detail === undefined) {
+    detail = "";
   }
-  setErrorDetail(detail);
+  inst.setErrorDetail(detail);
 }
 
 export const withRouter = WrappedComponent => props => {
@@ -241,7 +264,7 @@ export function ChangeTitle(titleId) {
   //TODO 実際のIDに変更
   let name = GetLabel("SYSTEM");
   let page = GetLabel(titleId);
-  changeTitle(page + "[" + name + "]");
+  inst.changeTitle(page + "[" + name + "]");
 }
 
 /**
@@ -249,6 +272,6 @@ export function ChangeTitle(titleId) {
  * @param {Array} crumbs パンくずデータ(id,link)
  */
 export function SetBreadcrumbs(crumbs) {
-  setBreadcrumbs(crumbs);
+  inst.setBreadcrumbs(crumbs);
 }
 export default withRouter(Layout);

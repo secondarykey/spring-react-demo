@@ -55,6 +55,7 @@ class Authentication extends React.Component {
         this.urls.push(process.env.PUBLIC_URL + v);
       })
 
+      /*
       const {cookies} = this.props;
       let session = cookies.get("session");
       this.session = Encrypt.decode(session);
@@ -74,6 +75,7 @@ class Authentication extends React.Component {
           return;
         }
       }
+      */
 
   }
 
@@ -165,6 +167,11 @@ class Authentication extends React.Component {
       cookies.remove("session",{path:"/"});
   }
 
+  removeSession() {
+      const {cookies} = this.props;
+      cookies.remove("JSESSIONID",{path:"/"});
+  }
+
   /**
    * レンダリング
    * @returns 空
@@ -250,6 +257,10 @@ export function LoginPage(props) {
  */
 export function Remove(props) {
   inst.remove();
+}
+
+export function RemoveSession(props) {
+  inst.removeSession();
 }
 
 /**

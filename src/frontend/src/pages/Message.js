@@ -6,8 +6,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { withRouter, WriteMessage } from "../Layout";
-import { Remove } from "../Authentication";
-import { RemoveLanguage } from "../Locale";
+import { RemoveSession } from "../Authentication";
 
 /**
  * メッセージ画面
@@ -33,6 +32,7 @@ class Message extends React.Component {
         }
     }
 
+
     /**
      * コンポーネントマウント
      * <pre>
@@ -40,8 +40,9 @@ class Message extends React.Component {
      * </pre>
      */
     componentDidMount() {
-        Remove();
-        RemoveLanguage();
+        //Remove();
+        //RemoveLanguage();
+        RemoveSession();
     }
 
     /**

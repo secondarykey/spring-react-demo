@@ -10,13 +10,34 @@ class DateView extends React.Component {
         this.datetime = createRef();
         this.time = createRef();
     }
+
+    isSafari() {
+      const agent = window.navigator.userAgent.toLowerCase();
+      if ( agent.indexOf("chrome") !== -1 ) {
+      } else if ( agent.indexOf("safari") !== -1 ) {
+        return true;
+      }
+      return false
+    }
     
     componentDidMount() {
 
+
+      var buf = "2022-03-28 00:00:00";
+      if (this.isSafari()) {
+        buf = buf.replaceAll(/-/g,"/")
+        console.info(buf);
+      }
+      var date = Date.parse(buf);
+      console.info(date);
+
       let obj = [
-        {day:"2022-01-10",value:1},
-        {day:"2022-01-11",value:1},
-        {day:"2022-01-12",value:1}
+        {day:"2022-03-27",value:"1"},
+        {day:"2022-03-28",value:"Shift-0"},
+        {day:"2022-03-29",value:"0"},
+        {day:"2022-03-30",value:"0"},
+        {day:"2022-03-31",value:"0"},
+        {day:"2022-03-29",value:"Select"}
       ]
 
       this.date.current.setStyles(obj);

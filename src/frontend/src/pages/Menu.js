@@ -19,42 +19,42 @@ import "../css/Main.css";
 class Menu extends React.Component {
 
   gotoPlan = () => {
-    Redirect("/pages/plan/");
+    Redirect("/pages/demo/plan/");
     return;
   }
 
   gotoDate = () => {
-    Redirect("/pages/date/");
+    Redirect("/pages/demo/date/");
     return;
   }
 
   gotoToDo = () => {
-    Redirect("/pages/todo/");
+    Redirect("/pages/demo/todo/");
     return;
   }
 
   gotoPaging = () => {
-    Redirect("/pages/paging/");
+    Redirect("/pages/demo/paging/");
     return;
   }
 
   gotoFloat = () => {
-    Redirect("/pages/floating/");
+    Redirect("/pages/demo/floating/");
     return;
   }
 
   gotoDialogs = () => {
-    Redirect("/pages/dialogs/");
+    Redirect("/pages/demo/dialogs/");
     return;
   }
 
   gotoOperation = () => {
-    Redirect("/pages/operation/");
+    Redirect("/pages/demo/operation/");
     return;
   }
 
   gotoUsers = () => {
-    Redirect("/pages/users/");
+    Redirect("/pages/demo/users/");
     return;
   }
 

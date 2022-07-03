@@ -1,5 +1,6 @@
+//import "react-app-polyfill/stable";
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom';
 import { CookiesProvider } from "react-cookie";
 
 import { BrowserRouter as Router } from "react-router-dom";
@@ -7,7 +8,9 @@ import Layout   from './Layout';
 import Pages from "./pages/Pages"
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(
   <React.StrictMode>
     <CookiesProvider> 
       <Router basename={process.env.PUBLIC_URL}>
@@ -16,8 +19,7 @@ ReactDOM.render(
         </Layout>
       </Router>
     </CookiesProvider> 
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
 reportWebVitals();
