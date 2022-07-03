@@ -21,24 +21,34 @@ class ToDo extends React.Component {
       todos:todos
     }
 
+    this.search = this.search.bind(this);
     this.add = this.add.bind(this); 
     this.del = this.del.bind(this); 
   }
   
   componentDidMount() {
+    console.info("didmount");
+    this.search();
+  }
+
+  search() {
     var args = {
     };
     API.post("/api/demo/todo/view",resp => {
       let todos = resp.data.result.todos;
-      this.setState({
-        todos : todos
-      })
+      this.view(todos)
     },args).catch((err) => {
       if ( API.isUnknownError(err) ) {
         return;
       }
       WriteErrorMessage(err);
     });
+  }
+
+  view = (data) => {
+    this.setState({
+      todos : data
+    })
   }
 
   add() {
@@ -89,6 +99,7 @@ class ToDo extends React.Component {
   }    
 
   render() {
+    console.info("render()")
     return ( <>	
 
   <Row className="justify-content-between d-flex" style={{ margin : "2px"}}>
@@ -97,16 +108,17 @@ class ToDo extends React.Component {
   </Row>
 
   <ListGroup as="ol" style={ {marginTop:"20px"} }>
-      { this.state.todos.map( ( obj ) => {
+      { this.state.todos.map( ( obj,idx ) => {
         return (
-    <ListGroup.Item as="li" className="d-flex justify-content-between align-items-start" key={obj.id}>
-      <div className="ms-2 me-auto">
-        <div>{obj.value}</div>
-      </div>
-      <Button variant="danger" onClick={() => this.del(obj.id)}>DELETE</Button>
-    </ListGroup.Item>
-        )
-      } ) }
+<ListGroup.Item key={idx} as="li" className="d-flex justify-content-between align-items-start" key={obj.id}>
+ <div className="ms-2 me-auto">
+   <div>{obj.value}</div>
+ </div>
+ <Button variant="danger" onClick={() => this.del(obj.id)}>DELETE</Button>
+</ListGroup.Item>
+)
+      } 
+      )}
   </ListGroup>  
 
 	</>);

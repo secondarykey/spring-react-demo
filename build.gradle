@@ -72,6 +72,7 @@ tasks.named("processBatchResources").configure {
 
 task batchJar(type: Jar) {
 
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   classifier = "batch"
 
   manifest {
@@ -79,7 +80,9 @@ task batchJar(type: Jar) {
       'Main-Class': 'com.example.demo.BatchApplication'
     )
   }
-  from sourceSets.batch.output
+  from sourceSets.batch.output 
+  from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+  with jar
 }
 
 task copyBatchDependencies(type:Copy) {

@@ -7,6 +7,7 @@ import CryptJS from "crypto-js";
 
 /**
  * 暗号化クラス
+ * @package Utility
  * <pre>
  * JSONをデータとして暗号、復号を提供する
  * 暗号、復号のアルゴリズム詳細はサーバサイド、または設計書による

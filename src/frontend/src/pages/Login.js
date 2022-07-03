@@ -1,6 +1,7 @@
 /**
  * @fileoverview 
  * Loginページ用のファイル
+ * @module Login
  */
 import React from "react";
 import {
@@ -18,7 +19,6 @@ import API from "../API";
  * ログインページ
  * 
  * ここに仕様を書いていきます。
- * @namespace Login
  * @example
  * <Login />
  */
@@ -41,7 +41,12 @@ class Login extends React.Component {
       this.newPassword1 = React.createRef(); 
       this.newPassword2 = React.createRef(); 
 
-      this.state = { expiry : false }
+      this.loginAPI = this.loginAPI.bind(this);
+
+      this.state = { expiry : false,data : [19,20] }
+  }
+
+  componentDidMount() {
   }
 
   /**
@@ -60,20 +65,25 @@ class Login extends React.Component {
    * @returns false
    */
   handleLoginClick = (e) => {
-
-    ClearMessage();
-
     let data = {
         id : this.userId.current.value,
         password : this.password.current.value,
         language : GetLanguage()
     }
+    this.loginAPI(data)
+  }
 
+  loginAPI(data) {
+
+    ClearMessage();
     API.post("/api/v1/login",
       resp => {
         Save(resp.data.result.user);
         SetLanguage(resp.data.result.language);
-        Redirect('/pages/menu');
+
+        this.view();
+
+        Redirect('/pages/demo/menu');
     },data).catch( (err) => {
 
       if ( API.isUnknownError(err) ) {
@@ -136,6 +146,10 @@ class Login extends React.Component {
     return false;
   }
 
+  view = () => {
+    alert("not safari");
+  }
+
   /**
    * ログイン画面表示
    * state.expiry: true時にパスワード変更のコンポーネントを表示
@@ -146,7 +160,6 @@ class Login extends React.Component {
     let expiry = this.state.expiry;
 
     return ( <>
-
 <Form>
   <Container>
 

@@ -51,7 +51,6 @@ const Pages =() => {
     <Route path="/pages/demo/*"     element={<DemoPages/>}/>
     <Route path="/message/:id" element={<Page id="MESSAGE"><Message type="success" /></Page>} />
     <Route path="/error/:id"   element={<Page id="ERROR"><Message type="danger" /></Page>} />
-    <Route path="*" element={<Navigate to="/error/PRFN98M000"/>} />
   </Routes>
     </>);
 }
@@ -162,6 +161,7 @@ const Page = (props) => {
     ChangeTitle(props.id);
     SetBreadcrumbs(crumbs);
   })
+
   return (<>{props.children}</>)
 }
 
