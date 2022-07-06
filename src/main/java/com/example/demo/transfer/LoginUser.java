@@ -2,7 +2,8 @@ package com.example.demo.transfer;
 
 import java.io.Serializable;
 
-import com.example.demo.model.User;
+import com.example.demo.model.Users;
+
 
 public class LoginUser implements Serializable {
 	/**
@@ -39,7 +40,7 @@ public class LoginUser implements Serializable {
 	}
 	private String expiry;
 
-	public static LoginUser convert(User user) {
+	public static LoginUser convert(Users user) {
 		LoginUser lu = new LoginUser();
 		
 		lu.id = user.getId();

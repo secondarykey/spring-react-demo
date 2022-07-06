@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.ToDo;
+import com.example.demo.model.Todos;
 import com.example.demo.repository.ToDoQueryRepository;
 import com.example.demo.repository.ToDoRepository;
 import com.example.demo.transfer.request.ToDoRequest;
@@ -25,9 +25,9 @@ public class ToDoService extends BusinessService {
 
 	public Result<ToDoViewResponse> find(ToDoRequest json) {
 		Result<ToDoViewResponse> result = new Result<>();
-		List<ToDo> itr = query.findAll();
+		List<Todos> itr = query.findAll();
 		ToDoViewResponse res = new ToDoViewResponse();
-		List<ToDo> list = new ArrayList<>();
+		List<Todos> list = new ArrayList<>();
 		itr.forEach(list::add);
 
 		res.setTodos(list);
@@ -36,7 +36,7 @@ public class ToDoService extends BusinessService {
 	}
 
 	public Result<Integer> insert(ToDoRequest json) {
-		ToDo todo = new ToDo();
+		Todos todo = new Todos();
 		todo.setValue(json.getValue());
 		Result<Integer> result = new Result<>();
 	
@@ -47,7 +47,7 @@ public class ToDoService extends BusinessService {
 	}
 
 	public Result<String> delete(ToDoRequest json) {
-		ToDo todo = new ToDo();
+		Todos todo = new Todos();
 		todo.setId(json.getId());
 		Result<String> result = new Result<>();
 		crud.delete(todo);

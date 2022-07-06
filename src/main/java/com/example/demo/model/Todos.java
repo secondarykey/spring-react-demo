@@ -1,9 +1,9 @@
 /**
  * Auto Generated:Wed Jul 06 10:38:06 JST 2022
  * Original SQL:
-CREATE TABLE ROLE (
-    ID VARCHAR(16) PRIMARY KEY,
-    NAME VARCHAR(128)
+CREATE TABLE TODOS (
+    ID SERIAL PRIMARY KEY,
+    "VALUE" VARCHAR(32)
 )
  */
 package com.example.demo.model;
@@ -21,8 +21,8 @@ import com.example.demo.model.core.ModelImpl;
 /**
  * 
  */
-@Table("ROLE")
-public class Role extends ModelImpl
+@Table("TODOS")
+public class Todos extends ModelImpl
     implements Serializable  {
 
     /** シリアルバージョンID **/
@@ -31,42 +31,42 @@ public class Role extends ModelImpl
 
     /**
      * 
-     * Original SQL: ID VARCHAR(16) PRIMARY KEY
+     * Original SQL: ID SERIAL PRIMARY KEY
      */
     @Column("ID")
     @MappingName(value="id")
-    private String id;
+    private Integer id;
     /**
      * 
-     * Original SQL: NAME VARCHAR(128)
+     * Original SQL: "VALUE" VARCHAR(32)
 )
      */
-    @Column("NAME")
-    @MappingName(value="name")
-    private String name;
+    @Column("VALUE")
+    @MappingName(value="value")
+    private String value;
     /**
      *  の設定
      */
-    public void setId(String id) {
+    public void setId(Integer id) {
       this.id = id;
     }
     /**
      *  の取得
      */
-    public String getId() {
+    public Integer getId() {
         return this.id;
     }
     /**
      *  の設定
      */
-    public void setName(String name) {
-      this.name = name;
+    public void setValue(String value) {
+      this.value = value;
     }
     /**
      *  の取得
      */
-    public String getName() {
-        return this.name;
+    public String getValue() {
+        return this.value;
     }
 
 }

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.model.Time;
+import com.example.demo.model.Times;
 import com.example.demo.repository.TimeQueryRepository;
 import com.example.demo.repository.TimeRepository;
 import com.example.demo.transfer.Paging;
@@ -32,7 +32,7 @@ public class TimeService extends BusinessService {
 
 	public Result<TimeViewResponse> find(Paging paging) {
 
-		List<Time> times = query.findPage(paging);
+		List<Times> times = query.findPage(paging);
 		if ( times.size() <= 0 ) {
 			//TODO エラー
 		}
@@ -55,12 +55,13 @@ public class TimeService extends BusinessService {
 		Date date = DateUtil.parseClient(val);
 		OffsetDateTime offset = DateUtil.zone(date, zone);
 
-		Time time = new Time();
+		Times time = new Times();
 		time.setValue(val + " " + zone);
 		time.setDate(date);
 		time.setTime(date);
-		time.setDateToWithout(date);
-		time.setOffsetToWith(offset);
+
+		time.setDateWithout(date);
+		time.setOffsetWith(offset);
 		
 		crud.save(time);
 

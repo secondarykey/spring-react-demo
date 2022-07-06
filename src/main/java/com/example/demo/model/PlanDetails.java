@@ -1,13 +1,13 @@
 /**
  * Auto Generated:Wed Jul 06 10:38:06 JST 2022
  * Original SQL:
-CREATE TABLE OPERATION (
-    ID SERIAL PRIMARY KEY,
-    OPERATION_ID INTEGER,
-    ORGANIZATION_ID INTEGER,
-    SEQ INTEGER,
-    "START" DATE,
-    "END" DATE
+CREATE TABLE PLAN_DETAILS (
+  ID SERIAL PRIMARY KEY,
+  PLANS_ID INTEGER,
+  NAME VARCHAR(128),
+  START TIMESTAMP WITHOUT TIME ZONE,
+  "END" TIMESTAMP WITHOUT TIME ZONE,
+  FOREIGN KEY(PLANS_ID) REFERENCES PLANS(ID)
 )
  */
 package com.example.demo.model;
@@ -25,8 +25,8 @@ import com.example.demo.model.core.ModelImpl;
 /**
  * 
  */
-@Table("OPERATION")
-public class Operation extends ModelImpl
+@Table("PLAN_DETAILS")
+public class PlanDetails extends ModelImpl
     implements Serializable  {
 
     /** シリアルバージョンID **/
@@ -42,36 +42,28 @@ public class Operation extends ModelImpl
     private Integer id;
     /**
      * 
-     * Original SQL: OPERATION_ID INTEGER
+     * Original SQL: PLANS_ID INTEGER
      */
-    @Column("OPERATION_ID")
-    @MappingName(value="operationId")
-    private Integer operationId;
+    @Column("PLANS_ID")
+    @MappingName(value="plansId")
+    private Integer plansId;
     /**
      * 
-     * Original SQL: ORGANIZATION_ID INTEGER
+     * Original SQL: NAME VARCHAR(128)
      */
-    @Column("ORGANIZATION_ID")
-    @MappingName(value="organizationId")
-    private Integer organizationId;
+    @Column("NAME")
+    @MappingName(value="name")
+    private String name;
     /**
      * 
-     * Original SQL: SEQ INTEGER
-     */
-    @Column("SEQ")
-    @MappingName(value="seq")
-    private Integer seq;
-    /**
-     * 
-     * Original SQL: "START" DATE
+     * Original SQL: START TIMESTAMP WITHOUT TIME ZONE
      */
     @Column("START")
     @MappingName(value="start")
     private Date start;
     /**
      * 
-     * Original SQL: "END" DATE
-)
+     * Original SQL: "END" TIMESTAMP WITHOUT TIME ZONE
      */
     @Column("END")
     @MappingName(value="end")
@@ -91,38 +83,26 @@ public class Operation extends ModelImpl
     /**
      *  の設定
      */
-    public void setOperationId(Integer operationId) {
-      this.operationId = operationId;
+    public void setPlansId(Integer plansId) {
+      this.plansId = plansId;
     }
     /**
      *  の取得
      */
-    public Integer getOperationId() {
-        return this.operationId;
+    public Integer getPlansId() {
+        return this.plansId;
     }
     /**
      *  の設定
      */
-    public void setOrganizationId(Integer organizationId) {
-      this.organizationId = organizationId;
+    public void setName(String name) {
+      this.name = name;
     }
     /**
      *  の取得
      */
-    public Integer getOrganizationId() {
-        return this.organizationId;
-    }
-    /**
-     *  の設定
-     */
-    public void setSeq(Integer seq) {
-      this.seq = seq;
-    }
-    /**
-     *  の取得
-     */
-    public Integer getSeq() {
-        return this.seq;
+    public String getName() {
+        return this.name;
     }
     /**
      *  の設定

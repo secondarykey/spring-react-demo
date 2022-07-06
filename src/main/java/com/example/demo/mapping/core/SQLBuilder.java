@@ -1,4 +1,4 @@
-package com.example.demo.mapping;
+package com.example.demo.mapping.core;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -7,14 +7,15 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.relational.core.mapping.Column;
 
-import com.example.demo.anotation.model.MappingRS;
-import com.example.demo.model.Model;
+import com.example.demo.model.annotation.MappingName;
+import com.example.demo.model.core.Model;
 import com.example.demo.transfer.Paging;
 import com.example.demo.util.Util;
 
@@ -34,7 +35,12 @@ public class SQLBuilder {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(SQLBuilder.class);
-	
+
+	/**
+	 * オブジェクト生成
+	 * @param querySets SQLのカラムを構築する
+	 * @return
+	 */
 	public static SQLBuilder create(QuerySet... querySets) {
 		SQLBuilder builder = new SQLBuilder();
 		for ( QuerySet set : querySets ) {
@@ -128,8 +134,7 @@ public class SQLBuilder {
 			if ( buf.length() != 0 ) {
 				buf.append(",");
 			}
-			String line = SQLBuilder.generateColumns(set.getModelClass(), 
-					set.getTablePrefix(), set.getAliasPrefix());
+			String line = SQLBuilder.generateColumns(set);
 			buf.append(line);
 		}
 
@@ -161,24 +166,26 @@ public class SQLBuilder {
 	 *  というSQLに変換してくれる。
 	 * create() から、モデルを生成できる。
 	 * </pre>
-	 * @param clazz
-	 * @param model
-	 * @param as
-	 * @return
+	 * @param qs 対象のクエリセット
+	 * @return カラム名のCSV
 	 */
-	public static String generateColumns(Class<? extends Model> clazz,String model,String as) {
-		
-		List<Field> columns = SQLBuilder.getColumns(clazz);
+	public static String generateColumns(QuerySet qs) {
+		Class<? extends Model> clazz = qs.getModelClass();
+		String model = qs.getTablePrefix();
+		String as = qs.getAliasPrefix();
+		String[] ignores = qs.getIgnoreColumns();
+
+		List<Field> columns = SQLBuilder.getColumns(clazz,ignores);
 		StringBuffer buf = new StringBuffer();
 		int idx = 1;
 		for ( Field field : columns ) {
 			Column col = field.getAnnotation(Column.class);
-			MappingRS map = field.getAnnotation(MappingRS.class);
+			MappingName map = field.getAnnotation(MappingName.class);
 			
 			String colName = col.value();
 			String rename = map.value();
 			String comma = ", ";
-			
+
 			//最後の場合
 			if ( idx == columns.size() ) {
 				comma = "";
@@ -198,7 +205,7 @@ public class SQLBuilder {
 	 * @param prefix テーブル名(もしくは別名)
 	 * @param colName カラム名
 	 * @param force 強制エスケープ
-	 * @return
+	 * @return エスケープした文字列
 	 */
 	private static String escape(String prefix, String colName, boolean force) {
 
@@ -220,13 +227,19 @@ public class SQLBuilder {
 	/**
 	 * マッピングモデル生成
 	 * <pre>
-	 * @param <T>
+	 * 指定したクラスでマッピングオブジェクトを生成
+	 * </pre>
+	 * @param <T> 指定クラス
 	 * @param clazz 生成クラス
-	 * @param prefix SQLで使用したオブジェクトアクセスのPrefix
+	 * @param qs 対象のクエリセット
 	 * @param rs SQLの戻り値
 	 * @return 生成したT
 	 */
-	public static <T extends Model> T create(Class<T> clazz,String prefix,ResultSet rs) {
+	public static <T extends Model> T create(Class<T> clazz,QuerySet qs,ResultSet rs) {
+		
+		String prefix = qs.getAliasPrefix();
+		String[] ignores = qs.getIgnoreColumns();
+		
 		Constructor<T> con;
 		try {
 			con = clazz.getConstructor();
@@ -241,7 +254,7 @@ public class SQLBuilder {
 			throw new RuntimeException("デフォルトコンストラクタでの生成エラー",e);
 		}
 
-		List<Field> columns = SQLBuilder.getColumns(clazz);
+		List<Field> columns = SQLBuilder.getColumns(clazz,ignores);
 		for ( Field field : columns ) {
 			callSetter(model,field,prefix,rs);
 		}
@@ -254,15 +267,15 @@ public class SQLBuilder {
 	 * モデルのセッターにResultSetから設定を行う
 	 * 
 	 * </pre>
-	 * @param setter セッター
 	 * @param model セッターの存在するオブジェクト
-	 * @param rs データセット
 	 * @param field フィールド
-	 * @param name 
+	 * @param prefix 接頭子
+	 * @param rs データセット
 	 */
 	private static void callSetter(Object  model, Field field, String prefix,ResultSet rs) {
+
 		//MappingRSを取得
-		MappingRS map = field.getAnnotation(MappingRS.class);
+		MappingName map = field.getAnnotation(MappingName.class);
 		Class<?> tClazz = field.getType();
 
 		String val = map.value();
@@ -284,17 +297,34 @@ public class SQLBuilder {
 			logger.debug("Class:{} SetterName :{}",tClazz.getName(),setter.getName());
 		}
 		try {
+			
+			//メソッド指定の場合
 			if ( !Util.isEmpty(method) ) {
+
+				boolean usingCal = false;
 				Method getMethod;
 				try {
-					getMethod = rs.getClass().getMethod(method, String.class);
+					if ( Util.equals(method,"getTime") || Util.equals(method,"getDate") ) {
+						usingCal = true;
+						getMethod = rs.getClass().getMethod(method, String.class,Calendar.class);
+					} else {
+						getMethod = rs.getClass().getMethod(method, String.class);
+					}
 				} catch (NoSuchMethodException | SecurityException e) {
 					throw new RuntimeException("ResultSet.getterの取得失敗",e);
 				}
-				Object obj = getMethod.invoke(rs, name);
-				logger.debug("getObject = {}",obj.getClass());
-				
+
+				Object obj = null;
+				if ( usingCal ) {
+					obj = getMethod.invoke(rs, name,Calendar.getInstance());
+				} else {
+					obj = getMethod.invoke(rs, name);
+				}
+				if ( obj != null ) {
+					logger.debug("getObject = {}",obj.getClass());
+				}
 				setter.invoke(model,obj);
+
 			} else {
 				
 				Object obj = rs.getObject(name);
@@ -314,6 +344,7 @@ public class SQLBuilder {
 				}
 			}
 		} catch (SQLException e) {
+			logger.info("Model:{},Name:{},Class:{}",model,name,tClazz);
 			throw new RuntimeException("データ取得時の例外",e);
 		} catch (IllegalAccessException | 
 				IllegalArgumentException | InvocationTargetException e) {
@@ -324,15 +355,19 @@ public class SQLBuilder {
 
 	/**
 	 * Column定義のフィールドを取得
-	 * @param claza 対象クラス
+	 * @param clazz 対象クラス
+	 * @param ignores 対象から除外するもの
 	 * @return Column定義のフィールド
 	 */
-	private static List<Field> getColumns(Class<?> clazz) {
+	private static List<Field> getColumns(Class<?> clazz, String[] ignores) {
 		Field[] fields = clazz.getDeclaredFields();
 		List<Field> list = new ArrayList<>();
 		for ( Field f : fields ) {
 			Column ano = f.getAnnotation(Column.class);
 			if ( ano != null ) {
+				if ( Util.exists(ignores,ano.value()) ) {
+					continue;
+				}
 				list.add(f);
 			}
 		}
@@ -352,7 +387,7 @@ public class SQLBuilder {
 
 	/**
 	 * カウント文の取得
-	 * @return
+	 * @return カウント湯のカラム
 	 */
 	public String getCountSQL() {
 		return this.argSQL.formatted("COUNT(*)");
@@ -360,12 +395,16 @@ public class SQLBuilder {
 
 	/**
 	 * ページデータの設定
-	 * @param paging
+	 * @param paging ページデータ
 	 */
 	public void setPaging(Paging paging) {
 		this.paging = paging;
 	}
 
+	/**
+	 * カウント値の設定
+	 * @param cnt 設定件数
+	 */
 	public void setCount(int cnt) {
 		if (this.paging == null) {
 			logger.warn("ページングがない状態でカウントを発行 {}",cnt);

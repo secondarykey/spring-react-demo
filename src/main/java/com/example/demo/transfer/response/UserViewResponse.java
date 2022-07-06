@@ -2,17 +2,17 @@ package com.example.demo.transfer.response;
 
 import java.util.List;
 
-import com.example.demo.model.User;
+import com.example.demo.model.Users;
 import com.example.demo.transfer.Paging;
 
 public class UserViewResponse {
 
-	private List<User> users;
+	private List<Users> users;
 	private Paging paging;
-	public List<User> getUsers() {
+	public List<Users> getUsers() {
 		return users;
 	}
-	public void setUsers(List<User> users) {
+	public void setUsers(List<Users> users) {
 		this.users = users;
 	}
 	public Paging getPaging() {

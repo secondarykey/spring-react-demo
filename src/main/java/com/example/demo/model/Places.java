@@ -1,17 +1,16 @@
 /**
  * Auto Generated:Wed Jul 06 10:38:06 JST 2022
  * Original SQL:
-CREATE TABLE WORKER (
+CREATE TABLE PLACES (
     ID SERIAL PRIMARY KEY,
-    OPERATION_ID INTEGER,
-    USER_ID VARCHAR(255),
-    "DATE" DATE
+    NAME VARCHAR(128),
+    TIMEZONE VARCHAR(32)
 )
  */
 package com.example.demo.model;
 
 import java.io.Serializable;
-import java.util.Date;
+
 
 
 
@@ -23,8 +22,8 @@ import com.example.demo.model.core.ModelImpl;
 /**
  * 
  */
-@Table("WORKER")
-public class Worker extends ModelImpl
+@Table("PLACES")
+public class Places extends ModelImpl
     implements Serializable  {
 
     /** シリアルバージョンID **/
@@ -40,26 +39,19 @@ public class Worker extends ModelImpl
     private Integer id;
     /**
      * 
-     * Original SQL: OPERATION_ID INTEGER
+     * Original SQL: NAME VARCHAR(128)
      */
-    @Column("OPERATION_ID")
-    @MappingName(value="operationId")
-    private Integer operationId;
+    @Column("NAME")
+    @MappingName(value="name")
+    private String name;
     /**
      * 
-     * Original SQL: USER_ID VARCHAR(255)
-     */
-    @Column("USER_ID")
-    @MappingName(value="userId")
-    private String userId;
-    /**
-     * 
-     * Original SQL: "DATE" DATE
+     * Original SQL: TIMEZONE VARCHAR(32)
 )
      */
-    @Column("DATE")
-    @MappingName(value="date")
-    private Date date;
+    @Column("TIMEZONE")
+    @MappingName(value="timezone")
+    private String timezone;
     /**
      *  の設定
      */
@@ -75,38 +67,26 @@ public class Worker extends ModelImpl
     /**
      *  の設定
      */
-    public void setOperationId(Integer operationId) {
-      this.operationId = operationId;
+    public void setName(String name) {
+      this.name = name;
     }
     /**
      *  の取得
      */
-    public Integer getOperationId() {
-        return this.operationId;
+    public String getName() {
+        return this.name;
     }
     /**
      *  の設定
      */
-    public void setUserId(String userId) {
-      this.userId = userId;
+    public void setTimezone(String timezone) {
+      this.timezone = timezone;
     }
     /**
      *  の取得
      */
-    public String getUserId() {
-        return this.userId;
-    }
-    /**
-     *  の設定
-     */
-    public void setDate(Date date) {
-      this.date = date;
-    }
-    /**
-     *  の取得
-     */
-    public Date getDate() {
-        return this.date;
+    public String getTimezone() {
+        return this.timezone;
     }
 
 }

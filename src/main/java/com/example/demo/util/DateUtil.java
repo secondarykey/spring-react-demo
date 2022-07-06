@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateUtil {
 	
@@ -89,4 +90,19 @@ public class DateUtil {
 	public static String sqlDay(Date day) {
 		return sqlFmt.format(day);
 	}
+	
+	
+	/**
+	 * 現在時刻の取得
+	 * <pre>
+	 * 現在時刻をOffsetDateTimeにしたもの
+	 * </pre>
+	 * @return 現在時刻
+	 */
+	public static OffsetDateTime now() {
+		TimeZone tz = TimeZone.getDefault();
+		ZoneId id = tz.toZoneId();
+		return OffsetDateTime.now(id);
+	}
+	
 }

@@ -8,8 +8,11 @@ public class Util {
 		if ( Util.isEmpty(value) ) {
 			return "";
 		}
-		String p = value.substring(0,1);
-		String tail = value.substring(1);
+
+		String v = value.toLowerCase();
+
+		String p = v.substring(0,1);
+		String tail = v.substring(1);
 		return p.toUpperCase() + tail;
 	}	
 
@@ -74,6 +77,25 @@ public class Util {
 		}
 		if ( Util.equals(v, "default") ) {
 			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 文字列存在確認
+	 * @param ignores 拒否する配列
+	 * @param value 対象の値
+	 * @return 存在する場合true
+	 */
+	public static boolean exists(String[] ignores, String value) {
+		//対象が空の場合false
+		if ( Util.isEmpty(ignores) ) {
+			return false;
+		}
+		for ( String v : ignores ) {
+			if ( Util.equals(v,value) )  {
+				return true;
+			}
 		}
 		return false;
 	}

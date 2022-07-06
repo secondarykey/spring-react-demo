@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,12 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
-import com.example.demo.mapping.UserRoleMapper;
-import com.example.demo.mapping.UserRowMapper;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.Row;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Role;
-import com.example.demo.model.User;
+import com.example.demo.model.Users;
 import com.example.demo.transfer.Paging;
 import com.example.demo.util.EncryptUtil;
 import com.example.demo.util.Util;
@@ -29,21 +29,19 @@ public class UserQueryRepository extends QueryRepository {
 		super(template);
 	}
 
-	public User findByPassword(String id, String password) {
+	public Users findByPassword(String id, String password) {
 		String sql = """
 		SELECT %s FROM USERS WHERE "ID" = ? AND "PASSWORD" = ?
 				""";
-		SQLBuilder builder = SQLBuilder.create(
-				QuerySet.create(User.class,"", "")
-		);
+		QuerySet qs = QuerySet.create(Users.class,"", "");
+		SQLBuilder builder = SQLBuilder.create(qs);
 		builder.setSQL(sql, id,EncryptUtil.hashPassword(password));
-
-		UserRoleMapper mapper = new UserRoleMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+		
+		Row row = singleQuery(builder);
+		return row.get(qs);
 	}
 
-	public User joinRole(String id) {
+	public Users joinRole(String id) {
 
 		String sql = """
 		SELECT 
@@ -51,18 +49,18 @@ public class UserQueryRepository extends QueryRepository {
 		FROM USERS U JOIN ROLE R ON U.ROLE = R.ID AND U.ID = ?
 				""";
 
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(User.class,"U","users"),
-			QuerySet.create(Role.class,"R","roles")
-		);
+		QuerySet userQs = QuerySet.create(Users.class,"U","users");
+		QuerySet roleQs = QuerySet.create(Role.class,"R","roles");
+
+		SQLBuilder builder = SQLBuilder.create(userQs,roleQs);
 		builder.setSQL(sql,id);
 
-		UserRoleMapper mapper = new UserRoleMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+		Row row = singleQuery(builder);
+
+		return row.get(userQs);
 	}
 
-	public List<User> search(String id, String name, Paging paging) {
+	public List<Users> search(String id, String name, Paging paging) {
 
 		String sql = """
 		SELECT 
@@ -82,9 +80,8 @@ public class UserQueryRepository extends QueryRepository {
 			nameVal = "%" + name +"%";
 		}
 
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(User.class,"","users")
-		);
+		QuerySet qs = QuerySet.create(Users.class,"","users");
+		SQLBuilder builder = SQLBuilder.create(qs);
 		
 		builder.setOrder("ORDER BY USERS.ID");
 		builder.setPaging(paging);
@@ -99,8 +96,11 @@ public class UserQueryRepository extends QueryRepository {
 			builder.setSQL(sql,nameVal);
 		}
 
-		UserRowMapper mapper = new UserRowMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+		List<Row> rows = this.query(builder);
+		List<Users> list = new ArrayList<>();
+		for (Row row:rows) {
+			list.add(row.get(qs));
+		}
+		return list;
 	}
 }

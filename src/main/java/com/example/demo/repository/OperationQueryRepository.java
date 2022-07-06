@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.OperationMapper;
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.Row;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Operation;
 import com.example.demo.model.OperationLanguage;
 import com.example.demo.util.DateUtil;
@@ -35,17 +36,21 @@ public class OperationQueryRepository extends QueryRepository {
 		  ON OPE.ID = LANG.OPERATION_ID
 		""";
 
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(Operation.class,"OPE", "ope"),
-			QuerySet.create(OperationLanguage.class,"LANG", "lang")
-		);
+		QuerySet opeQs = QuerySet.create(Operation.class,"OPE", "ope");
+		QuerySet langQs = QuerySet.create(OperationLanguage.class,"LANG", "lang");
+		SQLBuilder builder = SQLBuilder.create( opeQs,langQs);
 		
 		String dateBuf = DateUtil.sqlDay(day);
 		builder.setSQL(sql, orgID,dateBuf,dateBuf,lang);
 
-		OperationMapper mapper = new OperationMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+		List<Row> rows = this.query(builder);
+	
+		List<Operation> opelist = new ArrayList<>();
+		for ( Row row : rows ) {
+			//TODO langQsの残し方
+			opelist.add(row.get(opeQs));
+		}
+		return opelist;
 	}
 
 }

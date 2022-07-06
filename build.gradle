@@ -25,6 +25,12 @@ sourceSets {
         }
         compileClasspath += sourceSets.main.runtimeClasspath
     }
+    
+    tool {
+        java {
+            srcDirs 'src/tool/java'
+        }
+    }
 }
 
 dependencies {

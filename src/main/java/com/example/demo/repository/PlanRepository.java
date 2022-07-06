@@ -3,8 +3,9 @@ package com.example.demo.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.model.Plan;
+import com.example.demo.model.Plans;
+
 
 @Repository
-public interface PlanRepository extends CrudRepository<Plan,Integer>{
+public interface PlanRepository extends CrudRepository<Plans,Integer>{
 }

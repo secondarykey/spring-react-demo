@@ -1,11 +1,11 @@
 /**
  * Auto Generated:Wed Jul 06 10:38:06 JST 2022
  * Original SQL:
-CREATE TABLE WORKER (
-    ID SERIAL PRIMARY KEY,
-    OPERATION_ID INTEGER,
-    USER_ID VARCHAR(255),
-    "DATE" DATE
+CREATE TABLE PLANS (
+  ID SERIAL PRIMARY KEY,
+  PLACES_ID INTEGER,
+  DATE TIMESTAMP WITHOUT TIME ZONE,
+  FOREIGN KEY(PLACES_ID) REFERENCES PLACES(ID)
 )
  */
 package com.example.demo.model;
@@ -23,8 +23,8 @@ import com.example.demo.model.core.ModelImpl;
 /**
  * 
  */
-@Table("WORKER")
-public class Worker extends ModelImpl
+@Table("PLANS")
+public class Plans extends ModelImpl
     implements Serializable  {
 
     /** シリアルバージョンID **/
@@ -40,22 +40,14 @@ public class Worker extends ModelImpl
     private Integer id;
     /**
      * 
-     * Original SQL: OPERATION_ID INTEGER
+     * Original SQL: PLACES_ID INTEGER
      */
-    @Column("OPERATION_ID")
-    @MappingName(value="operationId")
-    private Integer operationId;
+    @Column("PLACES_ID")
+    @MappingName(value="placesId")
+    private Integer placesId;
     /**
      * 
-     * Original SQL: USER_ID VARCHAR(255)
-     */
-    @Column("USER_ID")
-    @MappingName(value="userId")
-    private String userId;
-    /**
-     * 
-     * Original SQL: "DATE" DATE
-)
+     * Original SQL: DATE TIMESTAMP WITHOUT TIME ZONE
      */
     @Column("DATE")
     @MappingName(value="date")
@@ -75,26 +67,14 @@ public class Worker extends ModelImpl
     /**
      *  の設定
      */
-    public void setOperationId(Integer operationId) {
-      this.operationId = operationId;
+    public void setPlacesId(Integer placesId) {
+      this.placesId = placesId;
     }
     /**
      *  の取得
      */
-    public Integer getOperationId() {
-        return this.operationId;
-    }
-    /**
-     *  の設定
-     */
-    public void setUserId(String userId) {
-      this.userId = userId;
-    }
-    /**
-     *  の取得
-     */
-    public String getUserId() {
-        return this.userId;
+    public Integer getPlacesId() {
+        return this.placesId;
     }
     /**
      *  の設定

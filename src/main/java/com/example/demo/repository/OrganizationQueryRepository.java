@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.OrganizationMapper;
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.Row;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Organization;
 
 @Repository
@@ -32,15 +33,17 @@ public class OrganizationQueryRepository extends QueryRepository {
 		    "START" <= ? AND "END" >= ?
         """;
 
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(Organization.class,"", "")
-		);
+		QuerySet orgQs = QuerySet.create(Organization.class,"", "");
+		SQLBuilder builder = SQLBuilder.create(orgQs);
 	
 		builder.setSQL(sql, day,day);
 
-		OrganizationMapper mapper = new OrganizationMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+		List<Row> rows = this.query(builder);
+		List<Organization> list = new ArrayList<>();
+		for ( Row row : rows ) {
+			list.add(row.get(orgQs));
+		}
+		return list;
 	}
 
 }
