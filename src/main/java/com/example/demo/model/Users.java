@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Thu Jul 07 09:48:08 JST 2022
+ * Auto Generated:Fri Jul 08 04:39:39 JST 2022
  * Original SQL:
 CREATE TABLE USERS (
     ID VARCHAR(255) PRIMARY KEY,
