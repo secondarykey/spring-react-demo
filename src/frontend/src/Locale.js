@@ -9,11 +9,8 @@ import {createIntl, createIntlCache, RawIntlProvider} from 'react-intl';
 import { instanceOf } from "prop-types";
 import { withCookies,Cookies } from "react-cookie";
 import Select from "./pages/components/Select";
-import Package from "../package.json";
-
-import ja from './locale-data/ja.json';
-import en from './locale-data/en.json';
-import zh from './locale-data/zh.json';
+import API from "./API";
+import Util from "./Util";
 
 /**
  * メッセージデータを作成する
@@ -22,16 +19,20 @@ import zh from './locale-data/zh.json';
  * @returns jsonデータ
  */
 function selectMessages(locale) {
+
+  var conf = global.clientConfig;
+
   let lang = locale;
   if ( lang === "default" ) {
-     lang = Package.language;
+     lang = conf.defaultLanguage;
   }
-  switch(lang) {
-    case 'en': return en;
-    case 'ja': return ja;
-    case 'zh': return zh;
-    default: return en;
+  const rtn = API.getSync("/client/" + lang + ".json");
+  if ( !Util.isEmpty(rtn) ) {
+    return JSON.parse(rtn);
+  } else {
+    return "{}";
   }
+
 }
 
 /**
@@ -98,8 +99,9 @@ export class Locale extends React.Component {
       let lang = cookies.get("language");
       this.selectLang = lang;
       if ( lang == null ) {
-        //TODO config.jsに切り替える必要あり
-        lang = Package.language;
+
+        var conf = global.clientConfig;
+        lang = conf.defaultLanguage;
         this.selectLang = "default";
       }
       this.state = {intl:create(lang)};
@@ -133,7 +135,8 @@ export class Locale extends React.Component {
   setLanguage = (locale) => {
     var lang = locale;
     if ( locale === "default" ) {
-      lang = Package.language;
+      var conf = global.clientConfig;
+      lang = conf.defaultLanguage;
     }
 
     this.setState({intl:create(lang)});

@@ -40,9 +40,6 @@ class API {
         'Language': GetLanguage()
       }, timeout: 10000,
     });
-
-    console.log(GetLanguage());
-
     return instance;
   }
 
@@ -148,6 +145,16 @@ class API {
 
     UnknownErrorMessage(err);
     return true;
+  }
+
+  static getSync(uri) {
+    //var ctx = Util.serverURL(uri);
+    var ctx = process.env.PUBLIC_URL + uri;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', ctx,false);
+    xhr.send(null);
+    return xhr.responseText;
   }
 }
 export default API

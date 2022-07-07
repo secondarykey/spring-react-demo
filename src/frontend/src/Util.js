@@ -3,6 +3,7 @@
  * このファイルはユーティリティ用のクラスです。
  * 業務的に共通なロジックをstaticメソッドで記述します。
  */
+import Package from "../package.json";
 
 /**
  * ユーティリティクラス
@@ -10,6 +11,23 @@
  * 
  */
 class Util {
+
+  /**
+   * サーバのURLを取得
+   * <pre>
+   * 開発環境下でプロキシを通さずにサーバにアクセスするリソースに使用
+   * ※ビルド後はPUBLIC_URLのみでアクセス
+   * </pre>
+   * @param {string} uri  URI
+   * @returns 開発環境下ではプロキシ扱いのURL
+   */
+  static serverURL(uri) {
+    var base = process.env.PUBLIC_URL;
+    if ( process.env.NODE_ENV === "development" ) {
+      base = Package.proxy + base;
+    }
+    return base + uri;
+  }
 
   /**
    * フォーマット日付変換
@@ -110,6 +128,35 @@ class Util {
       if ( this.matchStringGlob(key,val) ) {
           return true;
       }
+    }
+    return false;
+  }
+  /**
+   * オブジェクト判定
+   * @param {any} v - 対象引数
+   * @returns  対象引数がobjectの場合true
+   */
+   static isObject(v) {
+    if ( (typeof v) == "object" ) {
+      return true;
+    }
+    return false;
+  }
+  /**
+   * 空判定
+   * @param {any} val - 対象オブジェクト
+   * @returns 配列の場合、長さまで判定
+   */
+  static isEmpty(val) {
+    if ( val === undefined || val === null ) {
+      return true;
+    }
+    if ( Array.isArray(val) ) {
+      if ( val.length === 0 ) {
+        return true;
+      }
+    } else if ( !this.isObject(val) ) {
+      if ( val === "" ) return true;
     }
     return false;
   }
