@@ -1,73 +1,115 @@
+/**
+ * Auto Generated:Thu Jul 07 09:48:08 JST 2022
+ * Original SQL:
+CREATE TABLE WORKER (
+    ID SERIAL PRIMARY KEY,
+    OPERATION_ID INTEGER,
+    USER_ID VARCHAR(255),
+    "DATE" DATE
+)
+ */
 package com.example.demo.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
+
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
+
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import com.example.demo.anotation.model.MappingRS;
-
+import com.example.demo.model.annotation.MappingName;
+import com.example.demo.model.core.ModelImpl;
+/**
+ * 
+ */
 @Table("WORKER")
-public class Worker implements Model {
-	@Id
-	@Column("ID")
-	@MappingRS("id")
-	private int id;
-	
-	@Column("OPERATION_ID")
-	@MappingRS("opeID")
-	private int opeID;
+public class Worker extends ModelImpl
+    implements Serializable ,Persistable<Integer> {
 
-	@Column("USER_ID")
-	@MappingRS("userID")
-	private String userID;
+    /** シリアルバージョンID **/
+	private static final long serialVersionUID = 1L;
 
-	@Column("DATE")
-	@MappingRS(value="date",method="getDate")
-	private Date date;
-	
-	@Transient
-	private String name;
 
-	public int getId() {
-		return id;
-	}
+    /**
+     * 
+     * Original SQL: ID SERIAL PRIMARY KEY
+     */
+    @Id
+    @Column("ID")
+    @MappingName(value="id")
+    private Integer id;
+    /**
+     * 
+     * Original SQL: OPERATION_ID INTEGER
+     */
+    @Column("OPERATION_ID")
+    @MappingName(value="operationId")
+    private Integer operationId;
+    /**
+     * 
+     * Original SQL: USER_ID VARCHAR(255)
+     */
+    @Column("USER_ID")
+    @MappingName(value="userId")
+    private String userId;
+    /**
+     * 
+     * Original SQL: "DATE" DATE
+)
+     */
+    @Column("DATE")
+    @MappingName(value="date")
+    private Date date;
+    /**
+     *  の設定
+     */
+    public void setId(Integer id) {
+      this.id = id;
+    }
+    /**
+     *  の取得
+     */
+    public Integer getId() {
+        return this.id;
+    }
+    /**
+     *  の設定
+     */
+    public void setOperationId(Integer operationId) {
+      this.operationId = operationId;
+    }
+    /**
+     *  の取得
+     */
+    public Integer getOperationId() {
+        return this.operationId;
+    }
+    /**
+     *  の設定
+     */
+    public void setUserId(String userId) {
+      this.userId = userId;
+    }
+    /**
+     *  の取得
+     */
+    public String getUserId() {
+        return this.userId;
+    }
+    /**
+     *  の設定
+     */
+    public void setDate(Date date) {
+      this.date = date;
+    }
+    /**
+     *  の取得
+     */
+    public Date getDate() {
+        return this.date;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getOpeID() {
-		return opeID;
-	}
-
-	public void setOpeID(int opeID) {
-		this.opeID = opeID;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getUserID() {
-		return userID;
-	}
-
-	public void setUserID(String userID) {
-		this.userID = userID;
-	}	
 }

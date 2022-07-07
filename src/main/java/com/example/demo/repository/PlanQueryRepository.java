@@ -1,8 +1,11 @@
 package com.example.demo.repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,14 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.PlanMapper;
-import com.example.demo.mapping.PlanPlaceRowMapper;
-import com.example.demo.mapping.PlanRowMapper;
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
-import com.example.demo.model.Place;
-import com.example.demo.model.Plan;
-import com.example.demo.model.PlanDetail;
+import com.example.demo.mapping.PlansSet;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.Row;
+import com.example.demo.mapping.core.SQLBuilder;
+import com.example.demo.model.Places;
+import com.example.demo.model.PlanDetails;
+import com.example.demo.model.Plans;
 import com.example.demo.util.DateUtil;
 
 @Repository
@@ -31,7 +33,7 @@ public class PlanQueryRepository extends QueryRepository {
 		super(template);
 	}
 
-	public Collection<Plan> joinDetail() {
+	public Collection<PlansSet> joinDetail() {
 		String sql = """
 		SELECT
 		  %s
@@ -39,20 +41,35 @@ public class PlanQueryRepository extends QueryRepository {
 		    INNER JOIN (SELECT * FROM PLACES) "PLACE" ON "PLANS"."PLACES_ID" = "PLACE"."ID"
 		    LEFT OUTER JOIN (SELECT * FROM PLAN_DETAILS) "PLAN_DETAILS" ON "PLANS"."ID" = "PLAN_DETAILS"."PLANS_ID"
 		""";
-		
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(Plan.class, "PLANS", "plans"),
-			QuerySet.create(PlanDetail.class, "PLAN_DETAILS", "plan_details"),
-			QuerySet.create(Place.class, "PLACE", "place")
-		);
-		builder.setSQL(sql);
 
-		PlanRowMapper mapper = new PlanRowMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+		QuerySet planQs = QuerySet.create(Plans.class, "PLANS", "plans");
+		QuerySet detailQs = QuerySet.create(PlanDetails.class, "PLAN_DETAILS", "plan_details");
+		QuerySet placeQs = QuerySet.create(Places.class, "PLACE", "place");
+		
+		SQLBuilder builder = SQLBuilder.create(planQs,detailQs,placeQs);
+		builder.setSQL(sql);
+		
+	
+		List<Row> rows = this.query(builder);
+		List<PlansSet> list = new ArrayList<>();
+		Map<Integer,PlansSet> exists = new HashMap<>();
+		for ( Row row : rows ) {
+			
+			Plans plan = row.get(planQs);
+			PlanDetails detail = row.get(detailQs);
+	
+			PlansSet set = exists.get(plan.getId());
+			if ( set == null ) {
+				set = new PlansSet(plan);
+				list.add(set);
+				exists.put(plan.getId(),set);
+			}
+			set.addDetail(detail);
+		}
+		return list;
 	}
 
-	public List<Plan> findByPlace(Integer placeId) {
+	public List<Plans> findByPlace(Integer placeId) {
 		String sql = """
 		SELECT
 		  %s
@@ -60,30 +77,31 @@ public class PlanQueryRepository extends QueryRepository {
 		    INNER JOIN (SELECT * FROM PLACES) "PLACE"
 		    ON "PLANS"."PLACES_ID" = "PLACE"."ID" AND "PLANS"."PLACES_ID" = ?
 		""";
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(Plan.class, "PLANS", "plans"),
-			QuerySet.create(Place.class, "PLACE", "place")
-		);
+		QuerySet planQs = QuerySet.create(Plans.class, "PLANS", "plans");
+		QuerySet placeQs = QuerySet.create(Places.class, "PLACE", "place");
+		SQLBuilder builder = SQLBuilder.create(planQs,placeQs);
 		builder.setSQL(sql, placeId);
-
-		PlanPlaceRowMapper mapper = new PlanPlaceRowMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+		
+		List<Plans> list = new ArrayList<>();
+	
+		List<Row> rows = query(builder);
+		for ( Row row : rows ) {
+			list.add(row.get(planQs));
+		}
+		return list;
 	}
 
-	public Plan findByPlaceDate(Integer placeId, Date date) {
+	public Plans findByPlaceDate(Integer placeId, Date date) {
 		String sql = """
 		SELECT %s FROM PLANS WHERE PLACES_ID = ? AND DATE = ?
 		""";
 
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(Plan.class, "PLANS", "plans")
-		);
+		QuerySet planQs = QuerySet.create(Plans.class, "PLANS", "plans");
+		SQLBuilder builder = SQLBuilder.create(planQs);
 		
 		builder.setSQL(sql, placeId,DateUtil.formatClient(date));
 
-		PlanMapper mapper = new PlanMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+		Row row = this.singleQuery(builder);
+		return row.get(planQs);
 	}
 }

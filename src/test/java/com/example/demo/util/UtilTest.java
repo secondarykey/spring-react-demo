@@ -8,12 +8,18 @@ public class UtilTest {
 	
 	@Test
 	void testCapitalize() {
-		assertEquals(Util.capitalize(null),"");
-		assertEquals(Util.capitalize(""),"");
-		assertEquals(Util.capitalize("a"),"A");
-		assertEquals(Util.capitalize("A"),"A");
-		assertEquals(Util.capitalize("oomoji"),"Oomoji");
-		assertEquals(Util.capitalize("AAAA"),"AAAA");
+		assertEquals(Util.capitalize(null,true),"");
+		assertEquals(Util.capitalize(null,false),"");
+		assertEquals(Util.capitalize("",true),"");
+		assertEquals(Util.capitalize("",false),"");
+		assertEquals(Util.capitalize("a",true),"A");
+		assertEquals(Util.capitalize("a",false),"A");
+		assertEquals(Util.capitalize("A",true),"A");
+		assertEquals(Util.capitalize("A",false),"A");
+		assertEquals(Util.capitalize("oomoji",true),"Oomoji");
+		assertEquals(Util.capitalize("oomoji",false),"Oomoji");
+		assertEquals(Util.capitalize("AAAA",true),"Aaaa");
+		assertEquals(Util.capitalize("AAAA",false),"AAAA");
 	}
 
 	@Test

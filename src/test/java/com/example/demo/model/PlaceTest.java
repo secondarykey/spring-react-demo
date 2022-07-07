@@ -8,7 +8,7 @@ public class PlaceTest {
 	
 	@Test
 	void check() {
-		assertTrue(ModelChecker.checkClass(Place.class));
+		assertTrue(ModelChecker.checkClass(Places.class));
 	}
 
 }

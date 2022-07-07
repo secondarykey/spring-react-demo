@@ -8,7 +8,7 @@ public class ToDoTest {
 	
 	@Test
 	void check() {
-		assertTrue(ModelChecker.checkClass(ToDo.class));
+		assertTrue(ModelChecker.checkClass(Todos.class));
 	}
 
 }

@@ -48,7 +48,7 @@ public class WorkerService {
 		
 		Map<Integer,List<Worker>> workerMap = new HashMap<>();
 		for ( Worker worker : workers ) {
-			int id = worker.getOpeID();
+			int id = worker.getOperationId();
 			List<Worker> work = workerMap.get(id);
 			if ( Util.isEmpty(work) ) {
 				work = new ArrayList<>();

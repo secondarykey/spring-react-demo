@@ -8,7 +8,7 @@ public class TimeTest {
 	
 	@Test
 	void check() {
-		assertTrue(ModelChecker.checkClass(Time.class));
+		assertTrue(ModelChecker.checkClass(Times.class));
 	}
 
 }

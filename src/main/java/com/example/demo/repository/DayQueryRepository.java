@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -10,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.DayMapper;
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.Row;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Day;
 
 @Repository
@@ -31,9 +32,8 @@ public class DayQueryRepository extends QueryRepository {
 		SELECT %s FROM DAY WHERE "ORGANIZATION_ID" = ? AND "DAY" >= ?
 				""";
 
-		SQLBuilder builder = SQLBuilder.create(
-				QuerySet.create(Day.class,"", "")
-		);
+		QuerySet dayQs = QuerySet.create(Day.class,"", "");
+		SQLBuilder builder = SQLBuilder.create(dayQs);
 	
 		//TODO 2日前
 		Calendar cal = Calendar.getInstance();
@@ -41,10 +41,13 @@ public class DayQueryRepository extends QueryRepository {
 		cal.add(Calendar.MONTH, -2);
 
 		builder.setSQL(sql, orgId,cal.getTime());
-
-		DayMapper mapper = new DayMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+	
+		List<Row> rows = query(builder);
+		List<Day> days = new ArrayList<>();
+		for ( Row row : rows ) {
+			days.add(row.get(dayQs));
+		}
+		return days;
 	}
 
 }

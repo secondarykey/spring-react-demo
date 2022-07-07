@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.model.User;
+import com.example.demo.model.Users;
 import com.example.demo.repository.UserRepository;
 
 @StepScope
@@ -30,7 +30,7 @@ public class UserTasklet implements Tasklet {
 
 		logger.info("execute() userFind");
 		logger.info("params {}",userId);
-		User user = repo.findById(userId).orElse(new User());
+		Users user = repo.findById(userId).orElse(new Users());
 
 		logger.info("User Name:{}",user.getName());
 		return RepeatStatus.FINISHED;

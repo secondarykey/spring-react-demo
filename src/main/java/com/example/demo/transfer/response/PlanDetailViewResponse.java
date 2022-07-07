@@ -2,17 +2,17 @@ package com.example.demo.transfer.response;
 
 import java.util.List;
 
-import com.example.demo.model.PlanDetail;
+import com.example.demo.model.PlanDetails;
 
 public class PlanDetailViewResponse {
 
-	List<PlanDetail> details;
+	List<PlanDetails> details;
 
-	public List<PlanDetail> getDetails() {
+	public List<PlanDetails> getDetails() {
 		return details;
 	}
 
-	public void setDetails(List<PlanDetail> details) {
+	public void setDetails(List<PlanDetails> details) {
 		this.details = details;
 	}
 }

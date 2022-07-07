@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo.DemoApplication;
-import com.example.demo.model.Time;
+import com.example.demo.model.Times;
 import com.example.demo.util.DateUtil;
 
 @SpringBootTest(classes = DemoApplication.class)
@@ -29,14 +29,14 @@ public class BenchmarkTimeRepository {
     @BeforeEach
     void setup() {
     	for ( int i =0; i < 10; i++) {
-    		Time time = new Time();
+    		Times time = new Times();
     		Date date = DateUtil.parse("2020-10-11 12:13:14");
     		OffsetDateTime zone = DateUtil.zone(date, "JST");
     		time.setValue(zone.toString());
     		time.setDate(date);
     		time.setTime(date);
-    		time.setDateToWithout(date);
-    		time.setOffsetToWith(zone);
+    		time.setDateWithout(date);
+    		time.setOffsetWith(zone);
     		repository.save(time);
     	}
     }
@@ -53,8 +53,8 @@ public class BenchmarkTimeRepository {
 
     @Benchmark
     void benchmarkQuery() {
-		Iterable<Time> list = repository.findAll();
-		List<Time> times = new ArrayList<>();
+		Iterable<Times> list = repository.findAll();
+		List<Times> times = new ArrayList<>();
 		list.forEach(times::add);
 		assertEquals(times.size(),10);
     }

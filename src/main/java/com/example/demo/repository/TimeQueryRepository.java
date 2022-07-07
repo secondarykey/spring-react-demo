@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
-import com.example.demo.mapping.TimeMapper;
-import com.example.demo.model.Time;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.Row;
+import com.example.demo.mapping.core.SQLBuilder;
+import com.example.demo.model.Times;
 import com.example.demo.transfer.Paging;
 
 
@@ -26,15 +27,14 @@ public class TimeQueryRepository extends QueryRepository {
 		super(template);
 	}
 
-	public List<Time> findPage(Paging paging) {
+	public List<Times> findPage(Paging paging) {
 		String sql = """
 			SELECT
 			  %s 
 			FROM TIMES 
 		""";
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(Time.class, "", "")
-		);
+		QuerySet qs = QuerySet.create(Times.class, "", "");
+		SQLBuilder builder = SQLBuilder.create(qs);
 
 		builder.setSQL(sql);
 		builder.setOrder("""
@@ -42,9 +42,11 @@ public class TimeQueryRepository extends QueryRepository {
 				""");
 		builder.setPaging(paging);
 		
-		TimeMapper mapper = new TimeMapper(builder);
-		this.query(mapper);
-
-		return mapper.get();
+		List<Row> rows = this.query(builder);
+		List<Times> list = new ArrayList<>();
+		for ( Row row : rows ) {
+			list.add(row.get(qs));
+		}
+		return list;
 	}
 }

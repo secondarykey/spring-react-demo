@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
-import com.example.demo.mapping.WorkerMapper;
-import com.example.demo.model.User;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.Row;
+import com.example.demo.mapping.core.SQLBuilder;
+import com.example.demo.model.Users;
 import com.example.demo.model.Worker;
 import com.example.demo.util.DateUtil;
 
@@ -37,17 +38,20 @@ public class WorkerQueryRepository extends QueryRepository {
 		  WHERE WORK."DATE" = ?
 		""";
 
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(Worker.class,"WORK", "w"),
-			QuerySet.create(User.class,"USER", "u")
-		);
+		QuerySet workQs = QuerySet.create(Worker.class,"WORK", "w");
+		QuerySet userQs = QuerySet.create(Users.class,"USER", "u");
+
+		SQLBuilder builder = SQLBuilder.create(workQs,userQs);
 
 		String dateBuf = DateUtil.sqlDay(day);
 		builder.setSQL(sql,orgID,dateBuf);
 
-		WorkerMapper mapper = new WorkerMapper(builder);
-		this.query(mapper);
-		return mapper.get();
+		List<Row> rows = this.query(builder);
+		List<Worker> list = new ArrayList<>();
+		for ( Row row : rows ) {
+			list.add(row.get(workQs));
+		}
+		return list;
 	}
 
 }

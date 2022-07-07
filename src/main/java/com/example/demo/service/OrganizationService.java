@@ -51,7 +51,7 @@ public class OrganizationService  extends BusinessService {
 		for ( Organization org : list ) {
 			
 			int parent = org.getParent();
-			if ( org.getOrgID() == belong ) {
+			if ( org.getOrganizationId() == belong ) {
 				root = org;
 			}
 
@@ -69,7 +69,7 @@ public class OrganizationService  extends BusinessService {
 		}
 
 		OrganizationTree treeRoot = new OrganizationTree();
-		treeRoot.setKey(root.getOrgID());
+		treeRoot.setKey(root.getOrganizationId());
 		treeRoot.setTitle(root.getName());
 
 		setTree(treeRoot,map);
@@ -90,7 +90,7 @@ public class OrganizationService  extends BusinessService {
 		List<OrganizationTree> list = new ArrayList<OrganizationTree>();
 		for ( Organization org : children ) {
 			OrganizationTree obj = new OrganizationTree();
-			obj.setKey(org.getOrgID());
+			obj.setKey(org.getOrganizationId());
 			obj.setTitle(org.getName());
 			setTree(obj,map);
 			list.add(obj);

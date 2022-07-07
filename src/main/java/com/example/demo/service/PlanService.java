@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.model.Plan;
-import com.example.demo.model.PlanDetail;
+import com.example.demo.model.PlanDetails;
+import com.example.demo.model.Plans;
 import com.example.demo.repository.PlanDetailQueryRepository;
 import com.example.demo.repository.PlanDetailRepository;
 import com.example.demo.repository.PlanQueryRepository;
@@ -44,16 +44,16 @@ public class PlanService extends BusinessService {
 		int placeId = json.getPlace();
 		Date date = DateUtil.parseDate(json.getDate());
 		//place と date で存在を確認
-		Plan plan = queryRepo.findByPlaceDate(placeId, date);
+		Plans plan = queryRepo.findByPlaceDate(placeId, date);
 		if ( plan == null ) {
-			plan = new Plan();
+			plan = new Plans();
 			plan.setDate(date);
 			plan.setPlacesId(json.getPlace());
 			plan = planRepo.save(plan);
 		}
 
 		//詳細を追加
-		PlanDetail detail = new PlanDetail();
+		PlanDetails detail = new PlanDetails();
 		
 		String start = json.getStart();
 		String end = json.getEnd();
@@ -72,7 +72,7 @@ public class PlanService extends BusinessService {
 	public Result<PlanViewResponse> view(PlanViewRequest json) {
 		
 		int placeId = json.getPlaceId();
-		List<Plan> planList = queryRepo.findByPlace(placeId);
+		List<Plans> planList = queryRepo.findByPlace(placeId);
 
 		Result<PlanViewResponse> result = new Result<>();
 		PlanViewResponse res = new PlanViewResponse();
@@ -85,7 +85,7 @@ public class PlanService extends BusinessService {
 		int placeId = json.getPlaceId();
 		Date date = DateUtil.parseDate(json.getDate());
 		
-		List<PlanDetail> details = detailQueryRepo.findByPlaceDate(placeId, date);
+		List<PlanDetails> details = detailQueryRepo.findByPlaceDate(placeId, date);
 
 		Result<PlanDetailViewResponse> result = new Result<>();
 		PlanDetailViewResponse res = new PlanDetailViewResponse();

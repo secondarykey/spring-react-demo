@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.User;
+import com.example.demo.model.Users;
 import com.example.demo.repository.UserQueryRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.transfer.LoginUser;
@@ -38,7 +38,7 @@ public class UserService  extends BusinessService {
 	public Result<LoginResponse> findByPassword(LoginRequest json) {
 
 		Result<LoginResponse> result = new Result<>();
-		User user = query.findByPassword(json.getId(), json.getPassword());
+		Users user = query.findByPassword(json.getId(), json.getPassword());
 		if ( user == null ) {
 			result.setMessageId("PRFN00M101", "パスワードが一致するユーザが存在しない|" + json.getId());
 			return result;
@@ -74,7 +74,7 @@ public class UserService  extends BusinessService {
 	public Result<LoginResponse> changePassword(PasswordRequest json) {
 
 		Result<LoginResponse> result = new Result<>();
-		User user = query.findByPassword(json.getUserId(), json.getOldPassword());
+		Users user = query.findByPassword(json.getUserId(), json.getOldPassword());
 		if ( user == null ) {
 			result.setMessageId("PRFN00M203", "パスワードが一致するユーザが存在しない|" + json.getUserId());
 			return result;
@@ -99,7 +99,7 @@ public class UserService  extends BusinessService {
 
 	public Result<UserViewResponse> search(String id, String name, Paging paging) {
 		
-		List<User> users = query.search(id,name,paging);
+		List<Users> users = query.search(id,name,paging);
 	
 		UserViewResponse res = new UserViewResponse();
 		res.setUsers(users);
