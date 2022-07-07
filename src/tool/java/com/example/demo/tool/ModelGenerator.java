@@ -28,8 +28,14 @@ public class ModelGenerator {
 	private static final Logger logger = LoggerFactory.getLogger(ModelGenerator.class);
 	//元にするDDL
 	private static final String targetDDL = "src/main/resources/schema.sql";
-	//出力先
-	private static final String outputPath = "src/main/java/com/example/demo/model/gen";
+
+	//出力パッケージ名
+	private static final String packageName = "com.example.demo";
+	//出力元
+	private static final String outputPathRoot = "src/main/java";
+	//出力先(変更する場合フォーマットも少し考慮が必要)
+	private static final String genDir = "model/gen";
+
 	//バッチの出力先
 	//private static final String outputBatchPath = "src/main/java/com/yazaki/pas/model/gen/batch";
 
@@ -37,6 +43,9 @@ public class ModelGenerator {
 	private static final String ResourceNotFound = "[Not Found Resources]";
 
 	public static void main(String[] args) throws Exception {
+		
+		String outDir = packageName.replaceAll("\\.","/");
+		String outputPath = outputPathRoot + "/" + outDir + "/" + genDir;
 
 		try {
 			Files.createDirectory(Paths.get(outputPath));
@@ -455,7 +464,9 @@ public class ModelGenerator {
 		//ヘッダ部分を追加
 		buf.append(String.format(importFormat,
 				(new Date()).toString(),table.original,
-				batch,dateImp,offsetImp,addImport));
+				packageName,
+				batch,dateImp,offsetImp,addImport,
+				packageName,packageName));
 
 		StringBuffer members = new StringBuffer();
 
@@ -516,7 +527,7 @@ public class ModelGenerator {
 
 			StringBuffer buf = new StringBuffer();
 			//PKのimport文を生成
-			buf.append(String.format(pkImportFormat,useDate));
+			buf.append(String.format(packageName,pkImportFormat,useDate));
 
 			StringBuffer inner = new StringBuffer();
 			//PK用のカラムを作成
@@ -685,7 +696,7 @@ public class ModelGenerator {
  * Original SQL:
 %s
  */
-package com.example.demo.model.gen%s;
+package %s.model.gen%s;
 
 import java.io.Serializable;
 %s
@@ -695,8 +706,8 @@ import java.io.Serializable;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import com.example.demo.model.annotation.MappingName;
-import com.example.demo.model.core.ModelImpl;
+import %s.model.annotation.MappingName;
+import %s.model.core.ModelImpl;
 """;
 
 	private static final String dateImport = """
@@ -785,7 +796,7 @@ public class %s extends ModelImpl
 /**
  *
  */
-package com.example.demo.model.gen;
+package %s.model.gen;
 
 import java.io.Serializable;
 %s
