@@ -1,8 +1,12 @@
 package com.example.demo.config;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,5 +45,23 @@ public class Resource {
 			list.toArray(objArgs);
 		}
 		return messages.getMessage(id, objArgs,loc);
+	}
+	
+	/**
+	 * リソースマップを取得
+	 * @param lang 
+	 * @return 全リソースのマップ
+	 */
+	public Map<String,String> getMap(String lang) {
+		Locale loc = new Locale(lang);
+		ResourceBundle resources = ResourceBundle.getBundle(ResourceConfig.Name, loc);
+		Map<String,String> map = new LinkedHashMap<>();
+		Enumeration<String> keys = resources.getKeys();
+		while ( keys.hasMoreElements() ) {
+			String key = keys.nextElement();
+			String value = resources.getString(key);
+			map.put(key,value);
+		}
+		return map;
 	}
 }

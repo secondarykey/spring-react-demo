@@ -26,7 +26,7 @@ public class Session implements Serializable {
 	public static final String sessionLanguageKey = "language";
 
 	@Autowired
-    @Value("${application.default.language}")
+    @Value("${application.client.default.language}")
     private String defaultLanguage;
     @Autowired
     private HttpSession session;

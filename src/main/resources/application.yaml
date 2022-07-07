@@ -49,8 +49,8 @@ application:
   images:
     path: db\images
     extension: png
-  default:
-    language: en
   client: # second
+    default:
+      language: ja
     refresh: 180
     languages: ja,en,zh

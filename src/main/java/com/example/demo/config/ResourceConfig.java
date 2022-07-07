@@ -10,7 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @ConditionalOnWebApplication
 public class ResourceConfig implements WebMvcConfigurer {
-	
+
+	/**
+	 * リソース名
+	 */
+    public static final String Name = "locale/resource";
     @Bean(name="validator")
     public LocalValidatorFactoryBean localValidatorFactoryBean() {
         LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
