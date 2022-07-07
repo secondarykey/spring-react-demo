@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Wed Jul 06 10:38:06 JST 2022
+ * Auto Generated:Thu Jul 07 09:04:13 JST 2022
  * Original SQL:
 CREATE TABLE TIMES (
     ID SERIAL PRIMARY KEY,
@@ -16,6 +16,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.time.OffsetDateTime;
 
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.annotation.Id;
 
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -27,7 +29,7 @@ import com.example.demo.model.core.ModelImpl;
  */
 @Table("TIMES")
 public class Times extends ModelImpl
-    implements Serializable  {
+    implements Serializable ,Persistable<Integer> {
 
     /** シリアルバージョンID **/
 	private static final long serialVersionUID = 1L;
@@ -37,6 +39,7 @@ public class Times extends ModelImpl
      * 
      * Original SQL: ID SERIAL PRIMARY KEY
      */
+    @Id
     @Column("ID")
     @MappingName(value="id")
     private Integer id;

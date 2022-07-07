@@ -40,10 +40,9 @@ public class DayQueryRepository extends QueryRepository {
 		cal.setTime(day);
 		cal.add(Calendar.MONTH, -2);
 
-		List<Row> rows = query(builder);
-
 		builder.setSQL(sql, orgId,cal.getTime());
 	
+		List<Row> rows = query(builder);
 		List<Day> days = new ArrayList<>();
 		for ( Row row : rows ) {
 			days.add(row.get(dayQs));

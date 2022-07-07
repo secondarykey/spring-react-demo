@@ -8,7 +8,7 @@ public class PlanDetailTest {
 	
 	@Test
 	void check() {
-		assertTrue(ModelChecker.checkClass(PlanDetail.class));
+		assertTrue(ModelChecker.checkClass(PlanDetails.class));
 	}
 
 }

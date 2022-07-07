@@ -45,6 +45,12 @@ public class PlanQueryRepository extends QueryRepository {
 		
 		SQLBuilder builder = SQLBuilder.create(planQs,detailQs,placeQs);
 		builder.setSQL(sql);
+		
+	
+		//TODO 本当はDetailを取りたい処理なので
+		// PlanをまとめてDetailを紐づける処理が必要
+		
+		
 		List<Row> rows = this.query(builder);
 		List<Plans> list = new ArrayList<>();
 		for ( Row row : rows ) {

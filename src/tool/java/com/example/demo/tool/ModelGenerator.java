@@ -262,6 +262,7 @@ public class ModelGenerator {
 			String lowLine = line.toLowerCase();
 			if ( lowLine.indexOf("constraint") != -1 ) {
 		
+				//TODO PK 書き方がまずいかも
 				String pk = "primary key (";
 				int idx = lowLine.indexOf(pk);
 				if ( idx == -1 )  {
@@ -269,7 +270,6 @@ public class ModelGenerator {
 					break;
 				}
 				String col = line.substring(idx + pk.length());
-				//TODO PK
 				logger.info("---- primary key line:{}",line);
 				while (true) {
 					int ldx = col.indexOf(")");
@@ -315,6 +315,13 @@ public class ModelGenerator {
 					}
 				}
 			}
+			
+		
+			//単独行でのPKも対応
+			if ( col.original.toLowerCase().indexOf("primary key") != -1 ) {
+				col.id = true;
+			}
+			
 			columns.put(col.name,col);
 		}
 		return columns;
@@ -426,6 +433,15 @@ public class ModelGenerator {
 				getId = table.idFunc.toString();
 			}
 		}
+
+		//重複する為、空にする
+		for ( Column col : table.columns.values() )  {
+			if ( col.name.toLowerCase().equals("id") ) {
+				getId = "";
+			}
+		}
+		
+		
 	
 		String dateImp = "";
 		if ( table.useDate() )  {
@@ -656,7 +672,7 @@ public class ModelGenerator {
 		for ( String elm : base) {
 			String p = elm.toLowerCase();
 			if ( buf.length() != 0 || head ) {
-				p = Util.capitalize(elm);
+				p = Util.capitalize(elm,true);
 			}
 			buf.append(p);
 		}
@@ -717,7 +733,7 @@ public class %s extends ModelImpl
 	 * PKの取得
 	 */
 	@Override
-	public %sPK getId() {
+	public %sPK gewIdK() {
 		%sPK pk = new %sPK();
 %s
 		return pk;

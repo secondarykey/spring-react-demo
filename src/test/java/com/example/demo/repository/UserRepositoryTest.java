@@ -8,6 +8,7 @@ import java.util.Date;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.example.demo.DemoApplication;
 import com.example.demo.model.Role;
@@ -15,6 +16,7 @@ import com.example.demo.model.Users;
 import com.example.demo.util.DateUtil;
 
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = DemoApplication.class)
 public class UserRepositoryTest {
 
@@ -56,6 +58,7 @@ public class UserRepositoryTest {
 		//更新
 		user.setName("テスト２");
 		user.setUpdated(null);
+		user.setRegister(false);
 		assertDoesNotThrow(() ->crud.save(user));
 
 		final Users find2 = crud.findById(user.getId()).orElse(null);

@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Wed Jul 06 10:38:06 JST 2022
+ * Auto Generated:Thu Jul 07 09:04:13 JST 2022
  * Original SQL:
 CREATE TABLE ROLE (
     ID VARCHAR(16) PRIMARY KEY,
@@ -12,6 +12,8 @@ import java.io.Serializable;
 
 
 
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.annotation.Id;
 
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -23,7 +25,7 @@ import com.example.demo.model.core.ModelImpl;
  */
 @Table("ROLE")
 public class Role extends ModelImpl
-    implements Serializable  {
+    implements Serializable ,Persistable<String> {
 
     /** シリアルバージョンID **/
 	private static final long serialVersionUID = 1L;
@@ -33,6 +35,7 @@ public class Role extends ModelImpl
      * 
      * Original SQL: ID VARCHAR(16) PRIMARY KEY
      */
+    @Id
     @Column("ID")
     @MappingName(value="id")
     private String id;

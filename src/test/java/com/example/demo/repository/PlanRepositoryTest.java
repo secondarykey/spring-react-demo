@@ -9,13 +9,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.example.demo.DemoApplication;
-import com.example.demo.model.Places;
-import com.example.demo.model.PlanDetails;
 import com.example.demo.model.Plans;
 import com.example.demo.util.DateUtil;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = DemoApplication.class)
 public class PlanRepositoryTest {
 	@Autowired
@@ -47,7 +47,7 @@ public class PlanRepositoryTest {
 	void testJoin() {
 		Collection<Plans> plans = repo.joinDetail();
 
-		assertEquals(plans.size(),3);
+		assertEquals(plans.size(),9);
 
 		for ( Plans plan : plans ) {
 			/* 関連性はメソッドで取得

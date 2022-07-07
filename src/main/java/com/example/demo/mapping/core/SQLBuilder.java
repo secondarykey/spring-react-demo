@@ -284,7 +284,7 @@ public class SQLBuilder {
 		if ( !Util.isEmpty(prefix) ) {
 			name = String.format("%s.%s", prefix,name);
 		}
-		String setterName = "set" + Util.capitalize(val);
+		String setterName = "set" + Util.capitalize(val,false);
 
 		Method setter;
 		try {

@@ -72,11 +72,13 @@ public abstract class ModelImpl implements Model {
 	 * @param params オペレーション引数
 	 */
 	public void setCreated(OperationParams params) {
+		
+		if ( params == null ) {
+			return;
+		}
 
 		String id = params.getOperationId();
-
 		OffsetDateTime now = DateUtil.now();
-
 		setCreatedUser(id);
 		setCreatedDate(now);
 		setUpdatedUser(id);
@@ -88,6 +90,9 @@ public abstract class ModelImpl implements Model {
 	 * @param params オペレーション引数
 	 */
 	public void setUpdated(OperationParams params) {
+		if ( params == null ) {
+			return;
+		}
 		String id = params.getOperationId();
 		OffsetDateTime now = DateUtil.now();
 		setUpdatedUser(id);

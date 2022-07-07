@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: ${SPRING_PROFILE_ACTIVE:local}
   batch:
     job:
       enabled: false
@@ -37,6 +35,8 @@ logging:
     com:
       example:
         demo: INFO
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss z}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(%-20.20logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
 
 application:
   default:

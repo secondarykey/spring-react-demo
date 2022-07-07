@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Wed Jul 06 10:38:06 JST 2022
+ * Auto Generated:Thu Jul 07 09:04:13 JST 2022
  * Original SQL:
 CREATE TABLE USERS (
     ID VARCHAR(255) PRIMARY KEY,
@@ -19,6 +19,8 @@ import java.io.Serializable;
 
 import java.time.OffsetDateTime;
 
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.annotation.Id;
 
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -30,7 +32,7 @@ import com.example.demo.model.core.ModelImpl;
  */
 @Table("USERS")
 public class Users extends ModelImpl
-    implements Serializable  {
+    implements Serializable ,Persistable<String> {
 
     /** シリアルバージョンID **/
 	private static final long serialVersionUID = 1L;
@@ -40,6 +42,7 @@ public class Users extends ModelImpl
      * 
      * Original SQL: ID VARCHAR(255) PRIMARY KEY
      */
+    @Id
     @Column("ID")
     @MappingName(value="id")
     private String id;

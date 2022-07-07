@@ -4,13 +4,22 @@ import java.util.List;
 
 public class Util {
 
-	public static String capitalize(String value) {
+	/**
+	 * 先頭文字を大文字にする
+	 * <pre>
+	 * </pre>
+	 * @param value
+	 * @return
+	 */
+	public static String capitalize(String value,boolean toLower) {
+
 		if ( Util.isEmpty(value) ) {
 			return "";
 		}
-
-		String v = value.toLowerCase();
-
+		String v = value;
+		if ( toLower ) {
+			v = value.toLowerCase();
+		}
 		String p = v.substring(0,1);
 		String tail = v.substring(1);
 		return p.toUpperCase() + tail;

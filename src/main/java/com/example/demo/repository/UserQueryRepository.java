@@ -38,6 +38,9 @@ public class UserQueryRepository extends QueryRepository {
 		builder.setSQL(sql, id,EncryptUtil.hashPassword(password));
 		
 		Row row = singleQuery(builder);
+		if ( row == null ) {
+			return null;
+		}
 		return row.get(qs);
 	}
 
