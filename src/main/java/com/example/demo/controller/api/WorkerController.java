@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.config.Session;
+import com.example.demo.controller.JSONController;
 import com.example.demo.service.WorkerService;
 import com.example.demo.transfer.request.WorkerRequest;
 import com.example.demo.transfer.response.Result;

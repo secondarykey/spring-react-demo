@@ -3,7 +3,9 @@ package com.example.demo.repository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.mapping.PlansSet;
 import com.example.demo.mapping.core.QuerySet;
 import com.example.demo.mapping.core.Row;
 import com.example.demo.mapping.core.SQLBuilder;
@@ -30,7 +33,7 @@ public class PlanQueryRepository extends QueryRepository {
 		super(template);
 	}
 
-	public Collection<Plans> joinDetail() {
+	public Collection<PlansSet> joinDetail() {
 		String sql = """
 		SELECT
 		  %s
@@ -47,14 +50,21 @@ public class PlanQueryRepository extends QueryRepository {
 		builder.setSQL(sql);
 		
 	
-		//TODO 本当はDetailを取りたい処理なので
-		// PlanをまとめてDetailを紐づける処理が必要
-		
-		
 		List<Row> rows = this.query(builder);
-		List<Plans> list = new ArrayList<>();
+		List<PlansSet> list = new ArrayList<>();
+		Map<Integer,PlansSet> exists = new HashMap<>();
 		for ( Row row : rows ) {
-			list.add(row.get(planQs));
+			
+			Plans plan = row.get(planQs);
+			PlanDetails detail = row.get(detailQs);
+	
+			PlansSet set = exists.get(plan.getId());
+			if ( set == null ) {
+				set = new PlansSet(plan);
+				list.add(set);
+				exists.put(plan.getId(),set);
+			}
+			set.addDetail(detail);
 		}
 		return list;
 	}

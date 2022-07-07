@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.api;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.config.Session;
+import com.example.demo.controller.JSONController;
 import com.example.demo.model.Day;
 import com.example.demo.service.DayService;
 import com.example.demo.service.OrganizationService;

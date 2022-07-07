@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.example.demo.DemoApplication;
+import com.example.demo.mapping.PlansSet;
+import com.example.demo.model.PlanDetails;
 import com.example.demo.model.Plans;
 import com.example.demo.util.DateUtil;
 
@@ -45,13 +47,13 @@ public class PlanRepositoryTest {
 
 	@Test
 	void testJoin() {
-		Collection<Plans> plans = repo.joinDetail();
+		Collection<PlansSet> plans = repo.joinDetail();
 
-		assertEquals(plans.size(),9);
+		assertEquals(plans.size(),3);
 
-		for ( Plans plan : plans ) {
-			/* 関連性はメソッドで取得
-			List<PlanDetails> details = plan.getDetails();
+		for ( PlansSet set : plans ) {
+			List<PlanDetails> details = set.getDetails();
+			Plans plan = set.getPlan();
 			if ( plan.getId() == 1 ) {
 				assertEquals(details.size(),3);
 			} else if ( plan.getId() == 2 ) {
@@ -59,7 +61,6 @@ public class PlanRepositoryTest {
 			} else {
 				assertEquals(details.size(),4);
 			}
-			*/
 		}
 	}
 	
