@@ -65,10 +65,14 @@ public class ClientController {
 		String lang = props.getProperty("application.client.default.language");
 		//画面の言語一覧
 		String langs = props.getProperty("application.client.languages");
+		//画面の言語一覧
+		String expiry = props.getProperty("application.client.expiry");
 		//デフォルト言語
 		config.add("defaultLanguage",Str,lang);
 		//言語一覧
 		config.add("languages",Str,langs.split(","));
+		//デフォルト言語
+		config.add("expiry",Num,expiry);
 
 		HttpHeaders headers = new HttpHeaders();
 

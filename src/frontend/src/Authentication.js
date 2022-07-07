@@ -8,7 +8,6 @@ import { instanceOf } from "prop-types";
 import { withCookies,Cookies } from "react-cookie";
 
 import { Redirect } from "./Layout";
-import Package from "../package.json";
 import Encrypt from "./Encrypt";
 import Util from "./Util";
 
@@ -131,12 +130,14 @@ class Authentication extends React.Component {
       return;
     }
 
+    var conf = global.clientConfig;
+
     if ( this.refreshReload !== undefined ) {
       clearTimeout(this.refreshReload);
     }
     this.refreshReload = setTimeout(function() {
       Redirect("/error/refresh","Authentication refresh")
-    },1000 * Package.clientExpiry);
+    },1000 * conf.expiry);
   }
 
   /**

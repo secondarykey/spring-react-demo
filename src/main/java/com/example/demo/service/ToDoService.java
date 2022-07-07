@@ -39,7 +39,8 @@ public class ToDoService extends BusinessService {
 		Todos todo = new Todos();
 		todo.setValue(json.getValue());
 		Result<Integer> result = new Result<>();
-	
+
+		todo.setRegister(true);
 		todo = crud.save(todo);
 		
 		result.setResult(todo.getId());

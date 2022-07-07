@@ -1,4 +1,4 @@
-package com.example.demo.controller.api;
+package com.example.demo.controller.api.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;

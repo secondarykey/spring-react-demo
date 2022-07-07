@@ -12,6 +12,7 @@ import Select from "./pages/components/Select";
 import API from "./API";
 import Util from "./Util";
 
+var langCache = {};
 /**
  * メッセージデータを作成する
  * @private
@@ -26,13 +27,18 @@ function selectMessages(locale) {
   if ( lang === "default" ) {
      lang = conf.defaultLanguage;
   }
-  const rtn = API.getSync("/client/" + lang + ".json");
-  if ( !Util.isEmpty(rtn) ) {
-    return JSON.parse(rtn);
-  } else {
-    return "{}";
+  var cache = langCache[lang];
+  if ( cache !== undefined ) {
+    return cache;
   }
 
+  const rtn = API.getSync("/client/" + lang + ".json");
+  if ( !Util.isEmpty(rtn) ) {
+    langCache[lang] = JSON.parse(rtn);
+  } else {
+    langCache[lang] = {};
+  }
+  return langCache[lang];
 }
 
 /**

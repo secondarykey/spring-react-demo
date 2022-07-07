@@ -1,6 +1,6 @@
 //import "react-app-polyfill/stable";
 import React from 'react';
-import { createRoot } from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import { CookiesProvider } from "react-cookie";
 
 import { BrowserRouter as Router } from "react-router-dom";
@@ -30,7 +30,7 @@ class App extends React.Component {
 
 config.onload = function() {
   const container = document.getElementById("root");
-  const root = createRoot(container);
+  const root = ReactDOMClient.createRoot(container);
   root.render(<App/>);
   reportWebVitals();
 }

@@ -81,8 +81,6 @@ class Login extends React.Component {
         Save(resp.data.result.user);
         SetLanguage(resp.data.result.language);
 
-        this.view();
-
         Redirect('/pages/demo/menu');
     },data).catch( (err) => {
 
@@ -146,9 +144,6 @@ class Login extends React.Component {
     return false;
   }
 
-  view = () => {
-    alert("not safari");
-  }
 
   /**
    * ログイン画面表示
