@@ -5,7 +5,8 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import com.example.demo.anotation.model.MappingRS;
+import com.example.demo.model.annotation.MappingRS;
+import com.example.demo.model.core.Model;
 
 @Table("PLACES")
 public class Place implements Model {

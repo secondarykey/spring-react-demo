@@ -8,7 +8,9 @@ import java.util.Map;
 
 import org.springframework.jdbc.core.RowCallbackHandler;
 
-import com.example.demo.model.Model;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.SQLBuilder;
+import com.example.demo.model.core.Model;
 
 public abstract class ModelMapper<T> implements RowCallbackHandler {
 

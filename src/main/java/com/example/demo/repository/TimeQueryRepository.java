@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
 import com.example.demo.mapping.TimeMapper;
+import com.example.demo.mapping.core.Exp;
+import com.example.demo.mapping.core.Order;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Time;
 import com.example.demo.transfer.Paging;
 
@@ -27,21 +29,18 @@ public class TimeQueryRepository extends QueryRepository {
 	}
 
 	public List<Time> findPage(Paging paging) {
-		String sql = """
-			SELECT
-			  %s 
-			FROM TIMES 
-		""";
-		SQLBuilder builder = SQLBuilder.create(
-			QuerySet.create(Time.class, "", "")
-		);
 
-		builder.setSQL(sql);
-		builder.setOrder("""
-				ORDER BY "VALUE" DESC,ID ASC 
-				""");
+		QuerySet qs = QuerySet.create(Time.class, "", "");
+		QuerySet childQs = QuerySet.create(Time.class, "", "");
+		SQLBuilder builder = SQLBuilder.create(qs);
+
+		qs.where(Exp.eq(Time.VALUE,null).and(Exp.eq(Time.ID,10)));
+
 		builder.setPaging(paging);
+		builder.setOrder(Order.desc(Time.VALUE),Order.asc(Time.ID));
 		
+		qs.addInnerJoin(childQs,Exp.eq(Time.VALUE,null).and(Exp.eq(Time.ID,10)));
+
 		TimeMapper mapper = new TimeMapper(builder);
 		this.query(mapper);
 

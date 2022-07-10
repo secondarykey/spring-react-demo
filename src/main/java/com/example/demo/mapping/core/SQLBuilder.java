@@ -1,4 +1,4 @@
-package com.example.demo.mapping;
+package com.example.demo.mapping.core;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.relational.core.mapping.Column;
 
-import com.example.demo.anotation.model.MappingRS;
-import com.example.demo.model.Model;
+import com.example.demo.model.annotation.MappingRS;
+import com.example.demo.model.core.Model;
 import com.example.demo.transfer.Paging;
 import com.example.demo.util.Util;
 
@@ -379,7 +379,12 @@ public class SQLBuilder {
 		return this.paging != null;
 	}
 
-	public void setOrder(String string) {
-		this.order = string;
+	public void setOrder(String ...strings) {
+		for ( String o : strings ) {
+			if ( !Util.isEmpty(this.order) ) {
+				this.order += ",";
+			}
+			this.order += o;
+		}
 	}
 }

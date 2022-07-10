@@ -6,7 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import com.example.demo.anotation.model.MappingRS;
+import com.example.demo.model.annotation.MappingRS;
+import com.example.demo.model.core.Model;
 
 @Table("DAY")
 public class Organization implements Model {

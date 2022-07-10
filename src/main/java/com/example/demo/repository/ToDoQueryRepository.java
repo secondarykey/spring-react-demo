@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
 import com.example.demo.mapping.ToDoMapper;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.ToDo;
 
 @Repository

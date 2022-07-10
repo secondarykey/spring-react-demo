@@ -10,8 +10,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.mapping.OrganizationMapper;
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Organization;
 
 @Repository

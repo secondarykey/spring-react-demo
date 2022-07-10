@@ -10,8 +10,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.mapping.OperationMapper;
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Operation;
 import com.example.demo.model.OperationLanguage;
 import com.example.demo.util.DateUtil;

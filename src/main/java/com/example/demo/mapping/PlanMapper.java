@@ -1,5 +1,6 @@
 package com.example.demo.mapping;
 
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Plan;
 
 public class PlanMapper extends ModelMapper<Plan> {

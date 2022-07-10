@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
 import com.example.demo.mapping.WorkerMapper;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.User;
 import com.example.demo.model.Worker;
 import com.example.demo.util.DateUtil;

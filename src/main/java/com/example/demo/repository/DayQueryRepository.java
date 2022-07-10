@@ -11,8 +11,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.mapping.DayMapper;
-import com.example.demo.mapping.QuerySet;
-import com.example.demo.mapping.SQLBuilder;
+import com.example.demo.mapping.core.QuerySet;
+import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Day;
 
 @Repository
@@ -31,9 +31,9 @@ public class DayQueryRepository extends QueryRepository {
 		SELECT %s FROM DAY WHERE "ORGANIZATION_ID" = ? AND "DAY" >= ?
 				""";
 
-		SQLBuilder builder = SQLBuilder.create(
-				QuerySet.create(Day.class,"", "")
-		);
+		QuerySet.create(Day.class,"", "");
+
+		SQLBuilder builder = SQLBuilder.create();
 	
 		//TODO 2日前
 		Calendar cal = Calendar.getInstance();

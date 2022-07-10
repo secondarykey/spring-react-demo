@@ -7,10 +7,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import com.example.demo.anotation.model.MappingRS;
+import com.example.demo.model.annotation.MappingRS;
+import com.example.demo.model.core.Model;
 
 @Table("TIMES")
 public class Time implements Model {
+	public static final String ID = "ID";
+	public static final String VALUE = "VALUE";
 	@Id
 	@Column("ID")
 	@MappingRS("id")
