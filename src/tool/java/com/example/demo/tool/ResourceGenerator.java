@@ -22,7 +22,6 @@ import com.example.demo.util.Util;
  */
 public class ResourceGenerator {
 
-	private static final String CheckSumID = "RESOUCE_LANG";
 	/**
 	 * リソースの出力
 	 * @param args
@@ -30,12 +29,10 @@ public class ResourceGenerator {
 	public static void main(String[] args) {
 		
 		String filePath = "";
-		String outJSON = "";
 		String outProperty = "";
 
 		if ( args == null || args.length <= 1 ) {
 			filePath = "db/resource.csv";
-			outJSON = "./src/frontend/public/client";
 			outProperty = "./src/main/resources/locale";
 			System.out.println("入力ファイルの指定がない為、開発環境モードで動作します");
 		} else {
@@ -43,7 +40,6 @@ public class ResourceGenerator {
 			out.mkdir();
 
 			filePath = args[0];
-			outJSON = "./gen";
 			outProperty = "./gen";
 		}
 
@@ -109,7 +105,6 @@ public class ResourceGenerator {
 			}
 		}
 
-		createJson(outJSON,languageMap);
 		createProperty(outProperty,languageMap);
 		try {
 			br.close();
@@ -158,28 +153,6 @@ public class ResourceGenerator {
 		return;
 	}
 
-	private static void createJson(String outJSON, Map<String, Map<String, String>> languageMap) {
-		for (Entry<String, Map<String, String>> entry  : languageMap.entrySet() ) {
-			String key = entry.getKey();
-			Map<String,String> values = entry.getValue();
-			String file = outJSON + "/" + key + ".json";
-
-			StringBuffer buf = new StringBuffer();
-			buf.append("{\n");
-			addJSONData(buf,values);
-			buf.append("  \"" + CheckSumID + "\":\"" + key + "\"");
-			buf.append("\n}");
-
-			writeFile(file,buf);
-		}
-	}
-
-	private static void addJSONData(StringBuffer buf,Map<String, String> values) {
-		for ( Entry<String, String> entry : values.entrySet() ) {
-			buf.append("  \"" + entry.getKey() + "\":\"" + entry.getValue() + "\",\n");
-		}
-		return;
-	}
 
 	private static List<String> createColumns(String line) {
 
