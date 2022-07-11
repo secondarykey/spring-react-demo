@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Fri Jul 08 04:39:39 JST 2022
+ * Auto Generated:Mon Jul 11 09:04:26 JST 2022
  * Original SQL:
 CREATE TABLE TODOS (
     ID SERIAL PRIMARY KEY,

@@ -13,13 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.mapping.PlansSet;
+import com.example.demo.mapping.PlanSet;
 import com.example.demo.mapping.core.QuerySet;
 import com.example.demo.mapping.core.Row;
 import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Places;
 import com.example.demo.model.PlanDetails;
 import com.example.demo.model.Plans;
+
 import com.example.demo.util.DateUtil;
 
 @Repository
@@ -33,7 +34,7 @@ public class PlanQueryRepository extends QueryRepository {
 		super(template);
 	}
 
-	public Collection<PlansSet> joinDetail() {
+	public Collection<PlanSet> joinDetail() {
 		String sql = """
 		SELECT
 		  %s
@@ -51,16 +52,16 @@ public class PlanQueryRepository extends QueryRepository {
 		
 	
 		List<Row> rows = this.query(builder);
-		List<PlansSet> list = new ArrayList<>();
-		Map<Integer,PlansSet> exists = new HashMap<>();
+		List<PlanSet> list = new ArrayList<>();
+		Map<Integer,PlanSet> exists = new HashMap<>();
 		for ( Row row : rows ) {
 			
 			Plans plan = row.get(planQs);
 			PlanDetails detail = row.get(detailQs);
 	
-			PlansSet set = exists.get(plan.getId());
+			PlanSet set = exists.get(plan.getId());
 			if ( set == null ) {
-				set = new PlansSet(plan);
+				set = new PlanSet(plan);
 				list.add(set);
 				exists.put(plan.getId(),set);
 			}

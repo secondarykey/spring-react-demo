@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.example.demo.DemoApplication;
-import com.example.demo.mapping.PlansSet;
+import com.example.demo.mapping.PlanSet;
 import com.example.demo.model.PlanDetails;
 import com.example.demo.model.Plans;
 import com.example.demo.util.DateUtil;
@@ -47,11 +47,11 @@ public class PlanRepositoryTest {
 
 	@Test
 	void testJoin() {
-		Collection<PlansSet> plans = repo.joinDetail();
+		Collection<PlanSet> plans = repo.joinDetail();
 
 		assertEquals(plans.size(),3);
 
-		for ( PlansSet set : plans ) {
+		for ( PlanSet set : plans ) {
 			List<PlanDetails> details = set.getDetails();
 			Plans plan = set.getPlan();
 			if ( plan.getId() == 1 ) {

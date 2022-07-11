@@ -6,25 +6,23 @@ import java.util.List;
 import com.example.demo.model.PlanDetails;
 import com.example.demo.model.Plans;
 
-public class PlansSet {
+public class PlanSet {
 
 	private Plans plan;
-	private List<PlanDetails> details = new ArrayList<>();
-	
-	public PlansSet(Plans plan) {
+	private List<PlanDetails> details;
+	public PlanSet(Plans plan) {
 		this.plan = plan;
 	}
-	
-	public void addDetail(PlanDetails detail) {
-		getDetails().add(detail);
-	}
-
 	public Plans getPlan() {
 		return plan;
 	}
-
 	public List<PlanDetails> getDetails() {
 		return details;
 	}
-
+	public void addDetail(PlanDetails detail) {
+		if ( details == null ) {
+			details = new ArrayList<>();
+		}
+		details.add(detail);
+	}
 }

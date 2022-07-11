@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.mapping.core.QuerySet;
 import com.example.demo.mapping.core.Row;
+
 import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Organization;
 

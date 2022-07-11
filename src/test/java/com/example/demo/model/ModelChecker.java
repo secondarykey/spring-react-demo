@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import com.example.demo.model.annotation.MappingRS;
+import com.example.demo.model.annotation.MappingName;
 import com.example.demo.util.Util;
 
 /**
@@ -108,7 +108,7 @@ public class ModelChecker {
 						logger.warn("Column指定が大文字ではありません。",inst.getClass().getName(),field.getName());
 					}
 
-					MappingRS map = field.getAnnotation(MappingRS.class);
+					MappingName map = field.getAnnotation(MappingName.class);
 					if ( map == null ) {
 						logger.error("{} の {} ColumnにMappingRSがありません",inst.getClass().getName(),field.getName());
 						flag = true;

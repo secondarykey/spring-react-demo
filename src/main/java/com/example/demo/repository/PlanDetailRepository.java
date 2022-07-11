@@ -8,4 +8,5 @@ import com.example.demo.model.PlanDetails;
 
 @Repository
 public interface PlanDetailRepository extends CrudRepository<PlanDetails,Integer> {
+
 }

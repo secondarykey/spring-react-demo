@@ -418,7 +418,12 @@ public class SQLBuilder {
 		return this.paging != null;
 	}
 
-	public void setOrder(String string) {
-		this.order = string;
+	public void setOrder(String ...strings) {
+		for ( String o : strings ) {
+			if ( !Util.isEmpty(this.order) ) {
+				this.order += ",";
+			}
+			this.order += o;
+		}
 	}
 }
