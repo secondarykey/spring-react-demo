@@ -27,12 +27,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 		logger.debug("addInterceptors()");
 
-		//TODO 排他制御するURLの統一
 		List<String> noneAuthURLs = new ArrayList<>();
 		noneAuthURLs.add("/api/v1/login");
 		noneAuthURLs.add("/api/v1/password");
+		registry.addInterceptor(authentication).addPathPatterns("/api/**").excludePathPatterns(noneAuthURLs);
 
 		registry.addInterceptor(session);
-		registry.addInterceptor(authentication).excludePathPatterns(noneAuthURLs);
 	}
 }

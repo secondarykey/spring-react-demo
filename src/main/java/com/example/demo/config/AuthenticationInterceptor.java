@@ -24,7 +24,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	public static Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
 	
 	private static String[] targetURLPrefix = {"/api"};
-	private static String[] ignoreURLs = {"/api/v1/login","/api/v1/password"};
 	
 	@Autowired
 	Session session;
@@ -33,7 +32,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		if ( !isAuth(request) ) {
+		if ( !isTarget(request) ) {
 			logger.debug("対象URLでないのでOK:{}",request.getRequestURL());
 			return true;
 		}
@@ -64,34 +63,19 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	 * @param request
 	 * @return true = 必要
 	 */
-	private boolean isAuth(HttpServletRequest request) {
+	private boolean isTarget(HttpServletRequest request) {
 		String uri = request.getRequestURI();
 		String path = request.getContextPath();
 		String pure = uri.replaceAll(path, "");
 
 		logger.info("request:"+pure);
 
-		for ( String ignore : targetURLPrefix ) {
-			if ( pure.indexOf(ignore) == 0 ) {
-				if ( !ignoreURL(pure) ) {
-					return true;
-				}
+		for ( String target : targetURLPrefix ) {
+			if ( target.indexOf(pure) == 0 ) {
+				return true;
 			}
 		}
 		return false;
 	}
 
-	/**
-	 * 排他URL判定
-	 * @param url 対象URL
-	 * @return 
-	 */
-	private boolean ignoreURL(String url) {
-		for ( String ignore : ignoreURLs ) {
-			if ( url.equals(ignore) ) {
-				return false;
-			}
-		}
-		return true;
-	}
 }
