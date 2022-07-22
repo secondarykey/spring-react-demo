@@ -112,7 +112,6 @@ public class Exp implements Expression {
 		return ev;
 	}
 
-	private static final String DQ = "\"";
 
 	/**
 	 * SQL出力
@@ -136,7 +135,7 @@ public class Exp implements Expression {
 		//カラム名をエスケープする
 		String left = this.leftValue;
 		if ( left != null ) {
-			left = escapeColumn(left);
+			left = SQLBuilder.escapeColumn(left);
 		}
 
 		String sql = "";
@@ -146,20 +145,12 @@ public class Exp implements Expression {
 			sql = String.format("(%s%s(%s))", left, op.value(),valueCSV());
 		} else if ( op.equals(Operator.EqName)) {
 			//カラム名指定の場合はそのまま値を利用
-			sql = String.format("(%s%s%s)", left, op.value(),escapeColumn((String)rightValue));
+			sql = String.format("(%s%s%s)", left, op.value(),
+					SQLBuilder.escapeColumn((String)rightValue));
 		} else {
 			sql = String.format("(%s%s%s)", left, op.value(),"?");
 		}
 		return sql;
-	}
-
-	private String escapeColumn(String v) {
-		String rtn = v;
-		//先頭がダブルコーテーションでない場合
-		if ( rtn.indexOf(DQ) != 0 ) {
-			rtn = DQ + rtn + DQ; 
-		}
-		return rtn;
 	}
 
 	/**

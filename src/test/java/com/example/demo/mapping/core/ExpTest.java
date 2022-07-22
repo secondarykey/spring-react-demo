@@ -70,7 +70,7 @@ class ExpTest {
 	}
 	
 	@Test
-	void testColEq()  {
+	void testEqName()  {
 		Exp e = Exp.eqName("A","B");
 		assertEquals(e.toSQL(),"(\"A\" = \"B\")","EqName Test");
 	}

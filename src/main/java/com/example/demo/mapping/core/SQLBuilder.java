@@ -12,7 +12,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.relational.core.mapping.Column;
 
 import com.example.demo.model.annotation.MappingName;
 import com.example.demo.model.core.Model;
@@ -101,9 +100,7 @@ public class SQLBuilder {
 			Object[] rtn = new Object[args.length + 2];
 			System.arraycopy(args, 0, rtn, 0, args.length);
 			rtn[args.length] = paging.getNumberOfDisplay();
-			
 			rtn[args.length + 1] = paging.getOffset();
-
 			return rtn;
 		}
 		return args;
@@ -134,7 +131,7 @@ public class SQLBuilder {
 			if ( buf.length() != 0 ) {
 				buf.append(",");
 			}
-			String line = SQLBuilder.generateColumns(set);
+			String line = set.getColumnNames();
 			buf.append(line);
 		}
 
@@ -157,74 +154,6 @@ public class SQLBuilder {
 	}
 	
 	/**
-	 * 別名を設定したカラム名のCSVを出力
-	 * <pre>
-	 * SQLで別名をつける場合に使用
-	 *  "SELECT MappingUtil.generateColumn(Model.class,"PLAN","plan") FROM PLAN"
-	 * というSQLを発行した場合、Modelにつけたアノテーションから
-	 *  "SELECT PLAN.ID AS plan.id ,,,, FROM PLAN"
-	 *  というSQLに変換してくれる。
-	 * create() から、モデルを生成できる。
-	 * </pre>
-	 * @param qs 対象のクエリセット
-	 * @return カラム名のCSV
-	 */
-	public static String generateColumns(QuerySet qs) {
-		Class<? extends Model> clazz = qs.getModelClass();
-		String model = qs.getTablePrefix();
-		String as = qs.getAliasPrefix();
-		String[] ignores = qs.getIgnoreColumns();
-
-		List<Field> columns = SQLBuilder.getColumns(clazz,ignores);
-		StringBuffer buf = new StringBuffer();
-		int idx = 1;
-		for ( Field field : columns ) {
-			Column col = field.getAnnotation(Column.class);
-			MappingName map = field.getAnnotation(MappingName.class);
-			
-			String colName = col.value();
-			String rename = map.value();
-			String comma = ", ";
-
-			//最後の場合
-			if ( idx == columns.size() ) {
-				comma = "";
-			}
-			String cols = escape(model , colName,false) + " AS " + escape(as,rename,true) + comma;
-			buf.append(cols);
-			idx++;
-		}
-		return buf.toString();
-	}
-
-	/**
-	 * SQLエスケープ文字挿入
-	 * <pre>
-	 * prefixが存在しない場合にSQLのエスケープを入れておく
-	 * </pre>
-	 * @param prefix テーブル名(もしくは別名)
-	 * @param colName カラム名
-	 * @param force 強制エスケープ
-	 * @return エスケープした文字列
-	 */
-	private static String escape(String prefix, String colName, boolean force) {
-
-		if ( force ) {
-			String esc = colName;
-			if ( !Util.isEmpty(prefix) ) {
-				esc = String.format("%s.%s", prefix,colName);
-			}
-			return "\"" + esc + "\"";
-		} else {
-			if ( !Util.isEmpty(prefix) ) {
-				return String.format("\"%s\".\"%s\"", prefix,colName);
-			} else {
-				return String.format("\"%s\"", colName);
-			}
-		}
-	}
-
-	/**
 	 * マッピングモデル生成
 	 * <pre>
 	 * 指定したクラスでマッピングオブジェクトを生成
@@ -238,14 +167,13 @@ public class SQLBuilder {
 	public static <T extends Model> T create(Class<T> clazz,QuerySet qs,ResultSet rs) {
 		
 		String prefix = qs.getAliasPrefix();
-		String[] ignores = qs.getIgnoreColumns();
-		
 		Constructor<T> con;
 		try {
 			con = clazz.getConstructor();
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException("コンストラクタにアクセス不可",e);
 		}
+
 		T model;
 		try {
 			model = con.newInstance();
@@ -254,7 +182,7 @@ public class SQLBuilder {
 			throw new RuntimeException("デフォルトコンストラクタでの生成エラー",e);
 		}
 
-		List<Field> columns = SQLBuilder.getColumns(clazz,ignores);
+		List<Field> columns = qs.getColumns();
 		for ( Field field : columns ) {
 			callSetter(model,field,prefix,rs);
 		}
@@ -339,6 +267,8 @@ public class SQLBuilder {
 					setter.invoke(model, rs.getDouble(name));
 				} else if ( tClazz == Long.class ) {
 					setter.invoke(model, rs.getLong(name));
+				} else if ( tClazz == Boolean.class ) {
+					setter.invoke(model, rs.getBoolean(name));
 				} else {
 					setter.invoke(model, rs.getObject(name,tClazz) );
 				}
@@ -351,27 +281,6 @@ public class SQLBuilder {
 			throw new RuntimeException("メソッド呼び出し時の例外",e);
 		}
 		return;
-	}
-
-	/**
-	 * Column定義のフィールドを取得
-	 * @param clazz 対象クラス
-	 * @param ignores 対象から除外するもの
-	 * @return Column定義のフィールド
-	 */
-	private static List<Field> getColumns(Class<?> clazz, String[] ignores) {
-		Field[] fields = clazz.getDeclaredFields();
-		List<Field> list = new ArrayList<>();
-		for ( Field f : fields ) {
-			Column ano = f.getAnnotation(Column.class);
-			if ( ano != null ) {
-				if ( Util.exists(ignores,ano.value()) ) {
-					continue;
-				}
-				list.add(f);
-			}
-		}
-		return list;
 	}
 
 	/**
@@ -426,4 +335,21 @@ public class SQLBuilder {
 			this.order += o;
 		}
 	}
+	
+	//以下新I/F用の設定
+	public static final String DQ = "\"";	
+
+	public static String escapeColumn(String v) {
+		String rtn = v;
+		//先頭がダブルコーテーションでない場合
+		if ( rtn.indexOf(DQ) != 0 ) {
+			rtn = DQ + rtn + DQ; 
+		}
+		return rtn;
+	}
+
+	
+	
+	
+	
 }

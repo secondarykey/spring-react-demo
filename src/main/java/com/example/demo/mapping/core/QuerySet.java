@@ -1,15 +1,19 @@
 package com.example.demo.mapping.core;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
+import com.example.demo.model.annotation.MappingName;
 import com.example.demo.model.core.Model;
 import com.example.demo.util.Util;
 
 /**
  * クエリセット
  * <pre>
-<<<<<<< HEAD
  * 取得するSQLで、名称とオブジェクトを関連付けするセット
  * ・クラス名
  * ・SQL内の名称(SQL内でAS句で指定した値)
@@ -47,8 +51,11 @@ public class QuerySet {
 	 * JDBC名称
 	 */
 	private String aliasPrefix;
-	
-	private Expression where;
+
+	/**
+	 * WHERE句
+	 */
+	private Expression where = null;
 	private List<Relation> inner;
 	private List<Relation> outer;
 
@@ -100,16 +107,31 @@ public class QuerySet {
 	public void ignoreColumns(String... clms) {
 		ignoreColumns = clms;
 	}
-	
+
+	/**
+	 * 除外カラムを設定
+	 * @return 除外するカラムの一覧
+	 */
 	public String[] getIgnoreColumns() {
 		return ignoreColumns;
 	}
-	
+
+	/**
+	 * WHRER 句設定
+	 * @param exp
+	 * @return
+	 */
 	public QuerySet where(Expression exp) {
 		this.where = exp;
 		return this;
 	}
 
+	/**
+	 * INNER JOIN句の追加
+	 * @param qs 対象のクエリセット
+	 * @param ev 結合式
+	 * @return 自分自身を返す
+	 */
 	public QuerySet addInnerJoin(QuerySet qs,Expression ev) {
 		if ( inner == null ) {
 			inner = new ArrayList<>();
@@ -118,6 +140,12 @@ public class QuerySet {
 		return this;
 	}
 
+	/**
+	 * OUTER JOIN句の追加
+	 * @param qs 対象のクエリセット
+	 * @param ev 結合式
+	 * @return 自分自身を返す
+	 */
 	public QuerySet addOuterJoin(QuerySet qs,Expression ev) {
 		if ( outer == null ) {
 			outer = new ArrayList<>();
@@ -138,24 +166,132 @@ public class QuerySet {
 	 */
 	public String col(String col) {
 		String name = col;
-		name = escapeColumn(col);
-
+		name = SQLBuilder.escapeColumn(col);
 		//テーブル名がない場合
 		if ( Util.isEmpty(tablePrefix) ) {
 			return name;
 		}
+
+		String t = tablePrefix;
+		t = SQLBuilder.escapeColumn(t);
+
 		//エスケープして出力
-		return String.format("\"%s\".%s",tablePrefix,name);
+		return String.format("%s.%s",t,name);
 	}
 
-	private static final String DQ = "\"";	
-
-	private String escapeColumn(String v) {
-		String rtn = v;
-		//先頭がダブルコーテーションでない場合
-		if ( rtn.indexOf(DQ) != 0 ) {
-			rtn = DQ + rtn + DQ; 
+	/**
+	 * SQLの出力
+	 * @return
+	 */
+	public String toSQL() {
+		
+		Table tano = clazz.getAnnotation(Table.class);
+		if ( tano == null ) {
+			throw new RuntimeException("テーブル名の指定エラー");
 		}
-		return rtn;
+		
+		List<Field> fields = getColumns();
+
+		String sq = "\n";
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT" + sq);
+		int idx = 1;
+		for ( Field f : fields ) {
+			if ( idx != 1 ) {
+				sql.append(",");
+			}
+			Column ano = f.getAnnotation(Column.class);
+			if ( ano != null ) {
+				sql.append(ano.value());
+			}
+			idx++;
+		}
+		sql.append(sq + "FROM " + tano.value());
+		if ( where != null ) {
+			sql.append(sq + "WHERE" + sq + where.toSQL());
+		}
+		return sql.toString();
+	}
+
+	/**
+	 * 取得用のカラム名一覧
+	 * @return
+	 */
+	public String getColumnNames() {
+		
+		String model = getTablePrefix();
+		String as = getAliasPrefix();
+
+		List<Field> columns = getColumns();
+		StringBuffer buf = new StringBuffer();
+		int idx = 1;
+		for ( Field field : columns ) {
+			Column col = field.getAnnotation(Column.class);
+			MappingName map = field.getAnnotation(MappingName.class);
+			
+			String colName = col.value();
+			String rename = map.value();
+			String comma = ", ";
+
+			//最後の場合
+			if ( idx == columns.size() ) {
+				comma = "";
+			}
+			String cols = escape(model , colName,false) + " AS " + 
+			              escape(as,rename,true) + comma;
+			buf.append(cols);
+			idx++;
+		}
+		return buf.toString();
+	}
+
+	/**
+	 * カラムの一覧を取得
+	 * @return カラムフィールドを取得
+	 */
+	public List<Field> getColumns() {
+
+		Field[] fields = clazz.getDeclaredFields();
+		List<Field> list = new ArrayList<>();
+		String[] ignores = getIgnoreColumns();
+
+		for ( Field f : fields ) {
+			Column ano = f.getAnnotation(Column.class);
+			if ( ano != null ) {
+				if ( Util.exists(ignores,ano.value()) ) {
+					continue;
+				}
+				list.add(f);
+			}
+		}
+		return list;
+	}
+	
+	/**
+	 * SQLエスケープ文字挿入
+	 * <pre>
+	 * prefixが存在しない場合にSQLのエスケープを入れておく
+	 * </pre>
+	 * @param prefix テーブル名(もしくは別名)
+	 * @param colName カラム名
+	 * @param force 強制エスケープ
+	 * @return エスケープした文字列
+	 */
+	private String escape(String prefix, String colName, boolean force) {
+
+		if ( force ) {
+			String esc = colName;
+			if ( !Util.isEmpty(prefix) ) {
+				esc = String.format("%s.%s", prefix,colName);
+			}
+			return SQLBuilder.escapeColumn(esc);
+		} else {
+			String col = SQLBuilder.escapeColumn(colName);
+			if ( !Util.isEmpty(prefix) ) {
+				return String.format("%s.%s", SQLBuilder.escapeColumn(prefix), col);
+			} else {
+				return col;
+			}
+		}
 	}
 }
