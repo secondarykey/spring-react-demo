@@ -17,5 +17,11 @@ public class FileUtilTest {
 		got = FileUtil.join("test","join/test");
 		assertEquals(got,"test\\join\\test");
 	}
+	
+	@Test
+	void testGetResource() {
+		String sql = FileUtil.getResource("/sql/test.sql");
+		assertEquals(sql,"SELECT * FROM TEST","リソースからの読み込みテスト");
+	}
 
 }
