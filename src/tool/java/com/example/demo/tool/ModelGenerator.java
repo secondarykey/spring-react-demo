@@ -36,12 +36,6 @@ public class ModelGenerator {
 	//出力先(変更する場合フォーマットも少し考慮が必要)
 	private static final String genDir = "model/gen";
 
-	//バッチの出力先
-	//private static final String outputBatchPath = "src/main/java/com/yazaki/pas/model/gen/batch";
-
-	//名称マスタの固定値
-	private static final String ResourceNotFound = "[Not Found Resources]";
-
 	public static void main(String[] args) throws Exception {
 		
 		String outDir = packageName.replaceAll("\\.","/");
@@ -470,6 +464,11 @@ public class ModelGenerator {
 
 		StringBuffer members = new StringBuffer();
 
+		//名称用の変数を追加
+		for ( Column col : table.columns.values() ) {
+			members.append(String.format(getFieldFoemat,col.name.toUpperCase(),col.name));
+		}
+
 		boolean use = table.usePKClass();
 		//メンバを追加
 		for ( Column col : table.columns.values() ) {
@@ -548,6 +547,7 @@ public class ModelGenerator {
 		
 			table.pkJava = buf;
 		}
+		
 
 		//元クラス用のgetId()メソッドを作成
 		StringBuffer func = new StringBuffer();
@@ -605,10 +605,6 @@ public class ModelGenerator {
 		}
 		
 		String mem = map;
-		//名称マスタは初期値を固定値にしておく
-		if ( "pas_m_name".equals(tblName) && "value".equals(mem) ) {
-			mem = mem + " = \"" + ResourceNotFound + "\"";
-		}
 
 		return String.format(memberFormat,
 				col.comment,col.original,id,
@@ -642,6 +638,8 @@ public class ModelGenerator {
 		} else if ( type.indexOf("int") != -1 ||
 		            type.indexOf("serial") != -1 ) {
 			return "Integer";
+		} else if ( type.indexOf("boolean") != -1 ) {
+			return "Boolean";
 		} else if ( type.indexOf("double") != -1 ) {
 			return "Double";
 		}
@@ -737,6 +735,10 @@ public class %s extends ModelImpl
 %s 
 %s
 }
+""";
+
+	private static final String getFieldFoemat = """ 
+	public static final String %s = "%s";
 """;
 
 	private static final String getIdFormat = """ 
