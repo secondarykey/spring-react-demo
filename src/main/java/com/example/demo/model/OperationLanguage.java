@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Mon Jul 11 09:04:26 JST 2022
+ * Auto Generated:Fri Jul 22 16:46:24 JST 2022
  * Original SQL:
 CREATE TABLE OPERATION_LANGUAGE (
     ID SERIAL PRIMARY KEY,
@@ -33,6 +33,10 @@ public class OperationLanguage extends ModelImpl
 	private static final long serialVersionUID = 1L;
 
 
+	public static final String ID = "ID";
+	public static final String OPERATION_ID = "OPERATION_ID";
+	public static final String LANGUAGE = "LANGUAGE";
+	public static final String NAME = "NAME";
     /**
      * 
      * Original SQL: ID SERIAL PRIMARY KEY

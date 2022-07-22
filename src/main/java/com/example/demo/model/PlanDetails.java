@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Mon Jul 11 09:04:26 JST 2022
+ * Auto Generated:Fri Jul 22 16:46:24 JST 2022
  * Original SQL:
 CREATE TABLE PLAN_DETAILS (
   ID SERIAL PRIMARY KEY,
@@ -35,6 +35,11 @@ public class PlanDetails extends ModelImpl
 	private static final long serialVersionUID = 1L;
 
 
+	public static final String ID = "ID";
+	public static final String PLANS_ID = "PLANS_ID";
+	public static final String NAME = "NAME";
+	public static final String START = "START";
+	public static final String END = "END";
     /**
      * 
      * Original SQL: ID SERIAL PRIMARY KEY

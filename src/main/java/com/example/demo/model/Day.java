@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Mon Jul 11 09:04:26 JST 2022
+ * Auto Generated:Fri Jul 22 16:46:24 JST 2022
  * Original SQL:
 CREATE TABLE DAY (
     ID SERIAL PRIMARY KEY,
@@ -33,6 +33,10 @@ public class Day extends ModelImpl
 	private static final long serialVersionUID = 1L;
 
 
+	public static final String ID = "ID";
+	public static final String ORGANIZATION_ID = "ORGANIZATION_ID";
+	public static final String DAY = "DAY";
+	public static final String VALUE = "VALUE";
     /**
      * 
      * Original SQL: ID SERIAL PRIMARY KEY

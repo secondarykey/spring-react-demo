@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Mon Jul 11 09:04:26 JST 2022
+ * Auto Generated:Fri Jul 22 16:46:24 JST 2022
  * Original SQL:
 CREATE TABLE USERS (
     ID VARCHAR(255) PRIMARY KEY,
@@ -38,6 +38,13 @@ public class Users extends ModelImpl
 	private static final long serialVersionUID = 1L;
 
 
+	public static final String ID = "ID";
+	public static final String NAME = "NAME";
+	public static final String PASSWORD = "PASSWORD";
+	public static final String ROLE = "ROLE";
+	public static final String BELONG = "BELONG";
+	public static final String LANGUAGE = "LANGUAGE";
+	public static final String EXPIRY = "EXPIRY";
     /**
      * 
      * Original SQL: ID VARCHAR(255) PRIMARY KEY
