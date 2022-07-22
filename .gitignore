@@ -40,3 +40,5 @@ src/frontend/node_modules
 src/frontend/docs
 __snapshots__
 *.swp
+
+src/main/resources/static/static
