@@ -66,13 +66,9 @@ public class QuerySet {
 	private Order order = null;
 
 	/**
-	 * 結合(INNER)
+	 * 
 	 */
-	private List<Relation> inner;
-	/**
-	 * 結合(OUTER)
-	 */
-	private List<Relation> outer;
+	private List<Relation> relations;
 
 	
 	/**
@@ -134,34 +130,6 @@ public class QuerySet {
 	 */
 	public QuerySet setWhere(Expression exp) {
 		this.where = exp;
-		return this;
-	}
-
-	/**
-	 * INNER JOIN句の追加
-	 * @param qs 対象のクエリセット
-	 * @param ev 結合式
-	 * @return 自分自身を返す
-	 */
-	public QuerySet addInnerJoin(QuerySet qs,Expression ev) {
-		if ( inner == null ) {
-			inner = new ArrayList<>();
-		}
-		inner.add(new Relation(qs,ev));
-		return this;
-	}
-
-	/**
-	 * OUTER JOIN句の追加
-	 * @param qs 対象のクエリセット
-	 * @param ev 結合式
-	 * @return 自分自身を返す
-	 */
-	public QuerySet addOuterJoin(QuerySet qs,Expression ev) {
-		if ( outer == null ) {
-			outer = new ArrayList<>();
-		}
-		outer.add(new Relation(qs,ev));
 		return this;
 	}
 
@@ -317,5 +285,24 @@ public class QuerySet {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	public Object[] values() {
+		if (where != null ) {
+			return where.values();
+		}
+		return null;
+	}
+
+	public void addJoin(Join join, QuerySet qs, Expression exp) {
+		Relation rel = new Relation(join,qs,exp);
+		if ( relations == null ) {
+			relations = new ArrayList<>();
+		}
+		relations.add(rel);
+	}
+
+	public List<Relation> getRelations() {
+		return relations;
 	}
 }

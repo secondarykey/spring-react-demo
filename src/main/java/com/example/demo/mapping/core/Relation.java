@@ -7,10 +7,12 @@ package com.example.demo.mapping.core;
  */
 public class Relation {
 
+	private Join join;
 	private QuerySet qs;
 	private Expression ev;
 
-	public Relation(QuerySet qs, Expression ev) {
+	public Relation(Join join,QuerySet qs, Expression ev) {
+		this.join = join;
 		this.qs = qs;
 		this.ev = ev;
 	}
@@ -21,5 +23,9 @@ public class Relation {
 
 	public Expression getExpression() {
 		return ev;
+	}
+
+	public Join getJoin() {
+		return join;
 	}
 }

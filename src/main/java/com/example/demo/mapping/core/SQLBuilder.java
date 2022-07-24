@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.example.demo.model.annotation.MappingName;
 import com.example.demo.model.core.Model;
+import com.example.demo.repository.core.QueryRepository;
 import com.example.demo.transfer.Paging;
 import com.example.demo.util.Util;
 
@@ -75,18 +76,33 @@ public class SQLBuilder {
 	/**
 	 * ORDER 
 	 */
-	private String order;
-	
+	@Deprecated
+	private String orderClms;
+
+	/**
+	 * 
+	 */
+	private Order order;
+
 	/**
 	 * SQL文の取得
 	 * @return 発行するSQL
 	 */
 	public String getSQL() {
-		if ( !Util.isEmpty(order) ) {
-			sql += " " + order;
+		if ( order != null ) {
+			
+			sql += " ORDER BY " + order.toSQL();
+			
+		} else {
+			if ( !Util.isEmpty(orderClms) ) {
+				sql += " " + orderClms;
+			} 
 		}
+
 		if ( paging != null ) {
-			sql += " LIMIT ? OFFSET ?";
+			int limit = paging.getNumberOfDisplay();
+			int offset = paging.getOffset();
+			sql += String.format(" LIMIT ? OFFSET ?",limit,offset);
 		}
 		return sql;
 	}
@@ -96,13 +112,6 @@ public class SQLBuilder {
 	 * @return 渡した引数
 	 */
 	public Object[] getArgs() {
-		if ( paging != null ) {
-			Object[] rtn = new Object[args.length + 2];
-			System.arraycopy(args, 0, rtn, 0, args.length);
-			rtn[args.length] = paging.getNumberOfDisplay();
-			rtn[args.length + 1] = paging.getOffset();
-			return rtn;
-		}
 		return args;
 	}
 
@@ -200,7 +209,7 @@ public class SQLBuilder {
 	 * @param prefix 接頭子
 	 * @param rs データセット
 	 */
-	private static void callSetter(Object  model, Field field, String prefix,ResultSet rs) {
+	private static void callSetter(Object model, Field field, String prefix,ResultSet rs) {
 
 		//MappingRSを取得
 		MappingName map = field.getAnnotation(MappingName.class);
@@ -328,16 +337,64 @@ public class SQLBuilder {
 	}
 
 	/**
+	 * 行取得
+	 * @param repo
+	 * @return
+	 */
+	public List<Row> getRows(QueryRepository repo) {
+
+		if ( sets.size() != 1 ) {
+			throw new RuntimeException("QuerySetの複数件はサポートしていません。");
+		}
+		//TODO ページング指定時の考慮
+
+		QuerySet set = sets.get(0);
+		
+		String cols = set.getColumnNames();
+		String from = set.toSQL();
+
+		StringBuffer sql = new StringBuffer();
+		sql.append(String.format("SELECT \n%s\n", cols));
+		sql.append(String.format("FROM \n(%s)", from));
+		if ( !Util.isEmpty(set.getTablePrefix()) ) {
+			sql.append(String.format(" AS %s", escapeColumn(set.getTablePrefix())));
+		}
+
+		Object[] vals = set.values();
+
+		//List<Relation> inner = set.getInner();
+		List<Relation> relations = set.getRelations();
+		if ( relations != null ) {
+			for ( Relation outer : relations ) {
+				Join join = outer.getJoin();
+				QuerySet qs = outer.getQs();
+				Expression ex = outer.getExpression();
+				sql.append("\n" + join.toSQL() + "\n(");
+				sql.append(qs.toSQL());
+				sql.append(") AS " + escapeColumn(qs.getTablePrefix()));
+				sql.append("\nON\n");
+				sql.append(ex.toSQL());
+				vals = Util.newArray(vals,qs.values());
+			}
+		}
+
+		//TODO リミットを設定
+		//TODO ORDERを設定
+		
+		QueryMapper mapper = new QueryMapper(set);
+	
+		logger.info(sql.toString());
+		
+		repo.query(sql.toString(),vals,mapper);
+		return mapper.result();
+	}
+
+	/**
 	 * オーダー句のセット
 	 * @param strings
 	 */
-	public void setOrder(String ...strings) {
-		for ( String o : strings ) {
-			if ( !Util.isEmpty(this.order) ) {
-				this.order += ",";
-			}
-			this.order += o;
-		}
+	public void setOrder(String strings) {
+		orderClms = strings;
 	}
 	
 	//以下新I/F用の設定
@@ -363,6 +420,5 @@ public class SQLBuilder {
 		return rtn;
 	}
 
-	
-	
+
 }

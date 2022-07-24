@@ -15,29 +15,27 @@ import com.example.demo.model.core.Model;
  * ResultSetからオブジェクトを取り出すMapper
  * @author p230985
  */
-public class ModelMapper implements RowCallbackHandler {
+public class QueryMapper implements RowCallbackHandler {
 
-	private static final Logger logger = LoggerFactory.getLogger(ModelMapper.class);
+	private static final Logger logger = LoggerFactory.getLogger(QueryMapper.class);
 	/**
 	 * SQLBuilder
 	 */
-	private SQLBuilder builder;
+	private QuerySet[] queries;
 	
 	/**
 	 * コンストラクタ
 	 * @param builder 対象のSQLビルダー
 	 */
-	public ModelMapper(SQLBuilder builder) {
-		this.builder = builder;
+	public QueryMapper(QuerySet ... queries) {
+		this.queries = queries;
 	}
-	
-	private List<Row> resultList = new ArrayList<>();
 
+	private List<Row> resultList = new ArrayList<>();
 	@Override
 	public void processRow(ResultSet rs) throws SQLException {
-		List<QuerySet> sets = builder.getQuerySets();
 		Row map = new Row();
-		for ( QuerySet set : sets ) {
+		for ( QuerySet set : queries ) {
 			Class<? extends Model> clazz = set.getModelClass();
 			Model t = SQLBuilder.create(clazz,set, rs);
 			String key = set.getAliasPrefix();
@@ -69,37 +67,4 @@ public class ModelMapper implements RowCallbackHandler {
 		return null;
 	}
 
-	@Deprecated
-	public String getSQL() {
-		return builder.getSQL();
-	}
-
-	@Deprecated
-	public Object[] getArguments() {
-		return builder.getArgs();
-	}	
-
-	/**
-	 * カウントSQLの取得 
-	 * @return
-	 */
-	@Deprecated
-	public String getCountSQL() {
-		return this.builder.getCountSQL();
-	}
-
-	@Deprecated
-	public Object[] getCountArguments() {
-		return this.builder.getCountArgs();
-	}
-
-	@Deprecated
-	public void setCount(int cnt) {
-		this.builder.setCount(cnt);
-	}
-
-	@Deprecated
-	public boolean isPaging() {
-		return this.builder.isPaging();
-	}
 }

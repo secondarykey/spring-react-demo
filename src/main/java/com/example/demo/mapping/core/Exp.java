@@ -55,7 +55,7 @@ public class Exp implements Expression {
 	 * @param v
 	 * @return
 	 */
-	public static Exp eq(String clm,Object v) {
+	public static Expression eq(String clm,Object v) {
 		return create(clm,v,Operator.Eq);
 	}
 	/**
@@ -64,36 +64,46 @@ public class Exp implements Expression {
 	 * @param rightClm 右辺
 	 * @return 生成したExp
 	 */
-	public static Exp eqName(String leftClm,String rightClm) {
+	public static Expression eqName(String leftClm,String rightClm) {
 		return create(leftClm,rightClm,Operator.EqName);
 	}
 
-	public static Exp lt(String clm,Object v) {
+	public static Expression lt(String clm,Object v) {
 		return create(clm,v,Operator.Lt);
 	}
-	public static Exp le(String clm,Object v) {
+	public static Expression le(String clm,Object v) {
 		return create(clm,v,Operator.Le);
 	}
-	public static Exp gt(String clm,Object v) {
+	public static Expression gt(String clm,Object v) {
 		return create(clm,v,Operator.Gt);
 	}
-	public static Exp ge(String clm,Object v) {
+	public static Expression ge(String clm,Object v) {
 		return create(clm,v,Operator.Ge);
 	}
 
-	public static Exp nullp(String clm) {
+	public static Expression nullp(String clm) {
 		return create(clm,null,Operator.Null);
 	}
 
-	public static Exp notNull(String clm) {
+	public static Expression notNull(String clm) {
 		return create(clm,null,Operator.NotNull);
 	}
 
-	public static Exp in(String clm,List<?> v) {
+	public static Expression in(String clm,List<?> v) {
 		return create(clm,v,Operator.In);
 	}
 
-	public static Exp in(String clm,Object... v) {
+	public static Expression between(String clm1,String clm2,Object v) {
+		Exp exp1 = create(clm1,v,Operator.Ge);
+		Exp exp2 = create(clm1,v,Operator.Le);
+		return exp1.and(exp2);
+	}
+
+	public static Expression between(String clm,Object v) {
+		return between(clm,clm,v);
+	}
+
+	public static Expression in(String clm,Object... v) {
 		return create(clm,v,Operator.In);
 	}
 	

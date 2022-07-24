@@ -23,25 +23,23 @@ public class DayRepositoryTest {
 	DayQueryRepository repo;
 	
 	@Test
-	void testFindBelong() {
+	void testFind() {
 		Date date = DateUtil.parseClient("2022-01-01 00:00");
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		List<Day> days = repo.findByBelong(1, cal.getTime());
+		List<Day> days = repo.find(1, cal.getTime());
 		assertEquals(days.size(),4,"他の組織の休日が取れてないこと");
 
-		days = repo.findByBelong(2, cal.getTime());
+		days = repo.find(2, cal.getTime());
 		assertEquals(days.size(),1,"組織変更で別の組織が取れる");
 
 		cal.add(Calendar.MONTH, 1);
-		days = repo.findByBelong(1, cal.getTime());
+		days = repo.find(1, cal.getTime());
 		assertEquals(days.size(),4,"１ヶ月前でも取得できていること");
 		
 		cal.add(Calendar.MONTH, 1);
-		days = repo.findByBelong(1, cal.getTime());
+		days = repo.find(1, cal.getTime());
 		assertEquals(days.size(),3,"12月データが対象から外れること");
-		
-		
 	}
 
 }

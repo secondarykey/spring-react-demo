@@ -96,7 +96,7 @@ class ExpTest {
 	
 	@Test
 	void testEqName()  {
-		Exp e = Exp.eqName("A","B");
+		Expression e = Exp.eqName("A","B");
 		assertEquals(e.toSQL(),"(\"A\" = \"B\")","EqName Test");
 	}
 	

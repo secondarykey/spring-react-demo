@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
 
 import com.example.demo.mapping.core.ModelMapper;
 import com.example.demo.mapping.core.Row;
@@ -76,11 +77,10 @@ public class QueryRepository {
 	 * @return カウント数
 	 */
 	protected int count(SQLBuilder builder) {
-		ModelMapper mapper = new ModelMapper(builder);
-		String sql = mapper.getCountSQL();
+		String sql = builder.getCountSQL();
 		int cnt = 0;
 		try {
-			cnt = template.queryForObject(sql, Integer.class ,mapper.getCountArguments());
+			cnt = template.queryForObject(sql, Integer.class ,builder.getCountArgs());
 		} catch (EmptyResultDataAccessException ex) {
 			//0件時の処理
 			logger.warn("戻り値がありませんでした。",ex);
@@ -97,12 +97,14 @@ public class QueryRepository {
 	 * @return マッパー
 	 */
 	private ModelMapper run(SQLBuilder builder) {
+
 		ModelMapper mapper = new ModelMapper(builder);
-		if ( mapper.isPaging() ) {
-			this.setCount(mapper);
+		if ( builder.isPaging() ) {
+			this.setCount(builder);
 		}
+
 		try {
-			template.query(mapper.getSQL(),mapper,mapper.getArguments());
+			template.query(builder.getSQL(),mapper,builder.getCountArgs());
 		} catch (EmptyResultDataAccessException ex) {
 			//0件時の処理
 			logger.warn("戻り値がありませんでした。",ex);
@@ -118,17 +120,17 @@ public class QueryRepository {
 	 * </pre>
 	 * @param mapper マッパーオブジェクト
 	 */
-	protected void setCount(ModelMapper mapper) {
-		String sql = mapper.getCountSQL();
+	protected void setCount(SQLBuilder builder) {
+		String sql = builder.getCountSQL();
 		int cnt = 0;
 		try {
-			cnt = template.queryForObject(sql, Integer.class ,mapper.getCountArguments());
+			cnt = template.queryForObject(sql, Integer.class ,builder.getCountArgs());
 		} catch (EmptyResultDataAccessException ex) {
 			//0件時の処理
 			logger.warn("戻り値がありませんでした。",ex);
-			mapper.setCount(0);
+			builder.setCount(0);
 		}
-		mapper.setCount(cnt);
+		builder.setCount(cnt);
 	}
 	
 
@@ -176,5 +178,9 @@ public class QueryRepository {
 		Object[] arrays = new Object[rtn.size()];
 		rtn.toArray(arrays);
 		return arrays;
+	}
+
+	public void query(String sql, Object[] vals,RowCallbackHandler handler) {
+		template.query(sql,handler,vals);
 	}
 }

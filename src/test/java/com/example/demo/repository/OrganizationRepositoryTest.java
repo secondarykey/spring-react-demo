@@ -15,8 +15,8 @@ import com.example.demo.DemoApplication;
 import com.example.demo.model.Organization;
 import com.example.demo.util.DateUtil;
 
-@ActiveProfiles("test")
 @SpringBootTest(classes = DemoApplication.class)
+@ActiveProfiles("test")
 public class OrganizationRepositoryTest {
 	
 	@Autowired

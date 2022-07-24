@@ -104,5 +104,9 @@ public class DateUtil {
 		ZoneId id = tz.toZoneId();
 		return OffsetDateTime.now(id);
 	}
+
+	public static java.sql.Date toSQLDate(Date time) {
+		return new java.sql.Date(time.getTime());
+	}
 	
 }

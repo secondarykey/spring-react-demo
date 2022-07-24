@@ -23,6 +23,6 @@ public class DayService  extends BusinessService {
 
 	public List<Day> find(int belong,String startBuf) {
 		Date start = DateUtil.parseDate(startBuf);
-		return query.findByBelong(belong, start);
+		return query.find(belong, start);
 	}
 }

@@ -9,11 +9,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.example.demo.DemoApplication;
 import com.example.demo.model.Operation;
 import com.example.demo.util.DateUtil;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = DemoApplication.class)
 public class OperationRepositoryTest {
 	
@@ -21,7 +23,7 @@ public class OperationRepositoryTest {
 	OperationQueryRepository repo;
 	
 	@Test
-	void testFindBelong() {
+	void test() {
 		Date date = DateUtil.parseDate("2022-01-01");
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
