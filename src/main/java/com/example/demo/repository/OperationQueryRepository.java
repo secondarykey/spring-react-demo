@@ -16,6 +16,7 @@ import com.example.demo.mapping.core.Row;
 import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Operation;
 import com.example.demo.model.OperationLanguage;
+import com.example.demo.repository.core.QueryRepository;
 import com.example.demo.util.DateUtil;
 
 @Repository

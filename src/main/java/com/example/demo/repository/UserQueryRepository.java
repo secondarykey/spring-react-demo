@@ -14,6 +14,7 @@ import com.example.demo.mapping.core.Row;
 import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Role;
 import com.example.demo.model.Users;
+import com.example.demo.repository.core.QueryRepository;
 import com.example.demo.transfer.Paging;
 import com.example.demo.util.EncryptUtil;
 import com.example.demo.util.Util;

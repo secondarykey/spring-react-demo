@@ -13,7 +13,7 @@ import com.example.demo.mapping.core.QuerySet;
 import com.example.demo.mapping.core.Row;
 import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Times;
-
+import com.example.demo.repository.core.QueryRepository;
 import com.example.demo.transfer.Paging;
 
 

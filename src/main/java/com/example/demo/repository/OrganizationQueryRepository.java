@@ -15,6 +15,7 @@ import com.example.demo.mapping.core.Row;
 
 import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Organization;
+import com.example.demo.repository.core.QueryRepository;
 
 @Repository
 public class OrganizationQueryRepository extends QueryRepository {

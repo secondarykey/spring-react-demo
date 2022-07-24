@@ -15,6 +15,7 @@ import com.example.demo.mapping.core.Row;
 import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Users;
 import com.example.demo.model.Worker;
+import com.example.demo.repository.core.QueryRepository;
 import com.example.demo.util.DateUtil;
 
 @Repository

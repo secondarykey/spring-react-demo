@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package com.example.demo.repository.core;
 
 import java.util.ArrayList;
 import java.util.Collection;

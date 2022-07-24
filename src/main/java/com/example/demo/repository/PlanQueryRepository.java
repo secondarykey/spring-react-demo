@@ -20,7 +20,7 @@ import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Places;
 import com.example.demo.model.PlanDetails;
 import com.example.demo.model.Plans;
-
+import com.example.demo.repository.core.QueryRepository;
 import com.example.demo.util.DateUtil;
 
 @Repository

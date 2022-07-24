@@ -11,6 +11,7 @@ import com.example.demo.mapping.core.QuerySet;
 import com.example.demo.mapping.core.Row;
 import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.Todos;
+import com.example.demo.repository.core.QueryRepository;
 
 @Repository
 public class ToDoQueryRepository extends QueryRepository {

@@ -13,6 +13,7 @@ import com.example.demo.mapping.core.Row;
 import com.example.demo.mapping.core.SQLBuilder;
 import com.example.demo.model.PlanDetails;
 import com.example.demo.model.Plans;
+import com.example.demo.repository.core.QueryRepository;
 
 @Repository
 public class PlanDetailQueryRepository extends QueryRepository {
