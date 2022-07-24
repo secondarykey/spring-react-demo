@@ -65,6 +65,6 @@ public class Order {
 	}
 	
 	public String toString() {
-		return name + " " + dir.toString();
+		return SQLBuilder.escapeColumn(name) + " " + dir.toString();
 	}
 }

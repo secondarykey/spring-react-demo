@@ -14,11 +14,14 @@ class QuerySetTest {
 		QuerySet set = QuerySet.create(Day.class, "", "");
 		String sql = FileUtil.getResource("/sql/Day.sql");
 		assertEquals(set.toSQL(),sql,"SQL Test");
-		set.where(Exp.eq(Day.ID, 2).and(Exp.eq(Day.VALUE,"test")));
+		set.setWhere(Exp.eq(Day.ID, 2).and(Exp.eq(Day.VALUE,"test")));
 
 		sql = FileUtil.getResource("/sql/DayWhere.sql");
-		assertEquals(set.toSQL(),sql,"SQL Test");
-
+		assertEquals(set.toSQL(),sql,"SQL Where Test");
+		
+		set.setOrder(Order.createAsc("ID").desc("VALUE"));
+		sql = FileUtil.getResource("/sql/DayOrder.sql");
+		assertEquals(set.toSQL(),sql,"SQL Order Test");
 	}
 	
 }

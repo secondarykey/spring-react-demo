@@ -9,4 +9,5 @@ public interface Expression {
 	public Expression and(Expression exp);
 	public Expression or(Expression exp);
 	public Expression not();
+	public Object[] values();
 }

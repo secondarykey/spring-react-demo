@@ -17,7 +17,6 @@ import com.example.demo.DemoApplication;
 import com.example.demo.transfer.response.Result;
 
 @SpringBootTest(classes = DemoApplication.class)
-
 public class AuthenticationInterceptorTest {
 
     private MockMvc mockMvc;

@@ -51,18 +51,29 @@ public class QuerySet {
 	 * JDBC名称
 	 */
 	private String aliasPrefix;
+	/**
+	 * 除外するカラム名
+	 */
+	private String[] ignoreColumns;
 
 	/**
 	 * WHERE句
 	 */
 	private Expression where = null;
-	private List<Relation> inner;
-	private List<Relation> outer;
+	/**
+	 * ORDER句
+	 */
+	private Order order = null;
 
 	/**
-	 * 除外するカラム名
+	 * 結合(INNER)
 	 */
-	private String[] ignoreColumns;
+	private List<Relation> inner;
+	/**
+	 * 結合(OUTER)
+	 */
+	private List<Relation> outer;
+
 	
 	/**
 	 * コンストラクタ
@@ -121,7 +132,7 @@ public class QuerySet {
 	 * @param exp
 	 * @return
 	 */
-	public QuerySet where(Expression exp) {
+	public QuerySet setWhere(Expression exp) {
 		this.where = exp;
 		return this;
 	}
@@ -210,6 +221,11 @@ public class QuerySet {
 		if ( where != null ) {
 			sql.append(sq + "WHERE" + sq + where.toSQL());
 		}
+
+		if ( order != null ) {
+			sql.append(sq + "ORDER BY" + sq + order.toSQL());
+		}
+		
 		return sql.toString();
 	}
 
@@ -293,5 +309,13 @@ public class QuerySet {
 				return col;
 			}
 		}
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 }

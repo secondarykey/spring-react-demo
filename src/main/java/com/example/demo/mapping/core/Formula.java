@@ -1,5 +1,7 @@
 package com.example.demo.mapping.core;
 
+import com.example.demo.util.Util;
+
 /**
  * 論理式
  * @author secon
@@ -73,4 +75,28 @@ public class Formula implements Expression {
 		return not(this);
 	}
 
+	@Override
+	public Object[] values() {
+		Object[] lv = null;
+		if ( left != null ) {
+			lv = left.values();
+		}
+
+		Object[] rv = null;
+		if ( right != null ) {
+			rv = right.values();
+		}
+
+		if ( lv != null && rv != null ) {
+			return Util.newArray(lv,rv);
+		}
+		
+		if ( lv != null ) {
+			return lv;
+		}
+		if ( rv != null ) {
+			return rv;
+		}
+		return null;
+	}
 }

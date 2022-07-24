@@ -108,4 +108,30 @@ public class Util {
 		}
 		return false;
 	}
+
+	/**
+	 * オブジェクト配列から、オブジェクト配列を生成
+	 * @param arrays オブジェクト配列群
+	 * @return オブジェクト配列
+	 */
+	public static Object[] newArray(Object[] ... arrays) {
+
+		int leng = 0;
+		for ( Object[] array : arrays ) {
+			leng += array.length;
+		}
+		Object[] newArray = new Object[leng];
+
+		int idx = 0;
+		for ( Object[] array : arrays ) {
+			int l = array.length;
+			if ( l != 0 ) {
+				System.arraycopy(array, 0, newArray, idx, l);
+				idx += l;
+			}
+		}
+		return newArray;
+	}
+	
+	
 }

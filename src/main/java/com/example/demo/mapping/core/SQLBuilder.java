@@ -327,6 +327,10 @@ public class SQLBuilder {
 		return this.paging != null;
 	}
 
+	/**
+	 * オーダー句のセット
+	 * @param strings
+	 */
 	public void setOrder(String ...strings) {
 		for ( String o : strings ) {
 			if ( !Util.isEmpty(this.order) ) {
@@ -339,6 +343,17 @@ public class SQLBuilder {
 	//以下新I/F用の設定
 	public static final String DQ = "\"";	
 
+	/**
+	 * カラムのエスケープ
+	 * <pre>
+	 * 文字列をダブルコーテーションで囲む
+	 * 最初がダブルコーテーションの場合、処理しない
+	 * 
+	 * AAA.BBB のような文字列も"AAA.BBB"と囲むので注意
+	 * </pre>
+	 * @param v 対象文字列
+	 * @return ダブルコーテーションで囲んだ文字列
+	 */
 	public static String escapeColumn(String v) {
 		String rtn = v;
 		//先頭がダブルコーテーションでない場合
@@ -348,8 +363,6 @@ public class SQLBuilder {
 		return rtn;
 	}
 
-	
-	
 	
 	
 }
