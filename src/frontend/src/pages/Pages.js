@@ -19,6 +19,7 @@ import PagingView from './Demo/Paging/View';
 import Dialogs from './Demo/Dialogs/View';
 import Operation from './Demo/Operation/View';
 import Users from './Demo/UserSearch/View';
+import UploadFile from './Demo/File/Upload';
 
 import {ChangeTitle,ClearMessage,SetBreadcrumbs} from "../Layout";
 
@@ -114,6 +115,12 @@ const DemoPages = (props) => {
     <Route path="users/" element={
       <Page id="USERS" crumbs={[]}>
         <Users/>
+      </Page>
+    }/>
+
+    <Route path="file/" element={
+      <Page id="FILE" crumbs={[]}>
+        <UploadFile/>
       </Page>
     }/>
   </Routes>
