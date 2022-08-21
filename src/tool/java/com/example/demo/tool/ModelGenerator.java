@@ -642,6 +642,8 @@ public class ModelGenerator {
 			return "Boolean";
 		} else if ( type.indexOf("double") != -1 ) {
 			return "Double";
+		} else if ( type.indexOf("blob") != -1 ) {
+			return "byte[]";
 		}
 		return "NotFound";
 	}

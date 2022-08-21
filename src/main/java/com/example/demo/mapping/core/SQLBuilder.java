@@ -1,5 +1,8 @@
 package com.example.demo.mapping.core;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -278,6 +281,15 @@ public class SQLBuilder {
 					setter.invoke(model, rs.getLong(name));
 				} else if ( tClazz == Boolean.class ) {
 					setter.invoke(model, rs.getBoolean(name));
+				} else if ( tClazz == byte[].class ) {
+					InputStream is = rs.getBinaryStream(name);
+					byte[] bytes;
+					try {
+						bytes = getBytes(is);
+					} catch (IOException e) {
+						throw new RuntimeException("Blobデータの取り出しに失敗",e);
+					}
+					setter.invoke(model, bytes);
 				} else {
 					setter.invoke(model, rs.getObject(name,tClazz) );
 				}
@@ -290,6 +302,17 @@ public class SQLBuilder {
 			throw new RuntimeException("メソッド呼び出し時の例外",e);
 		}
 		return;
+	}
+
+	private static byte[] getBytes(InputStream is) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int read;
+        byte[] data = new byte[1024 * 256];
+        while ((read = is.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, read);
+        }
+        is.close();
+        return buffer.toByteArray();
 	}
 
 	/**
