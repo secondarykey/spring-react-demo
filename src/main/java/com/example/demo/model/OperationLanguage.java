@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Fri Jul 22 16:46:24 JST 2022
+ * Auto Generated:Sun Aug 21 09:44:17 JST 2022
  * Original SQL:
 CREATE TABLE OPERATION_LANGUAGE (
     ID SERIAL PRIMARY KEY,
@@ -11,6 +11,7 @@ CREATE TABLE OPERATION_LANGUAGE (
 package com.example.demo.model;
 
 import java.io.Serializable;
+
 
 
 

@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Fri Jul 22 16:46:24 JST 2022
+ * Auto Generated:Sun Aug 21 09:44:17 JST 2022
  * Original SQL:
 CREATE TABLE ROLE (
     ID VARCHAR(16) PRIMARY KEY,
@@ -9,6 +9,7 @@ CREATE TABLE ROLE (
 package com.example.demo.model;
 
 import java.io.Serializable;
+
 
 
 

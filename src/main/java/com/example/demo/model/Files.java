@@ -1,17 +1,14 @@
 /**
  * Auto Generated:Sun Aug 21 09:44:18 JST 2022
  * Original SQL:
-CREATE TABLE TODOS (
-    ID SERIAL PRIMARY KEY,
-    "VALUE" VARCHAR(32)
+CREATE TABLE FILES (
+  ID SERIAL PRIMARY KEY,
+  DATA BLOB
 )
  */
 package com.example.demo.model;
 
 import java.io.Serializable;
-
-
-
 
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.annotation.Id;
@@ -24,8 +21,8 @@ import com.example.demo.model.core.ModelImpl;
 /**
  * 
  */
-@Table("TODOS")
-public class Todos extends ModelImpl
+@Table("FILES")
+public class Files extends ModelImpl
     implements Serializable ,Persistable<Integer> {
 
     /** シリアルバージョンID **/
@@ -33,7 +30,7 @@ public class Todos extends ModelImpl
 
 
 	public static final String ID = "ID";
-	public static final String VALUE = "VALUE";
+	public static final String DATA = "DATA";
     /**
      * 
      * Original SQL: ID SERIAL PRIMARY KEY
@@ -44,12 +41,12 @@ public class Todos extends ModelImpl
     private Integer id;
     /**
      * 
-     * Original SQL: "VALUE" VARCHAR(32)
+     * Original SQL: DATA BLOB
 )
      */
-    @Column("VALUE")
-    @MappingName(value="value")
-    private String value;
+    @Column("DATA")
+    @MappingName(value="data")
+    private byte[] data;
     /**
      *  の設定
      */
@@ -62,17 +59,10 @@ public class Todos extends ModelImpl
     public Integer getId() {
         return this.id;
     }
-    /**
-     *  の設定
-     */
-    public void setValue(String value) {
-      this.value = value;
-    }
-    /**
-     *  の取得
-     */
-    public String getValue() {
-        return this.value;
-    }
-
+	public byte[] getData() {
+		return data;
+	}
+	public void setData(byte[] data) {
+		this.data = data;
+	}
 }

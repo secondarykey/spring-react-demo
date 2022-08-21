@@ -1,5 +1,5 @@
 /**
- * Auto Generated:Fri Jul 22 16:46:24 JST 2022
+ * Auto Generated:Sun Aug 21 09:44:17 JST 2022
  * Original SQL:
 CREATE TABLE USERS (
     ID VARCHAR(255) PRIMARY KEY,
@@ -18,6 +18,7 @@ package com.example.demo.model;
 import java.io.Serializable;
 
 import java.time.OffsetDateTime;
+
 
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.annotation.Id;
